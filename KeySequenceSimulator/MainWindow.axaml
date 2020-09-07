@@ -1,0 +1,42 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:KeySequenceSimulator"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="KeySequenceSimulator.MainWindow"
+        Title="KeySequenceSimulator">
+
+	<Window.Styles>
+		<StyleInclude Source="/Assets/CustomStyles.axaml" />
+	</Window.Styles>
+
+	<DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+		<Menu DockPanel.Dock="Top" >
+			<MenuItem Header="_File">
+				<MenuItem Header="_Save..."/>
+				<MenuItem Header="_Open..."/>
+				<Separator/>
+				<MenuItem Header="_Exit"/>
+			</MenuItem>
+		</Menu>
+		
+		<!-- main view -->
+		<ScrollViewer DockPanel.Dock="Top" VerticalScrollBarVisibility="Auto">
+			<StackPanel Name="mainPanel" VerticalAlignment="Stretch">
+				<Button Width="20" Height="30">+</Button>
+				
+				<local:Sequence>test
+				</local:Sequence>
+			
+			</StackPanel>
+		</ScrollViewer>
+
+
+		<Border BorderBrush="White" BorderThickness="0,2,0,0">
+			<Panel Name="footer" Classes="footer" DockPanel.Dock="Bottom">
+				<TextBlock Classes="h1">Status:</TextBlock>
+			</Panel>
+		</Border>
+	</DockPanel>
+</Window>
