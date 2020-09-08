@@ -1,5 +1,15 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<ScrollViewer VerticalScrollBarVisibility="Visible">
+				<StackPanel>
+					<Button Width="20" Height="30">+</Button>
+				</StackPanel>
+			</ScrollViewer>
+		</Border>
+	</Design.PreviewWith>
+	
 	<Style Selector="Window">
 		<Setter Property="Background" Value="#245c60"></Setter>
 		<Setter Property="Foreground" Value="#FFFFFF"></Setter>
@@ -25,5 +35,13 @@
 	<Style Selector="Panel#mainPanel">
 		<Setter Property="Margin" Value="5" ></Setter>
 	</Style>
+
+	<Style Selector="ScrollViewer">
+		<Setter Property="Background" Value="Transparent"></Setter>
+	</Style>
+
+	<!--<Style Selector="ScrollBarPageButton">
+		<Setter Property="Background" Value="Transparent"></Setter>
+	</Style>-->
 </Styles>
 

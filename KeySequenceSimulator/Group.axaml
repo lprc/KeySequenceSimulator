@@ -7,6 +7,7 @@
 	<DockPanel>
 		<!-- Header -->
 		<Canvas Name="header" DockPanel.Dock="Top">
+			<Rectangle Fill="Blue" Width="63" Height="41" Canvas.Left="40" Canvas.Top="31"></Rectangle>
 			<TextBlock >Group 1</TextBlock>
 			<TextBlock >Hotkey 1</TextBlock>
 		</Canvas>

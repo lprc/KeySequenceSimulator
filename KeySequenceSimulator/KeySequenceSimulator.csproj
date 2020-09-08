@@ -4,18 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.11" />
+    <PackageReference Include="Avalonia" Version="0.9.12" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
 	<AvaloniaResource Include="Assets\*" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Assets\CustomStyles.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaXaml Include="Assets\CustomStyles.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaResource Update="Assets\CustomStyles.xaml">
+    <AvaloniaResource Update="Assets\CustomStyles.axaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
   </ItemGroup>
