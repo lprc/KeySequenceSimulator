@@ -5,7 +5,6 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KeySequenceSimulator.Sequence">
     <Canvas>
-		<Button>Button 1</Button>
-		<Button>Button 2</Button>
+		<Rectangle Fill="Blue" Width="63" Height="41" Canvas.Left="40" Canvas.Top="31" />
     </Canvas>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:KeySequenceSimulator">
 	<Design.PreviewWith>
 		<Border Padding="20">
 			<ScrollViewer VerticalScrollBarVisibility="Visible">
@@ -18,6 +19,7 @@
 	<Style Selector="TextBlock.h1">
 		<Setter Property="FontSize" Value="16"/>
 		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Margin" Value="2,0"/>
 	</Style>
 
 	<Style Selector="Menu">
@@ -36,8 +38,18 @@
 		<Setter Property="Margin" Value="5" ></Setter>
 	</Style>
 
-	<Style Selector="ScrollViewer">
-		<Setter Property="Background" Value="Transparent"></Setter>
+	<Style Selector="Panel#mainPanel">
+		<Setter Property="Margin" Value="5" ></Setter>
+	</Style>
+
+	<Style Selector="Button#btnAddGroup">
+		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+		<Setter Property="Margin" Value="5,5"></Setter>
+	</Style>
+
+	<Style Selector="local|Group">
+		<Setter Property="Margin" Value="10"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
 	</Style>
 
 	<!--<Style Selector="ScrollBarPageButton">

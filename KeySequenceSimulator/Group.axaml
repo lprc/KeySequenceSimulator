@@ -3,18 +3,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:local="clr-namespace:KeySequenceSimulator"
              x:Class="KeySequenceSimulator.Group">
-	<DockPanel>
+	<DockPanel LastChildFill="True">
 		<!-- Header -->
-		<Canvas Name="header" DockPanel.Dock="Top">
-			<Rectangle Fill="Blue" Width="63" Height="41" Canvas.Left="40" Canvas.Top="31"></Rectangle>
-			<TextBlock >Group 1</TextBlock>
-			<TextBlock >Hotkey 1</TextBlock>
-		</Canvas>
+		<DockPanel DockPanel.Dock="Top">
+			<Border DockPanel.Dock="Left"
+					BorderBrush="White" 
+					BorderThickness="1,1,1,0" 
+					Margin="0,0,10,0">
+				<TextBlock Margin="2">Group 1</TextBlock>
+			</Border>
+
+			<Border BorderBrush="White" BorderThickness="1,1,1,0">
+				<TextBlock Margin="2">Hotkey 1</TextBlock>
+			</Border>
+
+			<Button DockPanel.Dock="Right"
+					HorizontalAlignment="Right"
+					Name="btnGroupDelete"
+					Width="20"
+					Height="20"
+					Padding="0"
+					BorderThickness="1,1,1,0"
+					Margin="0">
+				x
+			</Button>
+
+			<Button DockPanel.Dock="Right"
+					HorizontalAlignment="Right"
+					Name="btnGroupMinimize"
+					Width="20"
+					Height="20"
+					Padding="0"
+					BorderThickness="1,1,0,0"
+					Margin="0">
+				-
+			</Button>
+		</DockPanel>
 
 		<!-- Content -->
-		<Panel Name="content">
+		<Border BorderBrush="White" 
+				BorderThickness="1"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Stretch">
+			<local:Sequence>
+				
+			</local:Sequence>
+		</Border>
 		
-		</Panel>
 	</DockPanel>
 </UserControl>

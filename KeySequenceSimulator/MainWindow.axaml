@@ -21,21 +21,27 @@
 			</MenuItem>
 		</Menu>
 	
-		<Border BorderBrush="White" BorderThickness="0,2,0,0" DockPanel.Dock="Bottom">
-			<Panel Name="footer" Classes="footer" DockPanel.Dock="Bottom">
+		<Border BorderBrush="White"
+				BorderThickness="0,2,0,0"
+				DockPanel.Dock="Bottom">
+			<Panel Name="footer"
+				   Classes="footer"
+				   DockPanel.Dock="Bottom">
 				<TextBlock Classes="h1">Status:</TextBlock>
 			</Panel>
 		</Border>
 
 		<!-- main view -->
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
-			<StackPanel Name="mainPanel" VerticalAlignment="Stretch">
-				<Button Width="20" Height="30">+</Button>
+			<StackPanel Name="mainPanel"
+						VerticalAlignment="Stretch">
+				<local:Group Width="200" 
+							 Height="100">
+				</local:Group>
 
-				<local:Sequence>
-					test
-				</local:Sequence>
-
+				<Button Name="btnAddGroup"
+						Width="20"
+						Height="30">+</Button>
 			</StackPanel>
 		</ScrollViewer>
 	</DockPanel>
