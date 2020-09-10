@@ -28,10 +28,17 @@ namespace KeySequenceSimulator
         {
             // Add group on Click
             Group group = new Group();
+            group.MainWindow = this;
             group.SetValue(DockPanel.DockProperty, Dock.Top);
             groups.Add(group);
             group.SetGroupHeaderText("Group " + groups.Count);
             mainPanel.Children.Add(group);
+        }
+
+        public void RemoveGroup(Group g)
+        {
+            groups.Remove(g);
+            mainPanel.Children.Remove(g);
         }
     }
 }

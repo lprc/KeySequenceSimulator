@@ -9,6 +9,8 @@ namespace KeySequenceSimulator
 {
     public class Group : UserControl
     {
+        public MainWindow MainWindow { get; set; }
+
         private Panel contentPanel;
         private Border groupContentBorder;
         private TextBlock txtGroupHeader;
@@ -50,6 +52,12 @@ namespace KeySequenceSimulator
             var visible = groupContentBorder.GetValue(IsVisibleProperty);
             minMaxButton.Content = visible ? "o" : "-";
             groupContentBorder.SetValue(IsVisibleProperty, !visible);
+        }
+
+        public void RemoveGroup(object sender, RoutedEventArgs e)
+        {
+            // Remove this group
+            MainWindow.RemoveGroup(this);
         }
     }
 }
