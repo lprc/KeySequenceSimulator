@@ -33,16 +33,17 @@
 
 		<!-- main view -->
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
-			<StackPanel Name="mainPanel"
+			<DockPanel Name="mainPanel"
 						VerticalAlignment="Stretch">
-				<local:Group Width="800" 
-							 Height="200">
+				<local:Group DockPanel.Dock="Top">
 				</local:Group>
 
 				<Button Name="btnAddGroup"
 						Width="20"
-						Height="30">+</Button>
-			</StackPanel>
+						Height="30"
+						DockPanel.Dock="Bottom"
+						Click="AddGroup">+</Button>
+			</DockPanel>
 		</ScrollViewer>
 	</DockPanel>
 </Window>

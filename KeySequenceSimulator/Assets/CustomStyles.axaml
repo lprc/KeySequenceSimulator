@@ -50,7 +50,7 @@
 	<!-- Group Styles -->
 	<Style Selector="local|Group">
 		<Setter Property="Margin" Value="10"></Setter>
-		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+		<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
 	</Style>
 
 	<Style Selector="local|Group Border">

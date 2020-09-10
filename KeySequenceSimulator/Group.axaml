@@ -44,11 +44,12 @@
 		<Border BorderBrush="White"
 			BorderThickness="1"
 			DockPanel.Dock="Left">
-			<DockPanel>
+			<DockPanel Name="groupContentPanel">
 				<local:AddButton DockPanel.Dock="Bottom" 
 								 Width="40" 
-								 Height="50"  />
-				<local:Sequence />
+								 Height="50"
+								 Click="AddSequence"/>
+				<!--<local:Sequence DockPanel.Dock="Top" />-->
 			</DockPanel>
 		</Border>
 
