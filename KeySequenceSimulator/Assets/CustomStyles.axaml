@@ -40,13 +40,14 @@
 
 	<Style Selector="Button#btnAddGroup">
 		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+		<Setter Property="VerticalAlignment" Value="Top"></Setter>
 		<Setter Property="Margin" Value="5,5"></Setter>
 	</Style>
 
 	<!-- Group Styles -->
 	<Style Selector="local|Group">
 		<Setter Property="Margin" Value="10"></Setter>
-		<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+		<!--<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>-->
 	</Style>
 
 	<Style Selector="local|Group Border.borderBackground">
@@ -55,6 +56,10 @@
 	<Style Selector="local|Group Button">
 		<Setter Property="Background" Value="#24614A"></Setter>
 	</Style>
+	<Style Selector="local|Group #groupContentPanel > Button">
+		<Setter Property="VerticalAlignment" Value="Top"></Setter>
+	</Style>
+	
 
 	<!-- Styles for AddButton -->
 	<Style Selector="Line">
@@ -69,7 +74,7 @@
 	</Style>
 	
 	<!-- Sequence Styles -->
-	<Style Selector="Button.sequenceBtn">
+	<Style Selector="Button.sequenceNumberBtn">
 		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
 		<Setter Property="Margin" Value="5"></Setter>
 		<Setter Property="FontSize" Value="16"/>

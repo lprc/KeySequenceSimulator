@@ -37,6 +37,7 @@ namespace KeySequenceSimulator
             txtGroupHeader.Text = text;
         }
 
+        // adds a sequence
         public void AddSequence(object sender, RoutedEventArgs e)
         {
             // Add sequence on Click
@@ -47,6 +48,7 @@ namespace KeySequenceSimulator
             contentPanel.Children.Add(seq);
         }
 
+        // shows or hides group
         public void MinMaxGroup(object sender, RoutedEventArgs e)
         {
             var visible = groupContentBorder.GetValue(IsVisibleProperty);
