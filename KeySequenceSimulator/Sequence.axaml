@@ -6,7 +6,7 @@
 			 xmlns:local="clr-namespace:KeySequenceSimulator"
              x:Class="KeySequenceSimulator.Sequence">
 	<StackPanel Orientation="Horizontal">
-		<Button Classes="sequenceBtn" Width="40" Height="50">
+		<Button Name="btnSequenceNumber" Classes="sequenceBtn" Width="40" Height="50">
 			1
 		</Button>
 

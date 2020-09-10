@@ -7,43 +7,51 @@
              x:Class="KeySequenceSimulator.Group">
 	<DockPanel LastChildFill="True">
 		<!-- Header -->
-		<DockPanel DockPanel.Dock="Top">
-			<Border DockPanel.Dock="Left"
-					BorderBrush="White" 
-					BorderThickness="1,1,1,0" 
-					Margin="0,0,10,0">
-				<TextBlock Margin="2">Group 1</TextBlock>
-			</Border>
+		<Border DockPanel.Dock="Top"
+				BorderBrush="White"
+				BorderThickness="0,0,0,1">
+			<DockPanel>
+				<Border DockPanel.Dock="Left"
+						BorderBrush="White"
+						BorderThickness="1,1,1,0"
+						Margin="0,0,10,0"
+						Classes="borderBackground">
+					<TextBlock Name="txtGroupHeader" Margin="2"></TextBlock>
+				</Border>
 
-			<Button BorderBrush="White" BorderThickness="1,1,1,0">Hotkey: 1</Button>
+				<Button BorderBrush="White" BorderThickness="1,1,1,0">Hotkey: 1</Button>
 
-			<Button DockPanel.Dock="Right"
-					HorizontalAlignment="Right"
-					Name="btnGroupDelete"
-					Width="20"
-					Height="20"
-					Padding="0"
-					BorderThickness="1,1,1,0"
-					Margin="0">
-				x
-			</Button>
+				<Button DockPanel.Dock="Right"
+						HorizontalAlignment="Right"
+						Name="btnGroupRemove"
+						Width="20"
+						Height="20"
+						Padding="0"
+						BorderThickness="1,1,1,0"
+						Margin="0" >
+					x
+				</Button>
 
-			<Button DockPanel.Dock="Right"
-					HorizontalAlignment="Right"
-					Name="btnGroupMinimize"
-					Width="20"
-					Height="20"
-					Padding="0"
-					BorderThickness="1,1,0,0"
-					Margin="0">
-				-
-			</Button>
-		</DockPanel>
+				<Button DockPanel.Dock="Right"
+						HorizontalAlignment="Right"
+						Name="btnGroupMinimize"
+						Width="20"
+						Height="20"
+						Padding="0"
+						BorderThickness="1,1,0,0"
+						Margin="0"
+						Click="MinMaxGroup">
+					-
+				</Button>
+			</DockPanel>
+		</Border>
 
 		<!-- Content -->
 		<Border BorderBrush="White"
-			BorderThickness="1"
-			DockPanel.Dock="Left">
+			BorderThickness="1,0,1,1"
+			DockPanel.Dock="Left"
+			Name="groupContentBorder"
+			Classes="borderBackground">
 			<DockPanel Name="groupContentPanel">
 				<local:AddButton DockPanel.Dock="Bottom" 
 								 Width="40" 

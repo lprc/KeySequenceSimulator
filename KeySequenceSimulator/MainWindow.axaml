@@ -35,9 +35,6 @@
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<DockPanel Name="mainPanel"
 						VerticalAlignment="Stretch">
-				<local:Group DockPanel.Dock="Top">
-				</local:Group>
-
 				<Button Name="btnAddGroup"
 						Width="20"
 						Height="30"
