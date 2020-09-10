@@ -3,8 +3,27 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:local="clr-namespace:KeySequenceSimulator"
              x:Class="KeySequenceSimulator.Sequence">
-    <Canvas>
-		<Rectangle Fill="Blue" Width="63" Height="41" Canvas.Left="40" Canvas.Top="31" />
-    </Canvas>
+	<StackPanel Orientation="Horizontal">
+		<Button Classes="sequenceBtn" Width="40" Height="50">
+			1
+		</Button>
+
+		<!-- Arrow -->
+		<Canvas Width="40" Height="50">
+			<Line StartPoint="0,25"
+				EndPoint="40,25"
+				StrokeThickness="2" />
+			<Polygon Points="40,25 35,30 35,20" 
+					 Stroke="White" 
+					 StrokeThickness="1" 
+					 Fill="White" />
+		</Canvas>
+
+		<local:AddButton>
+			
+		</local:AddButton>
+		
+	</StackPanel>
 </UserControl>

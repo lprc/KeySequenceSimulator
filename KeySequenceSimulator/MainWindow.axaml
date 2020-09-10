@@ -35,8 +35,8 @@
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<StackPanel Name="mainPanel"
 						VerticalAlignment="Stretch">
-				<local:Group Width="200" 
-							 Height="100">
+				<local:Group Width="800" 
+							 Height="200">
 				</local:Group>
 
 				<Button Name="btnAddGroup"

@@ -47,9 +47,34 @@
 		<Setter Property="Margin" Value="5,5"></Setter>
 	</Style>
 
+	<!-- Group Styles -->
 	<Style Selector="local|Group">
 		<Setter Property="Margin" Value="10"></Setter>
 		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+	</Style>
+
+	<Style Selector="local|Group Border">
+		<Setter Property="Background" Value="#24614A"></Setter>
+	</Style>
+
+	<!-- Styles for AddButton -->
+	<Style Selector="Line">
+		<Setter Property="Stroke" Value="White"></Setter>
+	</Style>
+
+	<Style Selector="Button.addBtn">
+		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+		<Setter Property="Margin" Value="5"></Setter>
+		<Setter Property="FontSize" Value="24"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+	</Style>
+	
+	<!-- Sequence Styles -->
+	<Style Selector="Button.sequenceBtn">
+		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
+		<Setter Property="Margin" Value="5"></Setter>
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="Bold"/>
 	</Style>
 
 	<!--<Style Selector="ScrollBarPageButton">

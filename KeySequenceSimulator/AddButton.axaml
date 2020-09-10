@@ -1,0 +1,22 @@
+﻿<Button xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:local="clr-namespace:KeySequenceSimulator"
+             x:Class="KeySequenceSimulator.AddButton"
+		BorderBrush="White"
+		BorderThickness="1"
+		Width="40"
+		Height="50"
+		Classes="addBtn">
+	<!--<Canvas Width="38" Height="48">
+		<Line StartPoint="20,15"
+            EndPoint="20,35"
+            StrokeThickness="1"/>
+		<Line StartPoint="10,25"
+            EndPoint="30,25"
+            StrokeThickness="1" />
+	</Canvas>-->
+	+
+</Button>

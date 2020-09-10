@@ -15,9 +15,7 @@
 				<TextBlock Margin="2">Group 1</TextBlock>
 			</Border>
 
-			<Border BorderBrush="White" BorderThickness="1,1,1,0">
-				<TextBlock Margin="2">Hotkey 1</TextBlock>
-			</Border>
+			<Button BorderBrush="White" BorderThickness="1,1,1,0">Hotkey: 1</Button>
 
 			<Button DockPanel.Dock="Right"
 					HorizontalAlignment="Right"
@@ -43,14 +41,17 @@
 		</DockPanel>
 
 		<!-- Content -->
-		<Border BorderBrush="White" 
-				BorderThickness="1"
-				HorizontalAlignment="Stretch"
-				VerticalAlignment="Stretch">
-			<local:Sequence>
-				
-			</local:Sequence>
+		<Border BorderBrush="White"
+			BorderThickness="1"
+			DockPanel.Dock="Left">
+			<DockPanel>
+				<local:AddButton DockPanel.Dock="Bottom" 
+								 Width="40" 
+								 Height="50"  />
+				<local:Sequence />
+			</DockPanel>
 		</Border>
-		
+
+
 	</DockPanel>
 </UserControl>
