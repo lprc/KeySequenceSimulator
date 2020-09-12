@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using System;
@@ -9,12 +10,16 @@ namespace KeySequenceSimulator
 {
     public class Group : UserControl
     {
-        public MainWindow MainWindow { get; set; }
+        public MainWindow mainWindow { get; set; }
 
         private Panel contentPanel;
         private Border groupContentBorder;
         private TextBlock txtGroupHeader;
         private Button minMaxButton;
+        private Button hotkeyButton;
+
+        private Key hotkey;
+        private EventHandler<KeyEventArgs> changeHotkeyListener;
 
         private List<Sequence> sequences = new List<Sequence>();
 
@@ -30,6 +35,17 @@ namespace KeySequenceSimulator
             groupContentBorder = this.FindControl<Border>("groupContentBorder");
             txtGroupHeader = this.FindControl<TextBlock>("txtGroupHeader");
             minMaxButton = this.FindControl<Button>("btnGroupMinimize");
+            hotkeyButton = this.FindControl<Button>("btnHotkey");
+
+            // handler for changing hotkey
+            changeHotkeyListener = (sender, e) =>
+            {
+                hotkey = e.Key;
+
+                // remove listener
+                mainWindow.KeyUp -= changeHotkeyListener;
+                hotkeyButton.Content = "Hotkey: " + hotkey.ToString();
+            };
         }
 
         public void SetGroupHeaderText(String text)
@@ -59,7 +75,18 @@ namespace KeySequenceSimulator
         public void RemoveGroup(object sender, RoutedEventArgs e)
         {
             // Remove this group
-            MainWindow.RemoveGroup(this);
+            mainWindow.RemoveGroup(this);
         }
+
+        public void SetHotkey(object sender, RoutedEventArgs e)
+        {
+            // Waits for input hotkey
+            hotkeyButton.Content = "Waiting for input...";
+
+            // add keylistener
+            mainWindow.KeyUp += changeHotkeyListener;
+        }
+
+        
     }
 }

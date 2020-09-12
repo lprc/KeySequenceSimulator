@@ -19,13 +19,18 @@
 					<TextBlock Name="txtGroupHeader" Margin="2"></TextBlock>
 				</Border>
 
-				<Button BorderBrush="White" BorderThickness="1,1,1,0">Hotkey: 1</Button>
+				<Button BorderBrush="White" 
+						BorderThickness="1,1,1,0"
+						Name="btnHotkey"
+						Click="SetHotkey">
+					Hotkey: 1
+				</Button>
 
 				<Button DockPanel.Dock="Right"
 						HorizontalAlignment="Right"
 						Name="btnGroupRemove"
-						Width="20"
-						Height="20"
+						Width="40"
+						Height="30"
 						Padding="0"
 						BorderThickness="1,1,1,0"
 						Margin="0"
@@ -36,8 +41,8 @@
 				<Button DockPanel.Dock="Right"
 						HorizontalAlignment="Right"
 						Name="btnGroupMinimize"
-						Width="20"
-						Height="20"
+						Width="40"
+						Height="30"
 						Padding="0"
 						BorderThickness="1,1,0,0"
 						Margin="0"

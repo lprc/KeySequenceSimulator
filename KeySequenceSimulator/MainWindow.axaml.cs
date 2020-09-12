@@ -28,7 +28,7 @@ namespace KeySequenceSimulator
         {
             // Add group on Click
             Group group = new Group();
-            group.MainWindow = this;
+            group.mainWindow = this;
             group.SetValue(DockPanel.DockProperty, Dock.Top);
             groups.Add(group);
             group.SetGroupHeaderText("Group " + groups.Count);
