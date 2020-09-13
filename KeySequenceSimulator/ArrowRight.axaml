@@ -4,18 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:local="clr-namespace:KeySequenceSimulator"
-             x:Class="KeySequenceSimulator.Sequence">
-	<StackPanel Name="sequencePanel"
-				Orientation="Horizontal">
-		<Button Name="btnSequenceNumber"
-				Classes="sequenceNumberBtn"
-				Width="40"
-				Height="50">
-			1
-		</Button>
-
-		<local:AddButton ToolTip.Tip="Add Action"
-						 Click="AddAction">
-		</local:AddButton>
-	</StackPanel>
+             x:Class="KeySequenceSimulator.ArrowRight">
+	<Canvas Width="40" Height="50">
+		<Line StartPoint="0,25"
+			EndPoint="40,25"
+			StrokeThickness="2" />
+		<Polygon Points="40,25 35,30 35,20"
+				 Stroke="White"
+				 StrokeThickness="1"
+				 Fill="White" />
+	</Canvas>
 </UserControl>

@@ -1,0 +1,30 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:local="clr-namespace:KeySequenceSimulator"
+             x:Class="KeySequenceSimulator.ActionView">
+	<StackPanel Orientation="Horizontal">
+		<ComboBox Name="ActionPart1"
+				  SelectedIndex="0">
+			<ComboBoxItem>KeyUp</ComboBoxItem>
+			<ComboBoxItem>KeyDown</ComboBoxItem>
+			<ComboBoxItem>KeyPress</ComboBoxItem>
+			<ComboBoxItem>Sleep</ComboBoxItem>
+			<ComboBoxItem>MouseDown</ComboBoxItem>
+			<ComboBoxItem>MouseUp</ComboBoxItem>
+			<ComboBoxItem>MouseClick</ComboBoxItem>
+			<ComboBoxItem>MouseDoubleClick</ComboBoxItem>
+		</ComboBox>
+		<Border Name="ActionPart2">
+			<Button>
+				Press to change key.
+			</Button>
+		</Border>
+		<Border Name="ActionPart3"
+				IsVisible="False">
+
+		</Border>
+	</StackPanel>
+</UserControl>

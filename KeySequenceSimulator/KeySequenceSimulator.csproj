@@ -9,6 +9,9 @@
 	<AvaloniaResource Include="Assets\*" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Remove="Assets\ActionView.axaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <AvaloniaResource Update="Assets\CustomStyles.axaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
