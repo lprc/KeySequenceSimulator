@@ -11,20 +11,10 @@
 		</Border>
 	</Design.PreviewWith>
 	
+	<!-- Window and global styles -->
 	<Style Selector="Window">
 		<Setter Property="Background" Value="#245c60"></Setter>
 		<Setter Property="Foreground" Value="#FFFFFF"></Setter>
-	</Style>
-
-	<Style Selector="TextBlock.h1">
-		<Setter Property="FontSize" Value="16"/>
-		<Setter Property="FontWeight" Value="Bold"/>
-		<Setter Property="Margin" Value="2,0"/>
-	</Style>
-
-	<Style Selector="Menu">
-		<Setter Property="BorderThickness" Value="0,0,0,2" ></Setter>
-		<Setter Property="BorderBrush" Value="White" ></Setter>
 	</Style>
 
 	<Style Selector="Button">
@@ -34,20 +24,44 @@
 		<Setter Property="Foreground" Value="#FFFFFF"></Setter>
 	</Style>
 
-	<Style Selector="Panel#mainPanel">
-		<Setter Property="Margin" Value="5" ></Setter>
-	</Style>
-
 	<Style Selector="Button#btnAddGroup">
 		<Setter Property="HorizontalAlignment" Value="Left"></Setter>
 		<Setter Property="VerticalAlignment" Value="Top"></Setter>
 		<Setter Property="Margin" Value="5,5"></Setter>
 	</Style>
 
+	<Style Selector="ToolTip">
+		<Setter Property="Background" Value="Black"></Setter>
+		<Setter Property="Foreground" Value="White"></Setter>
+		<Setter Property="FontSize" Value="12"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+	</Style>
+
+	<!-- footer style -->
+	<Style Selector="TextBlock.footer">
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Margin" Value="2,0"/>
+	</Style>
+
+	<!-- menu style -->
+	<Style Selector="Menu">
+		<Setter Property="BorderThickness" Value="0,0,0,2" ></Setter>
+		<Setter Property="BorderBrush" Value="White" ></Setter>
+	</Style>
+
+	<Style Selector="MenuItem">
+		<Setter Property="Background" Value="#000000"></Setter>
+	</Style>
+
+	<!-- main panel -->
+	<Style Selector="Panel#mainPanel">
+		<Setter Property="Margin" Value="5" ></Setter>
+	</Style>
+
 	<!-- Group Styles -->
 	<Style Selector="local|Group">
 		<Setter Property="Margin" Value="10"></Setter>
-		<!--<Setter Property="HorizontalAlignment" Value="Stretch"></Setter>-->
 	</Style>
 
 	<Style Selector="local|Group Border.borderBackground">
@@ -59,7 +73,6 @@
 	<Style Selector="local|Group #groupContentPanel > Button">
 		<Setter Property="VerticalAlignment" Value="Top"></Setter>
 	</Style>
-	
 
 	<!-- Styles for AddButton -->
 	<Style Selector="Line">

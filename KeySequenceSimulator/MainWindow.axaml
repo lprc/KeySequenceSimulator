@@ -24,22 +24,23 @@
 		<Border BorderBrush="White"
 				BorderThickness="0,2,0,0"
 				DockPanel.Dock="Bottom">
-			<Panel Name="footer"
-				   Classes="footer"
-				   DockPanel.Dock="Bottom">
-				<TextBlock Classes="h1">Status:</TextBlock>
-			</Panel>
+			<TextBlock Classes="footer"
+					   Name="footer"
+					   DockPanel.Dock="Bottom">Status:</TextBlock>
 		</Border>
 
 		<!-- main view -->
 		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<DockPanel Name="mainPanel"
-						VerticalAlignment="Stretch">
-				<Button Name="btnAddGroup"
-						Width="20"
-						Height="30"
+					   LastChildFill="False">
+				<local:AddButton Name="btnAddGroup"
+						Width="40"
+						Height="50"
 						DockPanel.Dock="Bottom"
-						Click="AddGroup">+</Button>
+						Click="AddGroup"
+						ToolTip.Tip="Add Group">
+					+
+				</local:AddButton>
 			</DockPanel>
 		</ScrollViewer>
 	</DockPanel>

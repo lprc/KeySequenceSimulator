@@ -24,7 +24,7 @@
 					 Fill="White" />
 		</Canvas>
 
-		<local:AddButton>
+		<local:AddButton ToolTip.Tip="Add Action">
 			
 		</local:AddButton>
 		

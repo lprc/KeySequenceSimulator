@@ -22,8 +22,9 @@
 				<Button BorderBrush="White" 
 						BorderThickness="1,1,1,0"
 						Name="btnHotkey"
-						Click="SetHotkey">
-					Hotkey: 1
+						Click="SetHotkey"
+						ToolTip.Tip="Press to change hotkey">
+					Press to set a hotkey.
 				</Button>
 
 				<Button DockPanel.Dock="Right"
@@ -34,7 +35,8 @@
 						Padding="0"
 						BorderThickness="1,1,1,0"
 						Margin="0"
-						Click="RemoveGroup">
+						Click="RemoveGroup"
+						ToolTip.Tip="Remove Group">
 					x
 				</Button>
 
@@ -46,7 +48,8 @@
 						Padding="0"
 						BorderThickness="1,1,0,0"
 						Margin="0"
-						Click="MinMaxGroup">
+						Click="MinMaxGroup"
+						ToolTip.Tip="Minimize Group">
 					-
 				</Button>
 			</DockPanel>
@@ -62,7 +65,8 @@
 				<local:AddButton DockPanel.Dock="Bottom" 
 								 Width="40" 
 								 Height="50"
-								 Click="AddSequence"/>
+								 Click="AddSequence"
+								 ToolTip.Tip="Add Sequence"/>
 				<!--<local:Sequence DockPanel.Dock="Top" />-->
 			</DockPanel>
 		</Border>

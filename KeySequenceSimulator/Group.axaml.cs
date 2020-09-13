@@ -70,6 +70,14 @@ namespace KeySequenceSimulator
             var visible = groupContentBorder.GetValue(IsVisibleProperty);
             minMaxButton.Content = visible ? "o" : "-";
             groupContentBorder.SetValue(IsVisibleProperty, !visible);
+            
+            // change tooltip and reopen to refresh content
+            ToolTip.SetTip(minMaxButton, visible ? "Maximize Group" : "Minimize Group");
+            if (ToolTip.GetIsOpen(minMaxButton))
+            {
+                ToolTip.SetIsOpen(minMaxButton, false);
+                ToolTip.SetIsOpen(minMaxButton, true);
+            }
         }
 
         public void RemoveGroup(object sender, RoutedEventArgs e)
