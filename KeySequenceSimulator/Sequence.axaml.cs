@@ -32,15 +32,16 @@ namespace KeySequenceSimulator
 
         public void AddAction(object sender, RoutedEventArgs e)
         {
-            // Add sequence on Click
+            // Add action and arrow on Click
             ActionView action = new ActionView();
             action.SetValue(DockPanel.DockProperty, Dock.Right);
             actions.Add(action);
-            //action.SetSequenceButtonNumber(actions.Count);
+
             ArrowRight arr = new ArrowRight();
             arr.SetValue(DockPanel.DockProperty, Dock.Right);
-            sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
+
             sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, action);
+            sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
         }
 
     }
