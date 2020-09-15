@@ -14,7 +14,8 @@
 			1
 		</Button>
 
-		<local:AddButton ToolTip.Tip="Add Action"
+		<local:AddButton Name="btnAddAction" 
+						 ToolTip.Tip="Add Action"
 						 Click="AddAction">
 		</local:AddButton>
 	</StackPanel>

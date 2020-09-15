@@ -9,19 +9,19 @@ namespace KeySequenceSimulator
 {
     public class ActionView : UserControl
     {
+        public Sequence ParentSequence { get; set; }
+
         private ComboBox actionCombobox;
         private Panel part2;
         private Border part3;
 
         private Button keyButton;
         private TextBox sleepText;
-        private Button mouseKeyButton;
+        private ComboBox cbMouseKey;
         private TextBox textText;
 
         private Key key;
-        private MouseButton mouseKey;
-        private EventHandler<KeyEventArgs> changeKeyListener;
-        private EventHandler<PointerReleasedEventArgs> changeMouseKeyListener;
+        private MouseButton mouseButton;
 
         public ActionView()
         {
@@ -38,33 +38,12 @@ namespace KeySequenceSimulator
 
             keyButton = this.FindControl<Button>("btnKey");
             sleepText = this.FindControl<TextBox>("txtSleep");
-            mouseKeyButton = this.FindControl<Button>("btnMouse");
+            cbMouseKey = this.FindControl<ComboBox>("cbMouse");
             textText = this.FindControl<TextBox>("txtText");
 
-            // add listener to combobox
+            // add listeners to comboboxes
             actionCombobox.SelectionChanged += OnSelectionChanged;
-
-            // handler for changing input key
-            changeKeyListener = (sender, e) =>
-            {
-                key = e.Key;
-
-                // remove listener
-                keyButton.KeyUp -= changeKeyListener;
-                keyButton.Content = key.ToString();
-            };
-
-            // handler for changing input mouse key
-            changeMouseKeyListener = (sender, e) =>
-            {
-                //TODO
-                //mouseKey = e.MouseButton;
-
-                // remove listener
-                keyButton.KeyUp -= changeKeyListener;
-                //keyButton.Content = key.ToString();
-                keyButton.Content = "test";
-            };
+            cbMouseKey.SelectionChanged += OnMouseSelectionChanged;
         }
 
         public void OnSelectionChanged(object sender, RoutedEventArgs e)
@@ -72,8 +51,10 @@ namespace KeySequenceSimulator
             // first hide all inputs
             keyButton.SetValue(IsVisibleProperty, false);
             sleepText.SetValue(IsVisibleProperty, false);
-            mouseKeyButton.SetValue(IsVisibleProperty, false);
+            cbMouseKey.SetValue(IsVisibleProperty, false);
             textText.SetValue(IsVisibleProperty, false);
+            part2.SetValue(IsVisibleProperty, true);
+            ParentSequence.SetRepeatSequence(false);
 
             // displays action parts depending on action type
             switch (actionCombobox.SelectedIndex)
@@ -90,10 +71,34 @@ namespace KeySequenceSimulator
                 case 5:
                 case 6:
                 case 7:
-                    mouseKeyButton.SetValue(IsVisibleProperty, true);
+                    cbMouseKey.SetValue(IsVisibleProperty, true);
                     break;
                 case 8:
                     textText.SetValue(IsVisibleProperty, true);
+                    break;
+                case 9: // repeat
+                    part2.SetValue(IsVisibleProperty, false);
+                    ParentSequence.SetRepeatSequence(true);
+                    break;
+            }
+        }
+
+        public void OnMouseSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            // save mouse button
+            switch (actionCombobox.SelectedIndex)
+            {
+                case 0:
+                    mouseButton = MouseButton.Left;
+                    break;
+                case 1:
+                    mouseButton = MouseButton.Right;
+                    break;
+                case 2:
+                    mouseButton = MouseButton.Middle;
+                    break;
+                default:
+                    mouseButton = MouseButton.None;
                     break;
             }
         }
@@ -102,11 +107,18 @@ namespace KeySequenceSimulator
         {
             // Waits for input hotkey
             keyButton.Content = "Waiting for input...";
-            mouseKeyButton.Content = "Waiting for input...";
 
             // add keylistener
             keyButton.KeyUp += changeKeyListener;
-            mouseKeyButton.PointerReleased += changeMouseKeyListener;
+        }
+
+        private void changeKeyListener(object sender, KeyEventArgs e)
+        {
+            key = e.Key;
+
+            // remove listener
+            keyButton.KeyUp -= changeKeyListener;
+            keyButton.Content = key.ToString();
         }
     }
 }

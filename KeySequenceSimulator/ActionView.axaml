@@ -17,6 +17,7 @@
 			<ComboBoxItem>MouseClick</ComboBoxItem>
 			<ComboBoxItem>MouseDoubleClick</ComboBoxItem>
 			<ComboBoxItem>Text</ComboBoxItem>
+			<ComboBoxItem>Repeat</ComboBoxItem>
 		</ComboBox>
 		<StackPanel Name="ActionPart2"
 					Orientation="Horizontal">
@@ -28,10 +29,13 @@
 						IsVisible="False"
 						Watermark="Enter sleep time in ms.">
 			</TextBox>
-			<Button Name="btnMouse"
-					IsVisible="False">
-				Press to change mouse key.
-			</Button>
+			<ComboBox Name="cbMouse"
+					  SelectedIndex="0"
+					  IsVisible="False">
+				<ComboBoxItem>Left</ComboBoxItem>
+				<ComboBoxItem>Right</ComboBoxItem>
+				<ComboBoxItem>Middle</ComboBoxItem>
+			</ComboBox>
 			<TextBox Name="txtText"
 						IsVisible="False"
 						Watermark="Enter text.">
