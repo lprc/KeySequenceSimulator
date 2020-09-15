@@ -14,6 +14,8 @@ namespace KeySequenceSimulator
 
         private List<ActionView> actions = new List<ActionView>();
 
+        public bool Repeat { get; set;  }
+
         public Sequence()
         {
             this.InitializeComponent();
@@ -50,20 +52,23 @@ namespace KeySequenceSimulator
         // replaces add action button with repeat if repeat is true
         public void SetRepeatSequence(bool repeat)
         {
-            btnAddAction.SetValue(IsVisibleProperty, !repeat);
-            if (repeat)
+            if (Repeat != repeat)
             {
-                // remove last arrow
-                sequencePanel.Children.RemoveAt(sequencePanel.Children.Count - 2);
-                sequencePanel.Children.RemoveAt(sequencePanel.Children.Count - 2);
-            }
-            else
-            {
-                // add last arrow
-                ArrowRight arr = new ArrowRight();
-                arr.SetValue(DockPanel.DockProperty, Dock.Right);
-                sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
-            }
+                Repeat = repeat;
+                btnAddAction.SetValue(IsVisibleProperty, !repeat);
+                if (repeat)
+                {
+                    // remove last arrow
+                    sequencePanel.Children.RemoveAt(sequencePanel.Children.Count - 2);
+                }
+                else
+                {
+                    // add last arrow
+                    ArrowRight arr = new ArrowRight();
+                    arr.SetValue(DockPanel.DockProperty, Dock.Right);
+                    sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
+                }
+            } 
         }
     }
 }

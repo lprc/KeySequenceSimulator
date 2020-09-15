@@ -112,10 +112,11 @@
 	</Style>
 
 	<Style Selector="local|ActionView TextBox">
-		<Setter Property="Margin" Value="5"></Setter>
+		<Setter Property="Margin" Value="5,0"></Setter>
 		<Setter Property="Background" Value="Transparent"></Setter>
 		<Setter Property="BorderBrush" Value="White"></Setter>
 		<Setter Property="BorderThickness" Value="1"></Setter>
+		<Setter Property="VerticalAlignment" Value="Center"></Setter>
 	</Style>
 
 	<!--<Style Selector="ScrollBarPageButton">
