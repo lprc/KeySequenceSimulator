@@ -8,6 +8,8 @@ namespace KeySequenceSimulator
 {
     public class Sequence : UserControl
     {
+        public Group group { get; set; }
+
         private Button btnSequenceNumber;
         private Panel sequencePanel;
         private Button btnAddAction;
@@ -69,6 +71,20 @@ namespace KeySequenceSimulator
                     sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
                 }
             } 
+        }
+
+        // executes the sequence. Stops if Group.IsRunning is false
+        public void Execute()
+        {
+            do
+            {
+                foreach (var action in actions)
+                {
+                    if (!group.IsRunning)
+                        return;
+                    action.Execute();
+                }
+            } while (group.IsRunning && Repeat);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace KeySequenceSimulator
     {
         public MainWindow mainWindow { get; set; }
 
+        public bool IsRunning { get; set; }
+
         private Panel contentPanel;
         private Border groupContentBorder;
         private TextBlock txtGroupHeader;
@@ -58,6 +60,7 @@ namespace KeySequenceSimulator
         {
             // Add sequence on Click
             Sequence seq = new Sequence();
+            seq.group = this;
             seq.SetValue(DockPanel.DockProperty, Dock.Top);
             sequences.Add(seq);
             seq.SetSequenceButtonNumber(sequences.Count);

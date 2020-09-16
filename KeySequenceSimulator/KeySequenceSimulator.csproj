@@ -12,6 +12,9 @@
     <AvaloniaResource Remove="Assets\ActionView.axaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KeySequenceSimulator.ActionSimulator\KeySequenceSimulator.ActionSimulator.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <AvaloniaResource Update="Assets\CustomStyles.axaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>

@@ -4,6 +4,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using System;
+using KeySequenceSimulator.ActionSimulator;
 
 namespace KeySequenceSimulator
 {
@@ -22,6 +23,8 @@ namespace KeySequenceSimulator
 
         private Key key;
         private MouseButton mouseButton;
+
+        public IActionSimulator ActionSimulator { get; set; }
 
         public ActionView()
         {
@@ -119,6 +122,55 @@ namespace KeySequenceSimulator
             // remove listener
             keyButton.KeyUp -= changeKeyListener;
             keyButton.Content = key.ToString();
+        }
+
+        // executes the action
+        public async void Execute()
+        {
+            MouseKey mk = cbMouseKey.SelectedIndex == 0 ? MouseKey.LEFT : cbMouseKey.SelectedIndex == 1 ? MouseKey.RIGHT : MouseKey.MIDDLE;
+
+            // selects an action to execute
+            switch (actionCombobox.SelectedIndex)
+            {
+                case 0:
+                    ActionSimulator.SimulateKey(KeyAction.DOWN, (int)key); //TODO key enum
+                    break;
+                case 1:
+                    ActionSimulator.SimulateKey(KeyAction.UP, (int)key);
+                    break;
+                case 2:
+                    ActionSimulator.SimulateKey(KeyAction.PRESS, (int)key);
+                    break;
+                case 3: // sleep
+                    try
+                    {
+                        ActionSimulator.SimulateSleep(Int32.Parse(sleepText.Text));
+                    }
+                    catch (Exception e)
+                    {
+                        // TODO validate input, only numeric
+                        await MessageBox.Show(null, "Error parsing sleep time", "Error", MessageBox.MessageBoxButtons.Ok);
+                    }                    
+                    break;
+                case 4: // mousedown
+                    ActionSimulator.SimulateMouseDown(mk, 0, 0); //TODO position
+                    break;
+                case 5: // mouseup
+                    ActionSimulator.SimulateMouseUp(mk, 0, 0); //TODO position
+                    break;
+                case 6: // mouse click
+                    ActionSimulator.SimulateMouseClick(mk, 0, 0); //TODO position
+                    break;
+                case 7: // mouse doubleclick
+                    ActionSimulator.SimulateMouseDoubleClick(mk, 0, 0); //TODO position
+                    break;
+                case 8: // text
+                    ActionSimulator.SimulateText(textText.Text);
+                    break;
+                case 9: // repeat
+                    // nop
+                    break;
+            }
         }
     }
 }

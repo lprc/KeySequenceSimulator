@@ -40,5 +40,7 @@ namespace KeySequenceSimulator
             groups.Remove(g);
             mainPanel.Children.Remove(g);
         }
+
+        //TODO set platform for IActionSimulator
     }
 }
