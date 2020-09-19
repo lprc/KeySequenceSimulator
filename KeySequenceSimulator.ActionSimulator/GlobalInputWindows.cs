@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace KeySequenceSimulator.ActionSimulator
 {
-    class GlobalInputWindows : IGlobalInput
+    public class GlobalInputWindows : IGlobalInput
     {
         private IKeyboardMouseEvents m_GlobalHook;
         private Dictionary<char, Action> hotkeyActionDict = new Dictionary<char, Action>();

@@ -43,6 +43,9 @@ namespace KeySequenceSimulator
             minMaxButton = this.FindControl<Button>("btnGroupMinimize");
             hotkeyButton = this.FindControl<Button>("btnHotkey");
 
+            // init input hook for hotkey listeners
+            GlobalInput = new GlobalInputWindows();
+
             // handler for changing hotkey
             changeHotkeyListener = (sender, e) =>
             {
@@ -50,11 +53,11 @@ namespace KeySequenceSimulator
 
                 //TODO convert hotkey to char properly
                 // register global input hook
-                GlobalInput.RemoveHook(hotkey.ToString()[0]);
-                GlobalInput.RegisterHook(hotkey.ToString()[0], () =>
+                GlobalInput.RemoveHook(hotkey.ToString().ToLower()[0]);
+                GlobalInput.RegisterHook(hotkey.ToString().ToLower()[0], () =>
                 {
                     // start background thread for each active sequence
-                    foreach(var seq in sequences)
+                    foreach (var seq in sequences)
                     {
                         if(seq.IsActive)
                         {
