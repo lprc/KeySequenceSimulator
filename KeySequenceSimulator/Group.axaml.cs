@@ -48,9 +48,10 @@ namespace KeySequenceSimulator
             {
                 hotkey = e.Key;
 
-                //TODO change hook hotkey if already registered
+                //TODO convert hotkey to char properly
                 // register global input hook
-                GlobalInput.RegisterHook((int)hotkey, () =>
+                GlobalInput.RemoveHook(hotkey.ToString()[0]);
+                GlobalInput.RegisterHook(hotkey.ToString()[0], () =>
                 {
                     // start background thread for each active sequence
                     foreach(var seq in sequences)
