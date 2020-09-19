@@ -10,7 +10,8 @@
 		<Button Name="btnSequenceNumber"
 				Classes="sequenceNumberBtn"
 				Width="40"
-				Height="50">
+				Height="50"
+				Click="ToggleActive">
 			1
 		</Button>
 

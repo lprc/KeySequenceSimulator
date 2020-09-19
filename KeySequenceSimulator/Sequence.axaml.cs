@@ -29,7 +29,9 @@ namespace KeySequenceSimulator
             AvaloniaXamlLoader.Load(this);
             btnSequenceNumber = this.FindControl<Button>("btnSequenceNumber");
             sequencePanel = this.FindControl<Panel>("sequencePanel");
-            btnAddAction = this.FindControl<Button>("btnAddAction"); 
+            btnAddAction = this.FindControl<Button>("btnAddAction");
+
+            IsActive = true;
         }
 
         public void SetSequenceButtonNumber(int number)
@@ -72,6 +74,15 @@ namespace KeySequenceSimulator
                     sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
                 }
             } 
+        }
+
+        public void ToggleActive(object sender, RoutedEventArgs e)
+        {
+            IsActive = !IsActive;
+            if (IsActive)
+                btnSequenceNumber.Classes.Remove("Inactive");
+            else
+                btnSequenceNumber.Classes.Add("Inactive");
         }
 
         // executes the sequence. Stops if Group.IsRunning is false
