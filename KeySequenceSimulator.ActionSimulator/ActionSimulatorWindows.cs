@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using WindowsInput;
 using WindowsInput.Native;
 
@@ -54,7 +54,7 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateSleep(int duration)
         {
-            throw new NotImplementedException();
+            Thread.Sleep(duration);
         }
 
         public void SimulateText(string text)

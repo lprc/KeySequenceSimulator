@@ -64,7 +64,7 @@ namespace KeySequenceSimulator
                     GlobalInput.RemoveHook(hotkey);
                     GlobalInput.RegisterHook(hotkey, () =>
                     {
-                        IsRunning = !IsRunning;
+                        IsRunning = !IsRunning; //TODO set to false if all sequences inactive
                         if (!IsRunning)
                             return;
 

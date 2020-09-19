@@ -92,11 +92,11 @@ namespace KeySequenceSimulator
             {
                 foreach (var action in actions)
                 {
-                    if (!group.IsRunning)
+                    if (!group.IsRunning || !IsActive)
                         return;
                     action.Execute();
                 }
-            } while (group.IsRunning && Repeat);
+            } while (group.IsRunning && Repeat && IsActive);
         }
     }
 }
