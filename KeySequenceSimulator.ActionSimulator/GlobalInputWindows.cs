@@ -36,12 +36,9 @@ namespace KeySequenceSimulator.ActionSimulator
 
         private void HandleInputs(object sender, KeyPressEventArgs e)
         {
-            char key = e.KeyChar;
-            foreach (var handle in hotkeyActionDict)
-            {
-                if (handle.Key == key)
-                    handle.Value.Invoke();
-            }
+            Action a;
+            if (hotkeyActionDict.TryGetValue(e.KeyChar, out a))
+                a.Invoke();
         }
     }
 }

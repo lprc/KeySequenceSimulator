@@ -14,7 +14,7 @@ namespace KeySequenceSimulator.ActionSimulator
     }
     public interface IActionSimulator
     {
-        void SimulateKey(KeyAction keyAction, int key);
+        void SimulateKey(KeyAction keyAction, char key);
         void SimulateMouseClick(MouseKey key, int x, int y);
         void SimulateMouseDown(MouseKey key, int x, int y);
         void SimulateMouseUp(MouseKey key, int x, int y);

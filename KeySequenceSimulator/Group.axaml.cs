@@ -22,8 +22,9 @@ namespace KeySequenceSimulator
         private Button minMaxButton;
         private Button hotkeyButton;
 
-        private Key hotkey;
+        private char hotkey;
         private EventHandler<KeyEventArgs> changeHotkeyListener;
+        private bool IsListening { get; set; }
 
         private List<Sequence> sequences = new List<Sequence>();
 
@@ -46,40 +47,48 @@ namespace KeySequenceSimulator
             // init input hook for hotkey listeners
             GlobalInput = new GlobalInputWindows();
             IsRunning = false;
+            IsListening = false;
 
             // handler for changing hotkey
             changeHotkeyListener = (sender, e) =>
             {
-                hotkey = e.Key;
+                IsListening = true;
+                hotkey = Util.KeyToChar(e.Key, e.KeyModifiers);
 
-                //TODO convert hotkey to char properly
-                // register global input hook
-                GlobalInput.RemoveHook(hotkey.ToString().ToLower()[0]);
-                GlobalInput.RegisterHook(hotkey.ToString().ToLower()[0], () =>
+                if (hotkey == '\x00')
+                    hotkeyButton.Content = "Invalid char. Try again.";
+                else
                 {
-                    IsRunning = !IsRunning;
-                    if (!IsRunning)
-                        return;
-
-                    // start background thread for each active sequence
-                    foreach (var seq in sequences)
+                    //TODO convert hotkey to char properly
+                    // register global input hook
+                    GlobalInput.RemoveHook(hotkey);
+                    GlobalInput.RegisterHook(hotkey, () =>
                     {
-                        //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
-                        if (seq.IsActive)
-                        {
-                            Thread t = new Thread(() =>
-                            {
-                                Thread.CurrentThread.IsBackground = true;
-                                seq.Execute();
-                            });
-                            t.Start();
-                        }
-                    }
-                });
+                        IsRunning = !IsRunning;
+                        if (!IsRunning)
+                            return;
 
-                // remove listener
-                mainWindow.KeyUp -= changeHotkeyListener;
-                hotkeyButton.Content = "Hotkey: " + hotkey.ToString().ToLower();
+                        // start background thread for each active sequence
+                        foreach (var seq in sequences)
+                        {
+                            //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
+                            if (seq.IsActive)
+                            {
+                                Thread t = new Thread(() =>
+                                {
+                                    Thread.CurrentThread.IsBackground = true;
+                                    seq.Execute();
+                                });
+                                t.Start();
+                            }
+                        }
+                    });
+
+                    // remove listener
+                    mainWindow.KeyUp -= changeHotkeyListener;
+                    IsListening = false;
+                    hotkeyButton.Content = "Hotkey: " + hotkey;
+                }
             };
         }
 
@@ -128,7 +137,8 @@ namespace KeySequenceSimulator
             hotkeyButton.Content = "Waiting for input...";
 
             // add keylistener
-            mainWindow.KeyUp += changeHotkeyListener;
+            if (!IsListening)
+                mainWindow.KeyUp += changeHotkeyListener;
         }
 
         

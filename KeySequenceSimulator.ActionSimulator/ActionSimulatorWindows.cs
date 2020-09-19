@@ -3,14 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WindowsInput;
+using WindowsInput.Native;
 
 namespace KeySequenceSimulator.ActionSimulator
 {
     public class ActionSimulatorWindows : IActionSimulator
     {
-        public void SimulateKey(KeyAction keyAction, int key)
+        private InputSimulator inputSimulator = new InputSimulator();
+
+        public void SimulateKey(KeyAction keyAction, char key)
         {
-            throw new NotImplementedException();
+            VirtualKeyCode vk = Util.CharToKeyCode(key);
+
+            if(vk != VirtualKeyCode.NONAME)
+                switch (keyAction)
+                {
+                    case KeyAction.DOWN:
+                        inputSimulator.Keyboard.KeyDown(vk);
+                        break;
+                    case KeyAction.UP:
+                        inputSimulator.Keyboard.KeyUp(vk);
+                        break;
+                    case KeyAction.PRESS:
+                        inputSimulator.Keyboard.KeyPress(vk);
+                        break;
+                }
+            
         }
 
         public void SimulateMouseClick(MouseKey key, int x, int y)

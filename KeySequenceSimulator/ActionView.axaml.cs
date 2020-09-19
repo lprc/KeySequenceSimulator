@@ -21,8 +21,9 @@ namespace KeySequenceSimulator
         private ComboBox cbMouseKey;
         private TextBox textText;
 
-        private Key key;
+        private char key;
         private MouseButton mouseButton;
+        private bool IsListening { get; set; }
 
         public IActionSimulator ActionSimulator { get; set; }
 
@@ -50,6 +51,8 @@ namespace KeySequenceSimulator
 
             // init action simulator
             ActionSimulator = new ActionSimulatorWindows();
+
+            IsListening = false;
         }
 
         public void OnSelectionChanged(object sender, RoutedEventArgs e)
@@ -115,16 +118,23 @@ namespace KeySequenceSimulator
             keyButton.Content = "Waiting for input...";
 
             // add keylistener
-            keyButton.KeyUp += changeKeyListener;
+            if (!IsListening)
+                keyButton.KeyUp += changeKeyListener;
         }
 
         private void changeKeyListener(object sender, KeyEventArgs e)
         {
-            key = e.Key;
-
-            // remove listener
-            keyButton.KeyUp -= changeKeyListener;
-            keyButton.Content = key.ToString();
+            key = Util.KeyToChar(e.Key, e.KeyModifiers);
+            IsListening = true;
+            if (key == '\x00')
+                keyButton.Content = "Invalid char. Try again.";
+            else
+            {
+                // remove listener
+                keyButton.KeyUp -= changeKeyListener;
+                IsListening = false;
+                keyButton.Content = key.ToString();
+            }
         }
 
         // executes the action
@@ -136,13 +146,13 @@ namespace KeySequenceSimulator
             switch (actionCombobox.SelectedIndex)
             {
                 case 0:
-                    ActionSimulator.SimulateKey(KeyAction.DOWN, (int)key); //TODO key enum
+                    ActionSimulator.SimulateKey(KeyAction.DOWN, key); //TODO key enum
                     break;
                 case 1:
-                    ActionSimulator.SimulateKey(KeyAction.UP, (int)key);
+                    ActionSimulator.SimulateKey(KeyAction.UP, key);
                     break;
                 case 2:
-                    ActionSimulator.SimulateKey(KeyAction.PRESS, (int)key);
+                    ActionSimulator.SimulateKey(KeyAction.PRESS, key);
                     break;
                 case 3: // sleep
                     try
