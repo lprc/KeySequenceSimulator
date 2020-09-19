@@ -3,8 +3,10 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using KeySequenceSimulator.ActionSimulator;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace KeySequenceSimulator
 {
@@ -25,6 +27,8 @@ namespace KeySequenceSimulator
 
         private List<Sequence> sequences = new List<Sequence>();
 
+        private IGlobalInput GlobalInput { get; set; }
+
         public Group()
         {
             this.InitializeComponent();
@@ -43,6 +47,25 @@ namespace KeySequenceSimulator
             changeHotkeyListener = (sender, e) =>
             {
                 hotkey = e.Key;
+
+                //TODO change hook hotkey if already registered
+                // register global input hook
+                GlobalInput.RegisterHook((int)hotkey, () =>
+                {
+                    // start background thread for each active sequence
+                    foreach(var seq in sequences)
+                    {
+                        if(seq.IsActive)
+                        {
+                            Thread t = new Thread(() =>
+                            {
+                                Thread.CurrentThread.IsBackground = true;
+                                seq.Execute();
+                            });
+                            t.Start();
+                        }
+                    }
+                });
 
                 // remove listener
                 mainWindow.KeyUp -= changeHotkeyListener;

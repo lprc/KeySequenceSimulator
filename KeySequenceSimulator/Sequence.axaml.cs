@@ -17,6 +17,7 @@ namespace KeySequenceSimulator
         private List<ActionView> actions = new List<ActionView>();
 
         public bool Repeat { get; set;  }
+        public bool IsActive { get; set; }
 
         public Sequence()
         {

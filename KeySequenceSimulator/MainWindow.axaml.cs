@@ -22,6 +22,8 @@ namespace KeySequenceSimulator
         {
             AvaloniaXamlLoader.Load(this);
             mainPanel = this.FindControl<Panel>("mainPanel");
+
+            // select and set AcionInput instance
         }
 
         public void AddGroup(object sender, RoutedEventArgs e)

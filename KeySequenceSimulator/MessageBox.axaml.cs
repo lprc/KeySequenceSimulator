@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace KeySequenceSimulator
 {
+    // taken from https://stackoverflow.com/questions/55706291/how-to-show-a-message-box-in-avaloniaui-beta
     class MessageBox : Window
     {
         public enum MessageBoxButtons

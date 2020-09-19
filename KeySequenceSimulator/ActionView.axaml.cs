@@ -149,7 +149,7 @@ namespace KeySequenceSimulator
                     catch (Exception e)
                     {
                         // TODO validate input, only numeric
-                        await MessageBox.Show(null, "Error parsing sleep time", "Error", MessageBox.MessageBoxButtons.Ok);
+                        await MessageBox.Show(null, "Error parsing sleep time:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok);
                     }                    
                     break;
                 case 4: // mousedown
