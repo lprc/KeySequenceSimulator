@@ -47,6 +47,9 @@ namespace KeySequenceSimulator
             // add listeners to comboboxes
             actionCombobox.SelectionChanged += OnSelectionChanged;
             cbMouseKey.SelectionChanged += OnMouseSelectionChanged;
+
+            // init action simulator
+            ActionSimulator = new ActionSimulatorWindows();
         }
 
         public void OnSelectionChanged(object sender, RoutedEventArgs e)

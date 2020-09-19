@@ -45,6 +45,7 @@ namespace KeySequenceSimulator
 
             // init input hook for hotkey listeners
             GlobalInput = new GlobalInputWindows();
+            IsRunning = false;
 
             // handler for changing hotkey
             changeHotkeyListener = (sender, e) =>
@@ -56,10 +57,15 @@ namespace KeySequenceSimulator
                 GlobalInput.RemoveHook(hotkey.ToString().ToLower()[0]);
                 GlobalInput.RegisterHook(hotkey.ToString().ToLower()[0], () =>
                 {
+                    IsRunning = !IsRunning;
+                    if (!IsRunning)
+                        return;
+
                     // start background thread for each active sequence
                     foreach (var seq in sequences)
                     {
-                        if(seq.IsActive)
+                        //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
+                        if (seq.IsActive)
                         {
                             Thread t = new Thread(() =>
                             {
@@ -73,7 +79,7 @@ namespace KeySequenceSimulator
 
                 // remove listener
                 mainWindow.KeyUp -= changeHotkeyListener;
-                hotkeyButton.Content = "Hotkey: " + hotkey.ToString();
+                hotkeyButton.Content = "Hotkey: " + hotkey.ToString().ToLower();
             };
         }
 
