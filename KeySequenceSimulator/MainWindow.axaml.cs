@@ -12,6 +12,8 @@ namespace KeySequenceSimulator
         private Panel mainPanel;
         public List<Group> Groups { get; private set; }
 
+        private string saveFile;
+
     public IGlobalInput GlobalInput { get; private set;  }
 
         public MainWindow()
@@ -59,8 +61,24 @@ namespace KeySequenceSimulator
 
         public void Save(object sender, RoutedEventArgs e)
         {
-            //TODO file dialog
-            MessageBox.Show(null, ToJson(), "json", MessageBox.MessageBoxButtons.Ok);
+            // if saveFile is null, show a dialog. Otherwise overwrite into saveFile
+            if (saveFile != null)
+                System.IO.File.WriteAllText(saveFile, ToJson());
+            else
+                SaveAs(sender, e);
+        }
+
+        public async void SaveAs(object sender, RoutedEventArgs e)
+        {
+            var dlg = new SaveFileDialog();
+            dlg.Filters.Add(new FileDialogFilter() { Name = "Json", Extensions = { "json" } });
+            var result = await dlg.ShowAsync(this);
+
+            if (result != null)
+            {
+                System.IO.File.WriteAllText(result, ToJson());
+                saveFile = result;
+            }
         }
 
         public string ToJson()
