@@ -14,9 +14,15 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top" >
 			<MenuItem Header="_File">
-				<MenuItem Header="_Save..." Click="Save" />
-				<MenuItem Header="_Save As..." Click="SaveAs" />
-				<MenuItem Header="_Open..."/>
+				<MenuItem Header="_Save..."
+						  Click="Save"
+						  InputGesture="Ctrl+S" 
+						  HotKey="Ctrl+S" />
+				<MenuItem Header="_Save As..."
+						Click="SaveAs"
+						InputGesture="Ctrl+Shift+S"
+						HotKey="Ctrl+Shift+S" />
+					<MenuItem Header="_Open..."/>
 				<Separator/>
 				<MenuItem Header="_Exit"/>
 			</MenuItem>
@@ -45,4 +51,5 @@
 			</DockPanel>
 		</ScrollViewer>
 	</DockPanel>
+
 </Window>

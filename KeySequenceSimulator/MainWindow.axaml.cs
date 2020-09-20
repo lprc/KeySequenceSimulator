@@ -14,7 +14,7 @@ namespace KeySequenceSimulator
 
         private string saveFile;
 
-    public IGlobalInput GlobalInput { get; private set;  }
+        public IGlobalInput GlobalInput { get; private set;  }
 
         public MainWindow()
         {

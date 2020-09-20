@@ -4,12 +4,15 @@
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.9.12" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
 	<AvaloniaResource Include="Assets\*" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Remove="Assets\ActionView.axaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.0-preview5" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview5" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0-preview5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeySequenceSimulator.ActionSimulator\KeySequenceSimulator.ActionSimulator.csproj" />
