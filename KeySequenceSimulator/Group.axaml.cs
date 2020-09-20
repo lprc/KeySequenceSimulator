@@ -14,7 +14,12 @@ namespace KeySequenceSimulator
     {
         public MainWindow mainWindow { get; set; }
 
-        public bool IsRunning { get; set; }
+        public volatile bool _isRunning;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set { _isRunning = value; }
+        }
 
         private Panel contentPanel;
         private Border groupContentBorder;
@@ -23,12 +28,9 @@ namespace KeySequenceSimulator
         private Button hotkeyButton;
 
         private char hotkey;
-        private EventHandler<KeyEventArgs> changeHotkeyListener;
         private bool IsListening { get; set; }
 
         private List<Sequence> sequences = new List<Sequence>();
-
-        private IGlobalInput GlobalInput { get; set; }
 
         public Group()
         {
@@ -44,52 +46,50 @@ namespace KeySequenceSimulator
             minMaxButton = this.FindControl<Button>("btnGroupMinimize");
             hotkeyButton = this.FindControl<Button>("btnHotkey");
 
-            // init input hook for hotkey listeners
-            GlobalInput = new GlobalInputWindows();
             IsRunning = false;
             IsListening = false;
+        }
 
-            // handler for changing hotkey
-            changeHotkeyListener = (sender, e) =>
+        public void ChangeHotkey(object sender, KeyEventArgs e)
+        {
+            IsListening = true;
+            hotkey = Util.KeyToChar(e.Key, e.KeyModifiers);
+
+            if (hotkey == '\x00')
+                hotkeyButton.Content = "Invalid char. Try again.";
+            else
             {
-                IsListening = true;
-                hotkey = Util.KeyToChar(e.Key, e.KeyModifiers);
-
-                if (hotkey == '\x00')
-                    hotkeyButton.Content = "Invalid char. Try again.";
-                else
+                //TODO convert hotkey to char properly
+                // register global input hook
+                mainWindow.GlobalInput.RemoveHook(hotkey);
+                mainWindow.GlobalInput.RegisterHook(hotkey, () =>
                 {
-                    //TODO convert hotkey to char properly
-                    // register global input hook
-                    GlobalInput.RemoveHook(hotkey);
-                    GlobalInput.RegisterHook(hotkey, () =>
+                    // set running to true only if at least one sequence is active
+                    IsRunning = !IsRunning && sequences.Exists(s => s.IsActive);
+                    if (!IsRunning)
+                        return;
+
+                    // start background thread for each active sequence
+                    foreach (var seq in sequences)
                     {
-                        IsRunning = !IsRunning; //TODO set to false if all sequences inactive
-                        if (!IsRunning)
-                            return;
-
-                        // start background thread for each active sequence
-                        foreach (var seq in sequences)
+                        //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
+                        if (seq.IsActive)
                         {
-                            //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
-                            if (seq.IsActive)
+                            Thread t = new Thread(() =>
                             {
-                                Thread t = new Thread(() =>
-                                {
-                                    Thread.CurrentThread.IsBackground = true;
-                                    seq.Execute();
-                                });
-                                t.Start();
-                            }
+                                Thread.CurrentThread.IsBackground = true;
+                                seq.Execute();
+                            });
+                            t.Start();
                         }
-                    });
+                    }
+                });
 
-                    // remove listener
-                    mainWindow.KeyUp -= changeHotkeyListener;
-                    IsListening = false;
-                    hotkeyButton.Content = "Hotkey: " + hotkey;
-                }
-            };
+                // remove listener
+                mainWindow.KeyUp -= ChangeHotkey;
+                IsListening = false;
+                hotkeyButton.Content = "Hotkey: " + hotkey;
+            }
         }
 
         public void SetGroupHeaderText(String text)
@@ -138,7 +138,7 @@ namespace KeySequenceSimulator
 
             // add keylistener
             if (!IsListening)
-                mainWindow.KeyUp += changeHotkeyListener;
+                mainWindow.KeyUp += ChangeHotkey;
         }
 
         

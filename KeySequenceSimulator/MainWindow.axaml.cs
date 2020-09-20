@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using KeySequenceSimulator.ActionSimulator;
 using System.Collections.Generic;
 
 namespace KeySequenceSimulator
@@ -10,6 +11,9 @@ namespace KeySequenceSimulator
     {
         private Panel mainPanel;
         private List<Group> groups = new List<Group>();
+
+        public IGlobalInput GlobalInput { get; private set;  }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -23,7 +27,15 @@ namespace KeySequenceSimulator
             AvaloniaXamlLoader.Load(this);
             mainPanel = this.FindControl<Panel>("mainPanel");
 
-            // select and set AcionInput instance
+            // create global input hook once
+            GlobalInput = new GlobalInputWindows();
+
+            this.Closed += MainWindow_Closed;
+        }
+
+        private void MainWindow_Closed(object sender, System.EventArgs e)
+        {
+            GlobalInput.Dispose();
         }
 
         public void AddGroup(object sender, RoutedEventArgs e)
