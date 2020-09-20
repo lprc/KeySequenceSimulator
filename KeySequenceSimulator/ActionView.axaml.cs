@@ -5,11 +5,22 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using System;
 using KeySequenceSimulator.ActionSimulator;
+using System.Collections.Generic;
 
 namespace KeySequenceSimulator
 {
     public class ActionView : UserControl
     {
+        // index of action types coerces with index of combobox
+        private enum ActionType
+        {
+            KEY_DOWN, KEY_UP, KEY_PRESS,
+            SLEEP, MOUSE_DOWN, MOUSE_UP, MOUSE_CLICK, MOUSE_DOUBLE_CLICK,
+            TEXT, REPEAT
+        }
+
+        private ActionType SelectedAction { get; set; }
+
         public Sequence ParentSequence { get; set; }
 
         private ComboBox actionCombobox;
@@ -22,7 +33,9 @@ namespace KeySequenceSimulator
         private TextBox textText;
 
         private char key;
-        private MouseButton mouseButton;
+        public MouseKey SelectedMouseKey { get; private set; }
+        public int MouseX { get; private set; }
+        public int MouseY { get; private set; }
         private bool IsListening { get; set; }
 
         public IActionSimulator ActionSimulator { get; set; }
@@ -46,7 +59,7 @@ namespace KeySequenceSimulator
             textText = this.FindControl<TextBox>("txtText");
 
             // add listeners to comboboxes
-            actionCombobox.SelectionChanged += OnSelectionChanged;
+            actionCombobox.SelectionChanged += OnActionSelectionChanged;
             cbMouseKey.SelectionChanged += OnMouseSelectionChanged;
 
             // init action simulator
@@ -55,7 +68,7 @@ namespace KeySequenceSimulator
             IsListening = false;
         }
 
-        public void OnSelectionChanged(object sender, RoutedEventArgs e)
+        public void OnActionSelectionChanged(object sender, RoutedEventArgs e)
         {
             // first hide all inputs
             keyButton.SetValue(IsVisibleProperty, false);
@@ -65,27 +78,29 @@ namespace KeySequenceSimulator
             part2.SetValue(IsVisibleProperty, true);
             ParentSequence.SetRepeatSequence(false);
 
+            SelectedAction = (ActionType)actionCombobox.SelectedIndex;
+
             // displays action parts depending on action type
-            switch (actionCombobox.SelectedIndex)
+            switch (SelectedAction)
             {
-                case 0:
-                case 1:
-                case 2:
+                case ActionType.KEY_DOWN:
+                case ActionType.KEY_UP:
+                case ActionType.KEY_PRESS:
                     keyButton.SetValue(IsVisibleProperty, true);
                     break;
-                case 3:
+                case ActionType.SLEEP:
                     sleepText.SetValue(IsVisibleProperty, true);
                     break;
-                case 4:
-                case 5:
-                case 6:
-                case 7:
+                case ActionType.MOUSE_DOWN:
+                case ActionType.MOUSE_UP:
+                case ActionType.MOUSE_CLICK:
+                case ActionType.MOUSE_DOUBLE_CLICK:
                     cbMouseKey.SetValue(IsVisibleProperty, true);
                     break;
-                case 8:
+                case ActionType.TEXT:
                     textText.SetValue(IsVisibleProperty, true);
                     break;
-                case 9: // repeat
+                case ActionType.REPEAT: // repeat
                     part2.SetValue(IsVisibleProperty, false);
                     ParentSequence.SetRepeatSequence(true);
                     break;
@@ -98,16 +113,13 @@ namespace KeySequenceSimulator
             switch (actionCombobox.SelectedIndex)
             {
                 case 0:
-                    mouseButton = MouseButton.Left;
+                    SelectedMouseKey = MouseKey.LEFT;
                     break;
                 case 1:
-                    mouseButton = MouseButton.Right;
+                    SelectedMouseKey = MouseKey.RIGHT;
                     break;
                 case 2:
-                    mouseButton = MouseButton.Middle;
-                    break;
-                default:
-                    mouseButton = MouseButton.None;
+                    SelectedMouseKey = MouseKey.MIDDLE;
                     break;
             }
         }
@@ -140,21 +152,19 @@ namespace KeySequenceSimulator
         // executes the action
         public async void Execute()
         {
-            MouseKey mk = cbMouseKey.SelectedIndex == 0 ? MouseKey.LEFT : cbMouseKey.SelectedIndex == 1 ? MouseKey.RIGHT : MouseKey.MIDDLE;
-
             // selects an action to execute
-            switch (actionCombobox.SelectedIndex)
+            switch (SelectedAction)
             {
-                case 0:
+                case ActionType.KEY_DOWN:
                     ActionSimulator.SimulateKey(KeyAction.DOWN, key); //TODO key enum
                     break;
-                case 1:
+                case ActionType.KEY_UP:
                     ActionSimulator.SimulateKey(KeyAction.UP, key);
                     break;
-                case 2:
+                case ActionType.KEY_PRESS:
                     ActionSimulator.SimulateKey(KeyAction.PRESS, key);
                     break;
-                case 3: // sleep
+                case ActionType.SLEEP:
                     try
                     {
                         ActionSimulator.SimulateSleep(Int32.Parse(sleepText.Text));
@@ -165,25 +175,59 @@ namespace KeySequenceSimulator
                         await MessageBox.Show(null, "Error parsing sleep time:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok);
                     }                    
                     break;
-                case 4: // mousedown
-                    ActionSimulator.SimulateMouseDown(mk, 0, 0); //TODO position
+                case ActionType.MOUSE_DOWN:
+                    ActionSimulator.SimulateMouseDown(SelectedMouseKey, 0, 0); //TODO position
                     break;
-                case 5: // mouseup
-                    ActionSimulator.SimulateMouseUp(mk, 0, 0); //TODO position
+                case ActionType.MOUSE_UP:
+                    ActionSimulator.SimulateMouseUp(SelectedMouseKey, 0, 0); //TODO position
                     break;
-                case 6: // mouse click
-                    ActionSimulator.SimulateMouseClick(mk, 0, 0); //TODO position
+                case ActionType.MOUSE_CLICK:
+                    ActionSimulator.SimulateMouseClick(SelectedMouseKey, 0, 0); //TODO position
                     break;
-                case 7: // mouse doubleclick
-                    ActionSimulator.SimulateMouseDoubleClick(mk, 0, 0); //TODO position
+                case ActionType.MOUSE_DOUBLE_CLICK:
+                    ActionSimulator.SimulateMouseDoubleClick(SelectedMouseKey, 0, 0); //TODO position
                     break;
-                case 8: // text
+                case ActionType.TEXT:
                     ActionSimulator.SimulateText(textText.Text);
                     break;
-                case 9: // repeat
+                case ActionType.REPEAT:
                     // nop
                     break;
             }
+        }
+        public string ToJson()
+        {
+            string json = "{\n";
+            json += "\ttype: " + SelectedAction;
+
+            switch (SelectedAction)
+            {
+                case ActionType.KEY_DOWN:
+                case ActionType.KEY_UP:
+                case ActionType.KEY_PRESS:
+                    json += ",\n\tkey: " + key;
+                    break;
+                case ActionType.SLEEP:
+                    json += ",\n\tduration: " + sleepText.Text;
+                    break;
+                case ActionType.MOUSE_DOWN:
+                case ActionType.MOUSE_UP:
+                case ActionType.MOUSE_CLICK:
+                case ActionType.MOUSE_DOUBLE_CLICK:
+                    json += ",\n\tmousekey: " + SelectedMouseKey + ",\n";
+                    json += "\tx: " + MouseX + ",\n";
+                    json += "\ty: " + MouseY;
+                    break;
+                case ActionType.TEXT:
+                    json += ",\n\ttext: " + textText.Text;
+                    break;
+                case ActionType.REPEAT:
+                    // nop
+                    break;
+            }
+
+            json += "\n}";
+            return json;
         }
     }
 }

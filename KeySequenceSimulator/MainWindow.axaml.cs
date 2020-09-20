@@ -10,9 +10,9 @@ namespace KeySequenceSimulator
     public class MainWindow : Window
     {
         private Panel mainPanel;
-        private List<Group> groups = new List<Group>();
+        public List<Group> Groups { get; private set; }
 
-        public IGlobalInput GlobalInput { get; private set;  }
+    public IGlobalInput GlobalInput { get; private set;  }
 
         public MainWindow()
         {
@@ -26,6 +26,8 @@ namespace KeySequenceSimulator
         {
             AvaloniaXamlLoader.Load(this);
             mainPanel = this.FindControl<Panel>("mainPanel");
+
+            Groups = new List<Group>();
 
             // create global input hook once
             GlobalInput = new GlobalInputWindows();
@@ -44,17 +46,34 @@ namespace KeySequenceSimulator
             Group group = new Group();
             group.mainWindow = this;
             group.SetValue(DockPanel.DockProperty, Dock.Top);
-            groups.Add(group);
-            group.SetGroupHeaderText("Group " + groups.Count);
+            Groups.Add(group);
+            group.SetGroupHeaderText("Group " + Groups.Count);
             mainPanel.Children.Add(group);
         }
 
         public void RemoveGroup(Group g)
         {
-            groups.Remove(g);
+            Groups.Remove(g);
             mainPanel.Children.Remove(g);
         }
 
-        //TODO set platform for IActionSimulator
+        public void Save(object sender, RoutedEventArgs e)
+        {
+            //TODO file dialog
+            MessageBox.Show(null, ToJson(), "json", MessageBox.MessageBoxButtons.Ok);
+        }
+
+        public string ToJson()
+        {
+            string json = "{\n\tgroups: [\n";
+
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                json += "\t" + Groups[i].ToJson() + (i == Groups.Count - 1 ? "\n" : ",\n");
+            }
+
+            json += "\t]\n}";
+            return json;
+        }
     }
 }

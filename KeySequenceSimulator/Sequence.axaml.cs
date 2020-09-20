@@ -109,5 +109,18 @@ namespace KeySequenceSimulator
                 }
             } while (group.IsRunning && Repeat && IsActive);
         }
+
+        public string ToJson()
+        {
+            string json = "{\n\tactions: [\n";
+
+            for (int i = 0; i < actions.Count; i++)
+            {
+                json += actions[i].ToJson() + (i == actions.Count - 1 ? "\n" : ",\n");
+            }
+
+            json += "\t]\n}";
+            return json;
+        }
     }
 }

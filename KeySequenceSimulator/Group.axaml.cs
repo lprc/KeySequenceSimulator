@@ -30,7 +30,7 @@ namespace KeySequenceSimulator
         private char hotkey;
         private bool IsListening { get; set; }
 
-        private List<Sequence> sequences = new List<Sequence>();
+        public List<Sequence> Sequences { get; private set; }
 
         public Group()
         {
@@ -45,6 +45,8 @@ namespace KeySequenceSimulator
             txtGroupHeader = this.FindControl<TextBlock>("txtGroupHeader");
             minMaxButton = this.FindControl<Button>("btnGroupMinimize");
             hotkeyButton = this.FindControl<Button>("btnHotkey");
+
+            Sequences = new List<Sequence>();
 
             IsRunning = false;
             IsListening = false;
@@ -65,12 +67,12 @@ namespace KeySequenceSimulator
                 mainWindow.GlobalInput.RegisterHook(hotkey, () =>
                 {
                     // set running to true only if at least one sequence is active
-                    IsRunning = !IsRunning && sequences.Exists(s => s.IsActive);
+                    IsRunning = !IsRunning && Sequences.Exists(s => s.IsActive);
                     if (!IsRunning)
                         return;
 
                     // start background thread for each active sequence
-                    foreach (var seq in sequences)
+                    foreach (var seq in Sequences)
                     {
                         //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
                         if (seq.IsActive)
@@ -104,8 +106,8 @@ namespace KeySequenceSimulator
             Sequence seq = new Sequence();
             seq.group = this;
             seq.SetValue(DockPanel.DockProperty, Dock.Top);
-            sequences.Add(seq);
-            seq.SetSequenceButtonNumber(sequences.Count);
+            Sequences.Add(seq);
+            seq.SetSequenceButtonNumber(Sequences.Count);
             contentPanel.Children.Add(seq);
         }
 
@@ -141,6 +143,18 @@ namespace KeySequenceSimulator
                 mainWindow.KeyUp += ChangeHotkey;
         }
 
-        
+        public string ToJson()
+        {
+            string json = "{\n\thotkey: " + hotkey + ",\n";
+
+            json += "\tsequences: [\n";
+            for (int i = 0; i < Sequences.Count; i++)
+            {
+                json += "\t" + Sequences[i].ToJson() + (i == Sequences.Count - 1 ? "\n" : ",\n");
+            }
+
+            json += "\t]\n}";
+            return json;
+        }
     }
 }
