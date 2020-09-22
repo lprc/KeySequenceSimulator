@@ -5,11 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:local="clr-namespace:KeySequenceSimulator"
              x:Class="KeySequenceSimulator.AddButton"
-		BorderBrush="White"
-		BorderThickness="1"
-		Width="40"
-		Height="50"
-		Classes="addBtn">
+		    Classes="addBtn">
 	<!--<Canvas Width="38" Height="48">
 		<Line StartPoint="20,15"
             EndPoint="20,35"

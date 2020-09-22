@@ -11,7 +11,8 @@
 				Classes="sequenceNumberBtn"
 				Width="40"
 				Height="50"
-				Click="ToggleActive">
+				Click="ToggleActive"
+				ToolTip.Tip="Toggle Active State">
 			1
 		</Button>
 

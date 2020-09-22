@@ -91,9 +91,15 @@ namespace KeySequenceSimulator
         {
             IsActive = !IsActive;
             if (IsActive)
+            {
                 btnSequenceNumber.Classes.Remove("Inactive");
+                this.Classes.Remove("Inactive");
+            }  
             else
+            {
                 btnSequenceNumber.Classes.Add("Inactive");
+                this.Classes.Add("Inactive");
+            }
         }
 
         // executes the sequence. Stops if Group.IsRunning is false
