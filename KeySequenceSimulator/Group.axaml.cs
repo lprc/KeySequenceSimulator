@@ -55,12 +55,17 @@ namespace KeySequenceSimulator
         public void ChangeHotkey(object sender, KeyEventArgs e)
         {
             IsListening = true;
-            hotkey = Util.KeyToChar(e.Key, e.KeyModifiers);
+            var newHotkey = Util.KeyToChar(e.Key, e.KeyModifiers);
 
-            if (hotkey == '\x00')
+            if (newHotkey == '\x00')
                 hotkeyButton.Content = "Invalid char. Try again.";
+            else if (!mainWindow.HotkeyAvailable(newHotkey) && newHotkey != hotkey)
+            {
+                hotkeyButton.Content = "Hotkey already in use. Try again.";
+            }
             else
             {
+                hotkey = newHotkey;
                 //TODO convert hotkey to char properly
                 // register global input hook
                 mainWindow.GlobalInput.RemoveHook(hotkey);

@@ -93,5 +93,10 @@ namespace KeySequenceSimulator
             json += "\t]\n}";
             return json;
         }
+
+        public bool HotkeyAvailable(char hotkey)
+        {
+            return !GlobalInput.GetRegisteredHotkeys().Contains(hotkey);
+        }
     }
 }

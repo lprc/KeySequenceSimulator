@@ -1,6 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -39,6 +40,11 @@ namespace KeySequenceSimulator.ActionSimulator
             Action a;
             if (hotkeyActionDict.TryGetValue(e.KeyChar, out a))
                 a.Invoke();
+        }
+
+        public List<char> GetRegisteredHotkeys()
+        {
+            return hotkeyActionDict.Keys.ToList();
         }
     }
 }

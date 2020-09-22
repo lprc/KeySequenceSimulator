@@ -9,5 +9,6 @@ namespace KeySequenceSimulator.ActionSimulator
         void RegisterHook(char hotkey, Action func);
         void RemoveHook(char hotkey);
         void Dispose();
+        List<char> GetRegisteredHotkeys();
     }
 }
