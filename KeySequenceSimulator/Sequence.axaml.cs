@@ -13,8 +13,7 @@ namespace KeySequenceSimulator
         private Button btnSequenceNumber;
         private Panel sequencePanel;
         private Button btnAddAction;
-
-        private List<ActionView> actions = new List<ActionView>();
+        public List<ActionView> Actions { get; set; }
 
         public volatile bool _repeat;
         public bool Repeat
@@ -42,6 +41,7 @@ namespace KeySequenceSimulator
             sequencePanel = this.FindControl<Panel>("sequencePanel");
             btnAddAction = this.FindControl<Button>("btnAddAction");
 
+            Actions = new List<ActionView>();
             IsActive = true;
         }
 
@@ -56,7 +56,7 @@ namespace KeySequenceSimulator
             ActionView action = new ActionView();
             action.ParentSequence = this;
             action.SetValue(DockPanel.DockProperty, Dock.Right);
-            actions.Add(action);
+            Actions.Add(action);
 
             ArrowRight arr = new ArrowRight();
             arr.SetValue(DockPanel.DockProperty, Dock.Right);
@@ -107,7 +107,7 @@ namespace KeySequenceSimulator
         {
             do
             {
-                foreach (var action in actions)
+                foreach (var action in Actions)
                 {
                     if (!group.IsRunning || !IsActive)
                         return;
@@ -118,11 +118,11 @@ namespace KeySequenceSimulator
 
         public string ToJson()
         {
-            string json = "{\n\tactions: [\n";
+            string json = "{\n\t\"active\" : \"" + (IsActive ? "true" : "false") + "\",\n\t\"actions\" : [\n";
 
-            for (int i = 0; i < actions.Count; i++)
+            for (int i = 0; i < Actions.Count; i++)
             {
-                json += actions[i].ToJson() + (i == actions.Count - 1 ? "\n" : ",\n");
+                json += Actions[i].ToJson() + (i == Actions.Count - 1 ? "\n" : ",\n");
             }
 
             json += "\t]\n}";

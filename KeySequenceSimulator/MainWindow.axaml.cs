@@ -3,7 +3,9 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using KeySequenceSimulator.ActionSimulator;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 
 namespace KeySequenceSimulator
 {
@@ -63,7 +65,7 @@ namespace KeySequenceSimulator
         {
             // if saveFile is null, show a dialog. Otherwise overwrite into saveFile
             if (saveFile != null)
-                System.IO.File.WriteAllText(saveFile, ToJson());
+                File.WriteAllText(saveFile, ToJson());
             else
                 SaveAs(sender, e);
         }
@@ -76,14 +78,56 @@ namespace KeySequenceSimulator
 
             if (result != null)
             {
-                System.IO.File.WriteAllText(result, ToJson());
+                File.WriteAllText(result, ToJson());
                 saveFile = result;
             }
         }
 
+        public async void Load(object sender, RoutedEventArgs e)
+        {
+            // show dialog for opening saved file
+            var dlg = new OpenFileDialog();
+            dlg.AllowMultiple = false;
+            dlg.Filters.Add(new FileDialogFilter() { Name = "Json", Extensions = { "json" } });
+            var result = await dlg.ShowAsync(this);
+
+            if (result != null)
+            {
+                string json = File.ReadAllText(result[0]);
+                ParseJson(json);
+            }
+        }
+
+        private void ParseJson(string json)
+        {
+            var values = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+            if (values["groups"] != null)
+            {
+                foreach (var group in values["groups"])
+                {
+                    AddGroup(null, null);
+                    var g = Groups[Groups.Count - 1];
+                    g.Hotkey = group["hotkey"] ?? "";
+                    foreach (var seq in group["sequences"])
+                    {
+                        g.AddSequence(null, null);
+                        var s = g.Sequences[g.Sequences.Count - 1];
+                        s.IsActive = seq["active"] ?? true;
+                        foreach (var action in seq["actions"])
+                        {
+                            s.AddAction(null, null);
+                            var a = s.Actions[s.Actions.Count - 1];
+                            ActionView.FromJson(action, a);
+                        }
+                    }
+                }
+            }
+
+        }
+
         public string ToJson()
         {
-            string json = "{\n\tgroups: [\n";
+            string json = "{\n\t\"groups\" : [\n";
 
             for (int i = 0; i < Groups.Count; i++)
             {
@@ -97,6 +141,11 @@ namespace KeySequenceSimulator
         public bool HotkeyAvailable(char hotkey)
         {
             return !GlobalInput.GetRegisteredHotkeys().Contains(hotkey);
+        }
+
+        public void Exit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

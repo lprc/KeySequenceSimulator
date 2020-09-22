@@ -27,7 +27,7 @@ namespace KeySequenceSimulator
         private Button minMaxButton;
         private Button hotkeyButton;
 
-        private char hotkey;
+        public char Hotkey { get; set; }
         private bool IsListening { get; set; }
 
         public List<Sequence> Sequences { get; private set; }
@@ -59,17 +59,17 @@ namespace KeySequenceSimulator
 
             if (newHotkey == '\x00')
                 hotkeyButton.Content = "Invalid char. Try again.";
-            else if (!mainWindow.HotkeyAvailable(newHotkey) && newHotkey != hotkey)
+            else if (!mainWindow.HotkeyAvailable(newHotkey) && newHotkey != Hotkey)
             {
                 hotkeyButton.Content = "Hotkey already in use. Try again.";
             }
             else
             {
-                hotkey = newHotkey;
+                Hotkey = newHotkey;
                 //TODO convert hotkey to char properly
                 // register global input hook
-                mainWindow.GlobalInput.RemoveHook(hotkey);
-                mainWindow.GlobalInput.RegisterHook(hotkey, () =>
+                mainWindow.GlobalInput.RemoveHook(Hotkey);
+                mainWindow.GlobalInput.RegisterHook(Hotkey, () =>
                 {
                     // set running to true only if at least one sequence is active
                     IsRunning = !IsRunning && Sequences.Exists(s => s.IsActive);
@@ -95,7 +95,7 @@ namespace KeySequenceSimulator
                 // remove listener
                 mainWindow.KeyUp -= ChangeHotkey;
                 IsListening = false;
-                hotkeyButton.Content = "Hotkey: " + hotkey;
+                hotkeyButton.Content = "Hotkey: " + Hotkey;
             }
         }
 
@@ -150,9 +150,9 @@ namespace KeySequenceSimulator
 
         public string ToJson()
         {
-            string json = "{\n\thotkey: " + hotkey + ",\n";
+            string json = "{\n\t\"hotkey\" : \"" + Hotkey + "\",\n";
 
-            json += "\tsequences: [\n";
+            json += "\t\"sequences\" : [\n";
             for (int i = 0; i < Sequences.Count; i++)
             {
                 json += "\t" + Sequences[i].ToJson() + (i == Sequences.Count - 1 ? "\n" : ",\n");

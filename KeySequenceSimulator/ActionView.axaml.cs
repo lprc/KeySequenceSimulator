@@ -6,20 +6,21 @@ using Avalonia.Markup.Xaml;
 using System;
 using KeySequenceSimulator.ActionSimulator;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 namespace KeySequenceSimulator
 {
     public class ActionView : UserControl
     {
         // index of action types coerces with index of combobox
-        private enum ActionType
+        public enum ActionType
         {
             KEY_DOWN, KEY_UP, KEY_PRESS,
             SLEEP, MOUSE_DOWN, MOUSE_UP, MOUSE_CLICK, MOUSE_DOUBLE_CLICK,
             TEXT, REPEAT
         }
 
-        private ActionType SelectedAction { get; set; }
+        public ActionType SelectedAction { get; set; }
 
         public Sequence ParentSequence { get; set; }
 
@@ -32,7 +33,7 @@ namespace KeySequenceSimulator
         private ComboBox cbMouseKey;
         private TextBox textText;
 
-        private char key;
+        public char Key { get; set; }
         public MouseKey SelectedMouseKey { get; private set; }
         public int MouseX { get; private set; }
         public int MouseY { get; private set; }
@@ -136,16 +137,16 @@ namespace KeySequenceSimulator
 
         private void changeKeyListener(object sender, KeyEventArgs e)
         {
-            key = Util.KeyToChar(e.Key, e.KeyModifiers);
+            Key = Util.KeyToChar(e.Key, e.KeyModifiers);
             IsListening = true;
-            if (key == '\x00')
+            if (Key == '\x00')
                 keyButton.Content = "Invalid char. Try again.";
             else
             {
                 // remove listener
                 keyButton.KeyUp -= changeKeyListener;
                 IsListening = false;
-                keyButton.Content = key.ToString();
+                keyButton.Content = Key.ToString();
             }
         }
 
@@ -156,13 +157,13 @@ namespace KeySequenceSimulator
             switch (SelectedAction)
             {
                 case ActionType.KEY_DOWN:
-                    ActionSimulator.SimulateKey(KeyAction.DOWN, key); //TODO key enum
+                    ActionSimulator.SimulateKey(KeyAction.DOWN, Key); //TODO key enum
                     break;
                 case ActionType.KEY_UP:
-                    ActionSimulator.SimulateKey(KeyAction.UP, key);
+                    ActionSimulator.SimulateKey(KeyAction.UP, Key);
                     break;
                 case ActionType.KEY_PRESS:
-                    ActionSimulator.SimulateKey(KeyAction.PRESS, key);
+                    ActionSimulator.SimulateKey(KeyAction.PRESS, Key);
                     break;
                 case ActionType.SLEEP:
                     try
@@ -198,28 +199,28 @@ namespace KeySequenceSimulator
         public string ToJson()
         {
             string json = "{\n";
-            json += "\ttype: " + SelectedAction;
+            json += "\t\"type\" : \"" + SelectedAction + "\"";
 
             switch (SelectedAction)
             {
                 case ActionType.KEY_DOWN:
                 case ActionType.KEY_UP:
                 case ActionType.KEY_PRESS:
-                    json += ",\n\tkey: " + key;
+                    json += ",\n\t\"key\" : \"" + Key + "\"";
                     break;
                 case ActionType.SLEEP:
-                    json += ",\n\tduration: " + sleepText.Text;
+                    json += ",\n\t\"duration\" : \"" + sleepText.Text + "\"";
                     break;
                 case ActionType.MOUSE_DOWN:
                 case ActionType.MOUSE_UP:
                 case ActionType.MOUSE_CLICK:
                 case ActionType.MOUSE_DOUBLE_CLICK:
-                    json += ",\n\tmousekey: " + SelectedMouseKey + ",\n";
-                    json += "\tx: " + MouseX + ",\n";
-                    json += "\ty: " + MouseY;
+                    json += ",\n\t\"mousekey\" : \"" + SelectedMouseKey + "\",\n";
+                    json += "\t\"x\" : \"" + MouseX + "\",\n";
+                    json += "\t\"y\" : \"" + MouseY + "\"";
                     break;
                 case ActionType.TEXT:
-                    json += ",\n\ttext: " + textText.Text;
+                    json += ",\n\t\"text\" : \"" + textText.Text + "\"";
                     break;
                 case ActionType.REPEAT:
                     // nop
@@ -228,6 +229,80 @@ namespace KeySequenceSimulator
 
             json += "\n}";
             return json;
+        }
+
+        public void SetSleepText(string text)
+        {
+            sleepText.Text = text;
+        }
+
+        public void SetTextText(string text)
+        {
+            textText.Text = text;
+        }
+
+        public void SetActionTypeCbIndex(int index)
+        {
+            actionCombobox.SelectedIndex = index;
+        }
+
+        public static ActionView FromJson(JObject jsonObject, ActionView initial)
+        {
+            var av = initial ?? new ActionView();
+            av.SelectedAction = (ActionView.ActionType)Enum.Parse(typeof(ActionView.ActionType), jsonObject["type"].ToString(), true);
+
+            switch (av.SelectedAction)
+            {
+                case ActionType.KEY_DOWN:
+                    av.SetActionTypeCbIndex(0);
+                    av.Key = jsonObject["key"].ToString()[0];
+                    break;
+                case ActionType.KEY_UP:
+                    av.SetActionTypeCbIndex(1);
+                    av.Key = jsonObject["key"].ToString()[0];
+                    break;
+                case ActionType.KEY_PRESS:
+                    av.SetActionTypeCbIndex(2);
+                    av.Key = jsonObject["key"].ToString()[0];
+                    break;
+                case ActionType.SLEEP:
+                    av.SetActionTypeCbIndex(3);
+                    av.SetSleepText(jsonObject["duration"].ToString());
+                    break;
+                case ActionType.MOUSE_DOWN:
+                    av.SetActionTypeCbIndex(4);
+                    av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    av.MouseX = Int32.Parse(jsonObject["x"].ToString());
+                    av.MouseY = Int32.Parse(jsonObject["y"].ToString());
+                    break;
+                case ActionType.MOUSE_UP:
+                    av.SetActionTypeCbIndex(5);
+                    av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    av.MouseX = Int32.Parse(jsonObject["x"].ToString());
+                    av.MouseY = Int32.Parse(jsonObject["y"].ToString());
+                    break;
+                case ActionType.MOUSE_CLICK:
+                    av.SetActionTypeCbIndex(6);
+                    av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    av.MouseX = Int32.Parse(jsonObject["x"].ToString());
+                    av.MouseY = Int32.Parse(jsonObject["y"].ToString());
+                    break;
+                case ActionType.MOUSE_DOUBLE_CLICK:
+                    av.SetActionTypeCbIndex(7);
+                    av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    av.MouseX = Int32.Parse(jsonObject["x"].ToString());
+                    av.MouseY = Int32.Parse(jsonObject["y"].ToString());
+                    break;
+                case ActionType.TEXT:
+                    av.SetActionTypeCbIndex(8);
+                    av.SetTextText(jsonObject["text"].ToString());
+                    break;
+                case ActionType.REPEAT:
+                    av.SetActionTypeCbIndex(9);
+                    break;
+            }
+
+            return av;
         }
     }
 }

@@ -18,9 +18,11 @@
 						  Click="Save" />
 				<MenuItem Header="_Save As..."
 						Click="SaveAs" />
-					<MenuItem Header="_Open..."/>
+					<MenuItem Header="_Open..."
+							  Click="Load"/>
 				<Separator/>
-				<MenuItem Header="_Exit"/>
+				<MenuItem Header="_Exit"
+						  Click="Exit"/>
 			</MenuItem>
 		</Menu>
 	
