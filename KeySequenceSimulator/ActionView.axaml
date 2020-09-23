@@ -43,7 +43,10 @@
 		</StackPanel>
 		<Border Name="ActionPart3"
 				IsVisible="False">
-
+			<StackPanel Orientation="Horizontal">
+				<TextBox Name="txtX" Watermark="X" />
+				<TextBox Name="txtY" Watermark="Y" />
+			</StackPanel>
 		</Border>
 	</StackPanel>
 </UserControl>

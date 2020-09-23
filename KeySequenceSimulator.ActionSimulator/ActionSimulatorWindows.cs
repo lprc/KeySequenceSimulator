@@ -34,22 +34,50 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateMouseClick(MouseKey key, int x, int y)
         {
-            throw new NotImplementedException();
+            inputSimulator.Mouse.MoveMouseTo(x, y);
+
+            if (key == MouseKey.LEFT)
+                inputSimulator.Mouse.LeftButtonClick();
+            else if (key == MouseKey.RIGHT)
+                inputSimulator.Mouse.RightButtonClick();
+            else if (key == MouseKey.MIDDLE)
+                inputSimulator.Mouse.MiddleButtonClick();
         }
 
         public void SimulateMouseDoubleClick(MouseKey key, int x, int y)
         {
-            throw new NotImplementedException();
+            inputSimulator.Mouse.MoveMouseTo(x, y);
+
+            if (key == MouseKey.LEFT)
+                inputSimulator.Mouse.LeftButtonDoubleClick();
+            else if (key == MouseKey.RIGHT)
+                inputSimulator.Mouse.RightButtonDoubleClick();
+            else if (key == MouseKey.MIDDLE)
+                inputSimulator.Mouse.MiddleButtonDoubleClick();
         }
 
         public void SimulateMouseDown(MouseKey key, int x, int y)
         {
-            throw new NotImplementedException();
+            inputSimulator.Mouse.MoveMouseTo(x, y);
+
+            if (key == MouseKey.LEFT)
+                inputSimulator.Mouse.LeftButtonDown();
+            else if (key == MouseKey.RIGHT)
+                inputSimulator.Mouse.RightButtonDown();
+            else if (key == MouseKey.MIDDLE)
+                inputSimulator.Mouse.MiddleButtonDown();
         }
 
         public void SimulateMouseUp(MouseKey key, int x, int y)
         {
-            throw new NotImplementedException();
+            inputSimulator.Mouse.MoveMouseTo(x, y);
+
+            if (key == MouseKey.LEFT)
+                inputSimulator.Mouse.LeftButtonUp();
+            else if (key == MouseKey.RIGHT)
+                inputSimulator.Mouse.RightButtonUp();
+            else if (key == MouseKey.MIDDLE)
+                inputSimulator.Mouse.MiddleButtonUp();
         }
 
         public void SimulateSleep(int duration)
@@ -59,7 +87,8 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateText(string text)
         {
-            throw new NotImplementedException();
+            foreach (var c in text)
+                SimulateKey(KeyAction.PRESS, c);
         }
     }
 }

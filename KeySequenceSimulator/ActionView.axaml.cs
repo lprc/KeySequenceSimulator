@@ -32,6 +32,8 @@ namespace KeySequenceSimulator
         private TextBox sleepText;
         private ComboBox cbMouseKey;
         private TextBox textText;
+        private TextBox txtX;
+        private TextBox txtY;
 
         public char Key { get; set; }
         public MouseKey SelectedMouseKey { get; private set; }
@@ -58,6 +60,8 @@ namespace KeySequenceSimulator
             sleepText = this.FindControl<TextBox>("txtSleep");
             cbMouseKey = this.FindControl<ComboBox>("cbMouse");
             textText = this.FindControl<TextBox>("txtText");
+            txtX = this.FindControl<TextBox>("txtX");
+            txtY = this.FindControl<TextBox>("txtY");
 
             // add listeners to comboboxes
             actionCombobox.SelectionChanged += OnActionSelectionChanged;
@@ -77,6 +81,7 @@ namespace KeySequenceSimulator
             cbMouseKey.SetValue(IsVisibleProperty, false);
             textText.SetValue(IsVisibleProperty, false);
             part2.SetValue(IsVisibleProperty, true);
+            part3.SetValue(IsVisibleProperty, false);
             ParentSequence.SetRepeatSequence(false);
 
             SelectedAction = (ActionType)actionCombobox.SelectedIndex;
@@ -97,6 +102,7 @@ namespace KeySequenceSimulator
                 case ActionType.MOUSE_CLICK:
                 case ActionType.MOUSE_DOUBLE_CLICK:
                     cbMouseKey.SetValue(IsVisibleProperty, true);
+                    part3.SetValue(IsVisibleProperty, true);
                     break;
                 case ActionType.TEXT:
                     textText.SetValue(IsVisibleProperty, true);
@@ -177,16 +183,16 @@ namespace KeySequenceSimulator
                     }                    
                     break;
                 case ActionType.MOUSE_DOWN:
-                    ActionSimulator.SimulateMouseDown(SelectedMouseKey, 0, 0); //TODO position
+                    ActionSimulator.SimulateMouseDown(SelectedMouseKey, ParseMouseX(), ParseMouseY());
                     break;
                 case ActionType.MOUSE_UP:
-                    ActionSimulator.SimulateMouseUp(SelectedMouseKey, 0, 0); //TODO position
+                    ActionSimulator.SimulateMouseUp(SelectedMouseKey, ParseMouseX(), ParseMouseY());
                     break;
                 case ActionType.MOUSE_CLICK:
-                    ActionSimulator.SimulateMouseClick(SelectedMouseKey, 0, 0); //TODO position
+                    ActionSimulator.SimulateMouseClick(SelectedMouseKey, ParseMouseX(), ParseMouseY());
                     break;
                 case ActionType.MOUSE_DOUBLE_CLICK:
-                    ActionSimulator.SimulateMouseDoubleClick(SelectedMouseKey, 0, 0); //TODO position
+                    ActionSimulator.SimulateMouseDoubleClick(SelectedMouseKey, ParseMouseX(), ParseMouseY());
                     break;
                 case ActionType.TEXT:
                     ActionSimulator.SimulateText(textText.Text);
@@ -196,6 +202,35 @@ namespace KeySequenceSimulator
                     break;
             }
         }
+
+        private int ParseMouseX()
+        {
+            try
+            {
+                return Int32.Parse(txtX.Text);
+            }
+            catch (Exception e)
+            {
+                // TODO validate input, only numeric
+                MessageBox.Show(null, "Error parsing mouse coords:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+                return -1;
+            }
+        }
+
+        private int ParseMouseY()
+        {
+            try
+            {
+                return Int32.Parse(txtY.Text);
+            }
+            catch (Exception e)
+            {
+                // TODO validate input, only numeric
+                MessageBox.Show(null, "Error parsing mouse coords:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+                return -1;
+            }
+        }
+
         public string ToJson()
         {
             string json = "{\n";
