@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using WindowsInput;
@@ -34,7 +35,7 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateMouseClick(MouseKey key, int x, int y)
         {
-            inputSimulator.Mouse.MoveMouseTo(x, y);
+            inputSimulator.Mouse.MoveMouseTo(NormalizePixelX(x), NormalizePixelY(y));
 
             if (key == MouseKey.LEFT)
                 inputSimulator.Mouse.LeftButtonClick();
@@ -46,7 +47,7 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateMouseDoubleClick(MouseKey key, int x, int y)
         {
-            inputSimulator.Mouse.MoveMouseTo(x, y);
+            inputSimulator.Mouse.MoveMouseTo(NormalizePixelX(x), NormalizePixelY(y));
 
             if (key == MouseKey.LEFT)
                 inputSimulator.Mouse.LeftButtonDoubleClick();
@@ -58,7 +59,7 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateMouseDown(MouseKey key, int x, int y)
         {
-            inputSimulator.Mouse.MoveMouseTo(x, y);
+            inputSimulator.Mouse.MoveMouseTo(NormalizePixelX(x), NormalizePixelY(y));
 
             if (key == MouseKey.LEFT)
                 inputSimulator.Mouse.LeftButtonDown();
@@ -70,7 +71,7 @@ namespace KeySequenceSimulator.ActionSimulator
 
         public void SimulateMouseUp(MouseKey key, int x, int y)
         {
-            inputSimulator.Mouse.MoveMouseTo(x, y);
+            inputSimulator.Mouse.MoveMouseTo(NormalizePixelX(x), NormalizePixelY(y));
 
             if (key == MouseKey.LEFT)
                 inputSimulator.Mouse.LeftButtonUp();
@@ -89,6 +90,28 @@ namespace KeySequenceSimulator.ActionSimulator
         {
             foreach (var c in text)
                 SimulateKey(KeyAction.PRESS, c);
+        }
+
+        private int NormalizePixelX(int xPixel)
+        {
+            // get both desktops combined maximum screen resolution
+            int screenMaxWidth = GetSystemMetrics((int)SYSTEM_METRICS_ARGS.SM_CXVIRTUALSCREEN) - 1;
+            return (int)(xPixel * (65535.0f / screenMaxWidth));
+        }
+
+        private int NormalizePixelY(int yPixel)
+        {
+            // get both desktops combined maximum screen resolution
+            int screenMaxHeight = GetSystemMetrics((int)SYSTEM_METRICS_ARGS.SM_CYVIRTUALSCREEN) - 1;
+            return (int)(yPixel * (65535.0f / screenMaxHeight));
+        }
+
+        [DllImport("User32.dll")] static extern int GetSystemMetrics(int nIndex);
+
+        private enum SYSTEM_METRICS_ARGS
+        {
+            SM_CXSCREEN = 0, SM_CYSCREEN = 1,
+            SM_CXVIRTUALSCREEN = 78, SM_CYVIRTUALSCREEN = 79
         }
     }
 }
