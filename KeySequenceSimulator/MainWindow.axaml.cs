@@ -12,6 +12,7 @@ namespace KeySequenceSimulator
     public class MainWindow : Window
     {
         private Panel mainPanel;
+        private TextBlock lblStatus;
         public List<Group> Groups { get; private set; }
 
         private string saveFile;
@@ -30,6 +31,7 @@ namespace KeySequenceSimulator
         {
             AvaloniaXamlLoader.Load(this);
             mainPanel = this.FindControl<Panel>("mainPanel");
+            lblStatus = this.FindControl<TextBlock>("lblStatus");
 
             Groups = new List<Group>();
 
@@ -146,6 +148,25 @@ namespace KeySequenceSimulator
         public void Exit(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public void UpdateStatus()
+        {
+            string status = "Status: ";
+            List<string> actives = new List<string>();
+            for (int i = 0; i < Groups.Count; i++)
+            {
+                var g = Groups[i];
+                if (g.IsRunning)
+                    for (int j = 0; j < g.Sequences.Count; j++)
+                    {
+                        var seq = g.Sequences[j];
+                        if (seq.IsActive && seq.IsRunning)
+                            actives.Add((i + 1) + "." + (j + 1));
+                    }
+            }
+            status += string.Join(", ", actives);
+            lblStatus.Text = status;
         }
     }
 }

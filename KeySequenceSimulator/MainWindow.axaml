@@ -30,7 +30,7 @@
 				BorderThickness="0,2,0,0"
 				DockPanel.Dock="Bottom">
 			<TextBlock Classes="footer"
-					   Name="footer"
+					   Name="lblStatus"
 					   DockPanel.Dock="Bottom">Status:</TextBlock>
 		</Border>
 

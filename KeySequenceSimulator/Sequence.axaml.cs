@@ -2,6 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 using System.Collections.Generic;
 
 namespace KeySequenceSimulator
@@ -15,18 +16,25 @@ namespace KeySequenceSimulator
         private Button btnAddAction;
         public List<ActionView> Actions { get; set; }
 
-        public volatile bool _repeat;
+        private volatile bool _repeat;
         public bool Repeat
         {
             get { return _repeat; }
             set { _repeat = value; }
         }
 
-        public volatile bool _isActive;
+        private volatile bool _isActive;
         public bool IsActive
         {
             get { return _isActive; }
             set { _isActive = value; }
+        }
+
+        private volatile bool _isRunning;
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set { _isRunning = value; }
         }
 
         public Sequence()
@@ -105,6 +113,10 @@ namespace KeySequenceSimulator
         // executes the sequence. Stops if Group.IsRunning is false
         public void Execute()
         {
+            IsRunning = true;
+            // update status from ui thread
+            Dispatcher.UIThread.Post(() => group.mainWindow.UpdateStatus());
+
             do
             {
                 foreach (var action in Actions)
@@ -114,6 +126,10 @@ namespace KeySequenceSimulator
                     action.Execute();
                 }
             } while (group.IsRunning && Repeat && IsActive);
+            IsRunning = false;
+
+            // update status from ui thread when action is finished
+            Dispatcher.UIThread.Post(() => group.mainWindow.UpdateStatus());
         }
 
         public string ToJson()

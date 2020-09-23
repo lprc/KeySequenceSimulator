@@ -73,6 +73,7 @@ namespace KeySequenceSimulator
                 {
                     // set running to true only if at least one sequence is active
                     IsRunning = !IsRunning && Sequences.Exists(s => s.IsActive);
+                    mainWindow.UpdateStatus();
                     if (!IsRunning)
                         return;
 
