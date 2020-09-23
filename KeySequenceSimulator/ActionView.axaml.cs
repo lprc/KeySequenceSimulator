@@ -38,8 +38,20 @@ namespace KeySequenceSimulator
 
         public char Key { get; set; }
         public MouseKey SelectedMouseKey { get; private set; }
-        public int MouseX { get; private set; }
-        public int MouseY { get; private set; }
+
+        private int _mouseX;
+        public int MouseX
+        {
+            get { return _mouseX; }
+            private set { _mouseX = value; txtX.Text = value.ToString(); }
+        }
+
+        private int _mouseY;
+        public int MouseY
+        {
+            get { return _mouseY; }
+            private set { _mouseY = value; txtY.Text = value.ToString(); }
+        }
         private bool IsListening { get; set; }
 
         public IActionSimulator ActionSimulator { get; set; }
@@ -67,6 +79,10 @@ namespace KeySequenceSimulator
             // add listeners to comboboxes
             actionCombobox.SelectionChanged += OnActionSelectionChanged;
             cbMouseKey.SelectionChanged += OnMouseSelectionChanged;
+
+            // add listeners to textboxes
+            txtX.GetObservable(TextBox.TextProperty).Subscribe(text => _mouseX = (text != null && text.Length > 0) ? ParseMouseX(text) : 0);
+            txtY.GetObservable(TextBox.TextProperty).Subscribe(text => _mouseY = (text != null && text.Length > 0) ? ParseMouseY(text) : 0);
 
             // init action simulator
             ActionSimulator = new ActionSimulatorWindows();
@@ -204,11 +220,12 @@ namespace KeySequenceSimulator
             }
         }
 
-        private int ParseMouseX()
+        private int ParseMouseX(string x = null)
         {
+
             try
             {
-                return Int32.Parse(txtX.Text);
+                return Int32.Parse(x ?? txtX.Text);
             }
             catch (Exception e)
             {
@@ -218,11 +235,11 @@ namespace KeySequenceSimulator
             }
         }
 
-        private int ParseMouseY()
+        private int ParseMouseY(string y = null)
         {
             try
             {
-                return Int32.Parse(txtY.Text);
+                return Int32.Parse(y ?? txtY.Text);
             }
             catch (Exception e)
             {
