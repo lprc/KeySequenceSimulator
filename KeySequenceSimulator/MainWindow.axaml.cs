@@ -17,7 +17,9 @@ namespace KeySequenceSimulator
 
         private string saveFile;
 
-        public IGlobalInput GlobalInput { get; private set;  }
+        public IGlobalInput GlobalInput { get; private set; }
+
+        private const string TITLE_PREFIX = "KeySequenceSimulator";
 
         public MainWindow()
         {
@@ -63,6 +65,11 @@ namespace KeySequenceSimulator
             mainPanel.Children.Remove(g);
         }
 
+        private void UpdateTitle()
+        {
+            Title = TITLE_PREFIX + " - " + saveFile;
+        }
+
         public void Save(object sender, RoutedEventArgs e)
         {
             // if saveFile is null, show a dialog. Otherwise overwrite into saveFile
@@ -82,11 +89,20 @@ namespace KeySequenceSimulator
             {
                 File.WriteAllText(result, ToJson());
                 saveFile = result;
+                UpdateTitle();
             }
         }
 
         public async void Load(object sender, RoutedEventArgs e)
         {
+            // ask if changes should be saved before loading new one
+            if (Groups.Count > 0)
+            {
+                var res = await MessageBox.Show(null, "Do you want to save existing changes?", "Save first?", MessageBox.MessageBoxButtons.YesNo);
+                if (res == MessageBox.MessageBoxResult.Yes)
+                    Save(null, null);
+            }
+
             // show dialog for opening saved file
             var dlg = new OpenFileDialog();
             dlg.AllowMultiple = false;
@@ -95,8 +111,14 @@ namespace KeySequenceSimulator
 
             if (result != null)
             {
+                // remove existing groups first
+                for (int i = Groups.Count - 1; i >= 0; i--)
+                    RemoveGroup(Groups[i]);
+
                 string json = File.ReadAllText(result[0]);
                 ParseJson(json);
+                saveFile = result[0];
+                UpdateTitle();
             }
         }
 
