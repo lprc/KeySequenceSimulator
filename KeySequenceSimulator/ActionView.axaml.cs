@@ -7,6 +7,7 @@ using System;
 using KeySequenceSimulator.ActionSimulator;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using Avalonia.Threading;
 
 namespace KeySequenceSimulator
 {
@@ -212,7 +213,7 @@ namespace KeySequenceSimulator
             catch (Exception e)
             {
                 // TODO validate input, only numeric
-                MessageBox.Show(null, "Error parsing mouse coords:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+                Dispatcher.UIThread.Post(() => MessageBox.Show(null, "Error parsing mouse coords:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok));
                 return -1;
             }
         }
@@ -226,7 +227,7 @@ namespace KeySequenceSimulator
             catch (Exception e)
             {
                 // TODO validate input, only numeric
-                MessageBox.Show(null, "Error parsing mouse coords:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok);
+                Dispatcher.UIThread.Post(() => MessageBox.Show(null, "Error parsing mouse coords:\n" + e.Message, "Error", MessageBox.MessageBoxButtons.Ok));
                 return -1;
             }
         }
