@@ -85,7 +85,7 @@ namespace KeySequenceSimulator
             dlg.Filters.Add(new FileDialogFilter() { Name = "Json", Extensions = { "json" } });
             var result = await dlg.ShowAsync(this);
 
-            if (result != null)
+            if (result != null && result.Length > 0)
             {
                 File.WriteAllText(result, ToJson());
                 saveFile = result;
@@ -109,7 +109,7 @@ namespace KeySequenceSimulator
             dlg.Filters.Add(new FileDialogFilter() { Name = "Json", Extensions = { "json" } });
             var result = await dlg.ShowAsync(this);
 
-            if (result != null)
+            if (result != null && result.Length > 0)
             {
                 // remove existing groups first
                 for (int i = Groups.Count - 1; i >= 0; i--)

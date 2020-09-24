@@ -27,7 +27,7 @@ namespace KeySequenceSimulator
 
         private ComboBox actionCombobox;
         private Panel part2;
-        private Border part3;
+        private Panel part3;
 
         private Button keyButton;
         private TextBox sleepText;
@@ -67,7 +67,7 @@ namespace KeySequenceSimulator
 
             actionCombobox = this.FindControl<ComboBox>("cbActionSelection");
             part2 = this.FindControl<Panel>("ActionPart2");
-            part3 = this.FindControl<Border>("ActionPart3");
+            part3 = this.FindControl<Panel>("ActionPart3");
 
             keyButton = this.FindControl<Button>("btnKey");
             sleepText = this.FindControl<TextBox>("txtSleep");

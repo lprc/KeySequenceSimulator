@@ -41,12 +41,13 @@
 						Watermark="Enter text.">
 			</TextBox>
 		</StackPanel>
-		<Border Name="ActionPart3"
-				IsVisible="False">
-			<StackPanel Orientation="Horizontal">
-				<TextBox Name="txtX" Watermark="X" />
-				<TextBox Name="txtY" Watermark="Y" />
-			</StackPanel>
-		</Border>
+		<StackPanel Name="ActionPart3"
+					IsVisible="False"
+					Orientation="Horizontal">
+			<TextBlock>X: </TextBlock>
+			<TextBox Name="txtX" Watermark="X" />
+			<TextBlock>Y: </TextBlock>
+			<TextBox Name="txtY" Watermark="Y" />
+		</StackPanel>
 	</StackPanel>
 </UserControl>
