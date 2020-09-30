@@ -78,23 +78,23 @@
 		<Setter Property="VerticalAlignment" Value="Top"></Setter>
 	</Style>
 
-	<!-- TransformOperationsTransition support added in Avalonia 0.10.x
-	<Style Selector="local|Group Border#groupContentBorder">
+	<!-- TransformOperationsTransition support added in Avalonia 0.10.x -->
+	<Style Selector="local|Group Border">
+		<Setter Property="RenderTransformOrigin" Value="0.5,0.0" />
 		<Setter Property="Transitions">
           <Transitions>
-            <TransformOperationsTransition Property="RenderTransform"  Duration="0:0:1" />
+            <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+			<DoubleTransition Property="Height" Duration="0:0:0.1"/> 
           </Transitions>
         </Setter>
 		<Setter Property="RenderTransform" Value="none" />
 	</Style>
+	
 	<Style Selector="local|Group Border.hidden">
-		<Setter Property="RenderTransform">
-			<Setter.Value>
-				<ScaleTransform ScaleX="1.0" ScaleY="0.0" />
-			</Setter.Value>
-		</Setter>
+		<Setter Property="RenderTransform" Value="scaleY(0.0)" />
+		<Setter Property="Height" Value="0" />
 	</Style>
-	-->
+	
 
 	<!-- Styles for AddButton -->
 	<Style Selector="Line">

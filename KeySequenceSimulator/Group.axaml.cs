@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Animation;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -120,10 +121,15 @@ namespace KeySequenceSimulator
         // shows or hides group
         public void MinMaxGroup(object sender, RoutedEventArgs e)
         {
-            var visible = groupContentBorder.GetValue(IsVisibleProperty);
+            // show / hide content using animation defined as Style
+            var visible = minMaxButton.Content.ToString() == "-";
             minMaxButton.Content = visible ? "o" : "-";
-            groupContentBorder.SetValue(IsVisibleProperty, !visible);
-            
+
+            if (visible)
+                groupContentBorder.Classes.Add("hidden");
+            else
+                groupContentBorder.Classes.Remove("hidden");
+
             // change tooltip and reopen to refresh content
             ToolTip.SetTip(minMaxButton, visible ? "Maximize Group" : "Minimize Group");
             if (ToolTip.GetIsOpen(minMaxButton))
