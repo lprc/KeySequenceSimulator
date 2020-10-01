@@ -55,8 +55,16 @@ namespace KeySequenceSimulator
             group.mainWindow = this;
             group.SetValue(DockPanel.DockProperty, Dock.Top);
             Groups.Add(group);
-            group.SetGroupHeaderText("Group " + Groups.Count);
+            group.Heading = GenerateGroupName();
             mainPanel.Children.Add(group);
+        }
+
+        private string GenerateGroupName()
+        {
+            for (int i = 1; i <= 100; i++)
+                if (!Groups.Exists(g => g.Heading == "Group " + i))
+                    return "Group " + i;
+            return "";
         }
 
         public void RemoveGroup(Group g)

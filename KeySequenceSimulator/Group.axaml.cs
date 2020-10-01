@@ -15,11 +15,18 @@ namespace KeySequenceSimulator
     {
         public MainWindow mainWindow { get; set; }
 
-        public volatile bool _isRunning;
+        private volatile bool _isRunning;
         public bool IsRunning
         {
             get { return _isRunning; }
             set { _isRunning = value; }
+        }
+
+        private string _heading;
+        public string Heading
+        {
+            get { return _heading; }
+            set { _heading = value; txtGroupHeader.Text = value; }
         }
 
         private Panel contentPanel;
@@ -99,11 +106,6 @@ namespace KeySequenceSimulator
                 IsListening = false;
                 hotkeyButton.Content = "Hotkey: " + Hotkey;
             }
-        }
-
-        public void SetGroupHeaderText(String text)
-        {
-            txtGroupHeader.Text = text;
         }
 
         // adds a sequence
