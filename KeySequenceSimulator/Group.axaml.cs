@@ -80,7 +80,7 @@ namespace KeySequenceSimulator
                 mainWindow.GlobalInput.RegisterHook(Hotkey, () =>
                 {
                     // set running to true only if at least one sequence is active. Stop running if at least one sequence is currently running
-                    IsRunning = !Sequences.Exists(s => s.IsRunning) || (!IsRunning && Sequences.Exists(s => s.IsActive));
+                    IsRunning = (!Sequences.Exists(s => s.IsRunning) || (!IsRunning && Sequences.Exists(s => s.IsActive))) && mainWindow.IsGloballyActive;
                     mainWindow.UpdateStatus();
                     if (!IsRunning)
                         return;

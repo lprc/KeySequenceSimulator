@@ -24,6 +24,21 @@
 				<MenuItem Header="_Exit"
 						  Click="Exit"/>
 			</MenuItem>
+			
+			<!-- global active toggle -->
+			<MenuItem Header="_Edit">
+				<MenuItem Header="_Global active"
+						  Click="ToggleGlobalActive">
+					<MenuItem.Icon>
+						<CheckBox Name="cbIsGlobalActive"
+								  BorderThickness="1"
+								  BorderBrush="White"
+								  IsHitTestVisible="False"
+								  IsChecked="True">
+						</CheckBox>
+					</MenuItem.Icon>
+				</MenuItem>
+			</MenuItem>
 		</Menu>
 	
 		<Border BorderBrush="White"

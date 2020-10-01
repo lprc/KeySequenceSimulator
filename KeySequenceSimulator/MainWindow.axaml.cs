@@ -13,7 +13,10 @@ namespace KeySequenceSimulator
     {
         private Panel mainPanel;
         private TextBlock lblStatus;
+        private CheckBox cbIsGloballyActive;
         public List<Group> Groups { get; private set; }
+
+        public bool IsGloballyActive { get; private set; }
 
         private string saveFile;
 
@@ -34,8 +37,10 @@ namespace KeySequenceSimulator
             AvaloniaXamlLoader.Load(this);
             mainPanel = this.FindControl<Panel>("mainPanel");
             lblStatus = this.FindControl<TextBlock>("lblStatus");
+            cbIsGloballyActive = this.FindControl<CheckBox>("cbIsGlobalActive");
 
             Groups = new List<Group>();
+            IsGloballyActive = true;
 
             // create global input hook once
             GlobalInput = new GlobalInputWindows();
@@ -46,6 +51,13 @@ namespace KeySequenceSimulator
         private void MainWindow_Closed(object sender, System.EventArgs e)
         {
             GlobalInput.Dispose();
+        }
+
+        public void ToggleGlobalActive(object sender, RoutedEventArgs e)
+        {
+            IsGloballyActive = !IsGloballyActive;
+            cbIsGloballyActive.IsChecked = IsGloballyActive;
+            UpdateStatus();
         }
 
         public void AddGroup(object sender, RoutedEventArgs e)
@@ -183,19 +195,25 @@ namespace KeySequenceSimulator
         public void UpdateStatus()
         {
             string status = "Status: ";
-            List<string> actives = new List<string>();
-            for (int i = 0; i < Groups.Count; i++)
+            if (!IsGloballyActive)
+                status += "Deactivated globally";
+            else
             {
-                var g = Groups[i];
-                if (g.IsRunning)
-                    for (int j = 0; j < g.Sequences.Count; j++)
-                    {
-                        var seq = g.Sequences[j];
-                        if (seq.IsActive && seq.IsRunning)
-                            actives.Add((i + 1) + "." + (j + 1));
-                    }
+                List<string> actives = new List<string>();
+                for (int i = 0; i < Groups.Count; i++)
+                {
+                    var g = Groups[i];
+                    if (g.IsRunning)
+                        for (int j = 0; j < g.Sequences.Count; j++)
+                        {
+                            var seq = g.Sequences[j];
+                            if (seq.IsActive && seq.IsRunning)
+                                actives.Add((i + 1) + "." + (j + 1));
+                        }
+                }
+                status += string.Join(", ", actives);
             }
-            status += string.Join(", ", actives);
+            
             lblStatus.Text = status;
         }
     }
