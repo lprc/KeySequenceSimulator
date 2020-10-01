@@ -194,9 +194,12 @@ namespace KeySequenceSimulator
 
         public void UpdateStatus()
         {
-            string status = "Status: ";
+            string status = "";
             if (!IsGloballyActive)
+            {
                 status += "Deactivated globally";
+                lblStatus.Classes.Add("red");
+            }
             else
             {
                 List<string> actives = new List<string>();
@@ -212,6 +215,7 @@ namespace KeySequenceSimulator
                         }
                 }
                 status += string.Join(", ", actives);
+                lblStatus.Classes.Remove("red");
             }
             
             lblStatus.Text = status;

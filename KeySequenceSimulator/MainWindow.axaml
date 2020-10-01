@@ -31,7 +31,7 @@
 						  Click="ToggleGlobalActive">
 					<MenuItem.Icon>
 						<CheckBox Name="cbIsGlobalActive"
-								  BorderThickness="1"
+								  BorderThickness="0"
 								  BorderBrush="White"
 								  IsHitTestVisible="False"
 								  IsChecked="True">
@@ -44,9 +44,12 @@
 		<Border BorderBrush="White"
 				BorderThickness="0,2,0,0"
 				DockPanel.Dock="Bottom">
-			<TextBlock Classes="footer"
-					   Name="lblStatus"
-					   DockPanel.Dock="Bottom">Status:</TextBlock>
+			<StackPanel Orientation="Horizontal">
+				<TextBlock Classes="footer">
+					Status:
+				</TextBlock>
+				<TextBlock Classes="footer" Name="lblStatus" />
+			</StackPanel>
 		</Border>
 
 		<!-- main view -->
