@@ -7,9 +7,7 @@
              x:Class="KeySequenceSimulator.Group">
 	<DockPanel LastChildFill="True">
 		<!-- Header -->
-		<Border DockPanel.Dock="Top"
-				BorderBrush="White"
-				BorderThickness="0,0,0,1">
+		<Border DockPanel.Dock="Top">
 			<DockPanel>
 				<Border DockPanel.Dock="Left"
 						BorderBrush="White"
@@ -25,18 +23,24 @@
 						BorderThickness="1,1,1,0"
 						Name="btnHotkey"
 						Click="SetHotkey"
+						Margin="0,0,10,0"
 						ToolTip.Tip="Press to change hotkey">
 					Press to set a hotkey.
+				</Button>
+
+				<Button BorderBrush="White"
+						BorderThickness="1,1,1,0"
+						Name="btnActive"
+						Click="ToggleIsActive"
+						ToolTip.Tip="Toggle active state of group">
+					Active
 				</Button>
 
 				<Button DockPanel.Dock="Right"
 						HorizontalAlignment="Right"
 						Name="btnGroupRemove"
 						Width="40"
-						Height="30"
-						Padding="0"
 						BorderThickness="1,1,1,0"
-						Margin="0"
 						Click="RemoveGroup"
 						ToolTip.Tip="Remove Group">
 					x
@@ -46,10 +50,7 @@
 						HorizontalAlignment="Right"
 						Name="btnGroupMinimize"
 						Width="40"
-						Height="30"
-						Padding="0"
 						BorderThickness="1,1,0,0"
-						Margin="0"
 						Click="MinMaxGroup"
 						ToolTip.Tip="Minimize Group">
 					-
@@ -58,11 +59,9 @@
 		</Border>
 
 		<!-- Content -->
-		<Border BorderBrush="White"
-			BorderThickness="1,0,1,1"
-			DockPanel.Dock="Left"
-			Name="groupContentBorder"
-			Classes="borderBackground">
+		<Border DockPanel.Dock="Left"
+				Name="groupContentBorder"
+				Classes="borderBackground">
 			<DockPanel Name="groupContentPanel">
 				<local:AddButton DockPanel.Dock="Bottom" 
 								 Width="40" 

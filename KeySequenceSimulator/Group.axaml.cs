@@ -29,11 +29,14 @@ namespace KeySequenceSimulator
             set { _heading = value; txtGroupHeader.Text = value; }
         }
 
+        public bool IsActive { get; private set; }
+
         private Panel contentPanel;
         private Border groupContentBorder;
         private TextBox txtGroupHeader;
         private Button minMaxButton;
         private Button hotkeyButton;
+        private Button btnIsActive;
 
         public char Hotkey { get; set; }
         private bool IsListening { get; set; }
@@ -53,11 +56,13 @@ namespace KeySequenceSimulator
             txtGroupHeader = this.FindControl<TextBox>("txtGroupHeader");
             minMaxButton = this.FindControl<Button>("btnGroupMinimize");
             hotkeyButton = this.FindControl<Button>("btnHotkey");
+            btnIsActive = this.FindControl<Button>("btnActive");
 
             Sequences = new List<Sequence>();
 
             IsRunning = false;
             IsListening = false;
+            IsActive = true;
         }
 
         public void ChangeHotkey(object sender, KeyEventArgs e)
@@ -80,7 +85,7 @@ namespace KeySequenceSimulator
                 mainWindow.GlobalInput.RegisterHook(Hotkey, () =>
                 {
                     // set running to true only if at least one sequence is active. Stop running if at least one sequence is currently running
-                    IsRunning = (!Sequences.Exists(s => s.IsRunning) || (!IsRunning && Sequences.Exists(s => s.IsActive))) && mainWindow.IsGloballyActive;
+                    IsRunning = (!Sequences.Exists(s => s.IsRunning) || (!IsRunning && Sequences.Exists(s => s.IsActive))) && mainWindow.IsGloballyActive && IsActive;
                     mainWindow.UpdateStatus();
                     if (!IsRunning)
                         return;
@@ -106,6 +111,16 @@ namespace KeySequenceSimulator
                 IsListening = false;
                 hotkeyButton.Content = "Hotkey: " + Hotkey;
             }
+        }
+
+        public void ToggleIsActive(object sender, RoutedEventArgs e)
+        {
+            IsActive = !IsActive;
+            btnIsActive.Content = IsActive ? "Active" : "Inactive";
+            if (IsActive)
+                Classes.Remove("inactive");
+            else
+                Classes.Add("inactive");
         }
 
         // adds a sequence

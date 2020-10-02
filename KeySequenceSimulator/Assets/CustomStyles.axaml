@@ -13,7 +13,7 @@
 	
 	<!-- Window and global styles -->
 	<Style Selector="Window">
-		<Setter Property="Background" Value="#245c60"></Setter>
+		<Setter Property="Background" Value="#24282b"></Setter>
 		<Setter Property="Foreground" Value="#FFFFFF"></Setter>
 	</Style>
 
@@ -80,15 +80,40 @@
 		<Setter Property="Margin" Value="10"></Setter>
 	</Style>
 
+	<Style Selector="local|Group Border">
+		<Setter Property="BorderBrush" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+	</Style>
+
 	<Style Selector="local|Group Border.borderBackground">
-		<Setter Property="Background" Value="#24614A"></Setter>
+		<Setter Property="Background" Value="#4d746f"></Setter>
 	</Style>
 	<Style Selector="local|Group Button">
-		<Setter Property="Background" Value="#24614A"></Setter>
+		<Setter Property="Background" Value="#4d746f"></Setter>
 	</Style>
 	<Style Selector="local|Group #groupContentPanel > Button">
 		<Setter Property="VerticalAlignment" Value="Top"></Setter>
 	</Style>
+	<Style Selector="local|Group Border#groupContentBorder">
+		<Setter Property="BorderBrush" Value="White"></Setter>
+		<Setter Property="BorderThickness" Value="1,0,1,1"></Setter>
+	</Style>
+
+	<Style Selector="local|Group.inactive Border.borderBackground">
+		<Setter Property="Background" Value="#5d706e"></Setter>
+	</Style>
+	<Style Selector="local|Group.inactive Button">
+		<Setter Property="Background" Value="#5d706e"></Setter>
+	</Style>
+	<Style Selector="local|Group.inactive Button#btnActive">
+		<Setter Property="Foreground" Value="Orange"></Setter>
+	</Style>
+	<!--<Style Selector="local|Group.inactive Button">
+		<Setter Property="Foreground" Value="Gray"></Setter>
+	</Style>
+	<Style Selector="local|Group.inactive TextBox">
+		<Setter Property="Foreground" Value="Gray"></Setter>
+	</Style>-->
 
 	<!-- TransformOperationsTransition support added in Avalonia 0.10.x -->
 	<Style Selector="local|Group Border">
