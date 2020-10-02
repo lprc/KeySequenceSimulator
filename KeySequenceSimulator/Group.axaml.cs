@@ -31,7 +31,7 @@ namespace KeySequenceSimulator
 
         private Panel contentPanel;
         private Border groupContentBorder;
-        private TextBlock txtGroupHeader;
+        private TextBox txtGroupHeader;
         private Button minMaxButton;
         private Button hotkeyButton;
 
@@ -50,7 +50,7 @@ namespace KeySequenceSimulator
             AvaloniaXamlLoader.Load(this);
             contentPanel = this.FindControl<Panel>("groupContentPanel");
             groupContentBorder = this.FindControl<Border>("groupContentBorder");
-            txtGroupHeader = this.FindControl<TextBlock>("txtGroupHeader");
+            txtGroupHeader = this.FindControl<TextBox>("txtGroupHeader");
             minMaxButton = this.FindControl<Button>("btnGroupMinimize");
             hotkeyButton = this.FindControl<Button>("btnHotkey");
 

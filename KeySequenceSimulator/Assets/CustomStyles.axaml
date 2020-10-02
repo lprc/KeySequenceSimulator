@@ -41,6 +41,11 @@
 		<Setter Property="FontWeight" Value="Bold"/>
 	</Style>
 
+	<Style Selector="TextBox.transparent">
+		<Setter Property="Background" Value="Transparent"></Setter>
+		<Setter Property="Foreground" Value="White"></Setter>
+	</Style>
+
 	<!-- footer style -->
 	<Style Selector="TextBlock.footer">
 		<Setter Property="FontSize" Value="16"/>
