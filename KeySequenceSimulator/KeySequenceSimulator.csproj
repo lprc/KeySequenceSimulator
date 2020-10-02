@@ -2,6 +2,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net461</TargetFramework>
+    <PackageIcon>icon.ico</PackageIcon>
+    <ApplicationIcon>C:\projects\KeySequenceSimulator\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
 	<AvaloniaResource Include="Assets\*" />
@@ -25,5 +27,11 @@
     <AvaloniaResource Update="Assets\CustomStyles.axaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\icon.ico">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>

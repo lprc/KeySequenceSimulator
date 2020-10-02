@@ -5,7 +5,8 @@
 		xmlns:local="clr-namespace:KeySequenceSimulator"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="KeySequenceSimulator.MainWindow"
-        Title="KeySequenceSimulator">
+        Title="KeySequenceSimulator"
+		Icon="/Assets/icon.ico">
 
 	<Window.Styles>
 		<StyleInclude Source="/Assets/CustomStyles.axaml" />
