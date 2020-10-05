@@ -24,6 +24,7 @@ namespace KeySequenceSimulator
         public List<string> LoadList()
         {
             // file list is stored in a text file. Each line is one file
+            files.Clear();
             if (File.Exists(RECENT_FILES_FILE))
             {
                 foreach (var f in File.ReadLines(RECENT_FILES_FILE))
