@@ -19,8 +19,10 @@
 						  Click="Save" />
 				<MenuItem Header="_Save As..."
 						Click="SaveAs" />
-					<MenuItem Header="_Open..."
-							  Click="Load"/>
+				<MenuItem Header="_Open..."
+							Click="Load"/>
+				<Separator/>
+				<MenuItem Name="menuRecentFiles" Header="Recent"></MenuItem>
 				<Separator/>
 				<MenuItem Header="_Exit"
 						  Click="Exit"/>

@@ -14,6 +14,7 @@ namespace KeySequenceSimulator
         private Panel mainPanel;
         private TextBlock lblStatus;
         private CheckBox cbIsGloballyActive;
+        private MenuItem menuRecentFiles;
         public List<Group> Groups { get; private set; }
 
         public bool IsGloballyActive { get; private set; }
@@ -23,6 +24,8 @@ namespace KeySequenceSimulator
         public IGlobalInput GlobalInput { get; private set; }
 
         private const string TITLE_PREFIX = "KeySequenceSimulator";
+
+        private RecentFiles recentFiles = new RecentFiles();
 
         public MainWindow()
         {
@@ -38,6 +41,7 @@ namespace KeySequenceSimulator
             mainPanel = this.FindControl<Panel>("mainPanel");
             lblStatus = this.FindControl<TextBlock>("lblStatus");
             cbIsGloballyActive = this.FindControl<CheckBox>("cbIsGlobalActive");
+            menuRecentFiles = this.FindControl<MenuItem>("menuRecentFiles");
 
             Groups = new List<Group>();
             IsGloballyActive = true;
@@ -46,6 +50,24 @@ namespace KeySequenceSimulator
             GlobalInput = new GlobalInputWindows();
 
             this.Closed += MainWindow_Closed;
+
+            // load recent files to menu
+            UpdateRecentFilesMenu();
+        }
+
+        private void UpdateRecentFilesMenu()
+        {
+            List<MenuItem> items = new List<MenuItem>();
+            foreach (var file in recentFiles.LoadList())
+            {
+                var mu = new MenuItem();
+                mu.Header = file;
+                mu.Click += (sender, e) => LoadFile(file);
+                items.Add(mu);
+            }
+
+            // add list to menu
+            menuRecentFiles.Items = items.ToArray();
         }
 
         private void MainWindow_Closed(object sender, System.EventArgs e)
@@ -110,7 +132,27 @@ namespace KeySequenceSimulator
                 File.WriteAllText(result, ToJson());
                 saveFile = result;
                 UpdateTitle();
+
+                // add to recent files list
+                recentFiles.AddFile(result);
+                UpdateRecentFilesMenu();
             }
+        }
+
+        public void LoadFile(string file)
+        {
+            // remove existing groups first
+            for (int i = Groups.Count - 1; i >= 0; i--)
+                RemoveGroup(Groups[i]);
+
+            string json = File.ReadAllText(file);
+            ParseJson(json);
+            saveFile = file;
+            UpdateTitle();
+
+            // add to recent files list
+            recentFiles.AddFile(file);
+            UpdateRecentFilesMenu();
         }
 
         public async void Load(object sender, RoutedEventArgs e)
@@ -130,16 +172,7 @@ namespace KeySequenceSimulator
             var result = await dlg.ShowAsync(this);
 
             if (result != null && result.Length > 0)
-            {
-                // remove existing groups first
-                for (int i = Groups.Count - 1; i >= 0; i--)
-                    RemoveGroup(Groups[i]);
-
-                string json = File.ReadAllText(result[0]);
-                ParseJson(json);
-                saveFile = result[0];
-                UpdateTitle();
-            }
+                LoadFile(result[0]);
         }
 
         private void ParseJson(string json)

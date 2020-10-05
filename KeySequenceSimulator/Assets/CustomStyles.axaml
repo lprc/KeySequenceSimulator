@@ -35,7 +35,7 @@
 	</Style>
 
 	<Style Selector="ToolTip">
-		<Setter Property="Background" Value="Black"></Setter>
+		<Setter Property="Background" Value="#24282b"></Setter>
 		<Setter Property="Foreground" Value="White"></Setter>
 		<Setter Property="FontSize" Value="12"/>
 		<Setter Property="FontWeight" Value="Bold"/>
@@ -67,7 +67,8 @@
 	</Style>
 
 	<Style Selector="MenuItem">
-		<Setter Property="Background" Value="#000000"></Setter>
+		<Setter Property="Background" Value="#24282b"></Setter>
+		<!--TODO change arrow color somehow-->
 	</Style>
 
 	<!-- main panel -->
