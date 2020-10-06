@@ -2,8 +2,10 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Markup.Xaml.Styling;
 using KeySequenceSimulator.ActionSimulator;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -53,6 +55,13 @@ namespace KeySequenceSimulator
 
             // load recent files to menu
             UpdateRecentFilesMenu();
+
+            var dark = new StyleInclude(new Uri("resm:Styles?assembly=KeySequenceSimulator"))
+            {
+                Source = new Uri("resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default")
+                //Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml")
+            };
+            Application.Current.Styles.Add(dark);
         }
 
         private void UpdateRecentFilesMenu()

@@ -4,7 +4,6 @@ todo kss:
 - exception handling when loading from file
 - visualize busy while saving / loading file
 - validate sequences before executing
-- add load recent file
 
 window bg: #245c60
 group bg: #24614A
@@ -18,3 +17,4 @@ done:
 - toggle global active state
 - group name changeable
 - deactivate group
+- add load recent file

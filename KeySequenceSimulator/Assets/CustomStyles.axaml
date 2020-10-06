@@ -70,6 +70,12 @@
 		<Setter Property="Background" Value="#24282b"></Setter>
 		<!--TODO change arrow color somehow-->
 	</Style>
+	<!-- doesnt work yet. see issue https://github.com/AvaloniaUI/Avalonia/issues/4804 -->
+	<!--<Style Selector="MenuItem /template/ Path#rightArrow">
+		<Setter Property="Fill" Value="Green"/>
+		<Setter Property="Stroke" Value="White"/>
+		<Setter Property="Margin" Value="0"/>
+	</Style>-->
 
 	<!-- main panel -->
 	<Style Selector="Panel#mainPanel">
