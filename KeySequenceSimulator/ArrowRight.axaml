@@ -6,12 +6,7 @@
 			 xmlns:local="clr-namespace:KeySequenceSimulator"
              x:Class="KeySequenceSimulator.ArrowRight">
 	<Canvas Width="40" Height="50">
-		<Line StartPoint="0,25"
-			EndPoint="40,25"
-			StrokeThickness="2" />
-		<Polygon Points="40,25 35,30 35,20"
-				 Stroke="White"
-				 StrokeThickness="1"
-				 Fill="White" />
+		<Line StartPoint="0,25" EndPoint="40,25"/>
+		<Polygon Points="40,25 35,30 35,20" />
 	</Canvas>
 </UserControl>

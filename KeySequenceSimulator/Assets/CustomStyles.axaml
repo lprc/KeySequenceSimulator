@@ -85,6 +85,11 @@
 	<!-- Group Styles -->
 	<Style Selector="local|Group">
 		<Setter Property="Margin" Value="10"></Setter>
+		<Setter Property="Transitions">
+			<Transitions>
+				<DoubleTransition Property="Opacity" Duration="0:0:0.2"/>
+			</Transitions>
+		</Setter>
 	</Style>
 
 	<Style Selector="local|Group Border">
@@ -93,10 +98,10 @@
 	</Style>
 
 	<Style Selector="local|Group Border.borderBackground">
-		<Setter Property="Background" Value="#4d746f"></Setter>
+		<Setter Property="Background" Value="#3f3f46"></Setter>
 	</Style>
 	<Style Selector="local|Group Button">
-		<Setter Property="Background" Value="#4d746f"></Setter>
+		<Setter Property="Background" Value="#3f3f46"></Setter>
 	</Style>
 	<Style Selector="local|Group #groupContentPanel > Button">
 		<Setter Property="VerticalAlignment" Value="Top"></Setter>
@@ -106,21 +111,12 @@
 		<Setter Property="BorderThickness" Value="1,0,1,1"></Setter>
 	</Style>
 
-	<Style Selector="local|Group.inactive Border.borderBackground">
-		<Setter Property="Background" Value="#5d706e"></Setter>
-	</Style>
-	<Style Selector="local|Group.inactive Button">
-		<Setter Property="Background" Value="#5d706e"></Setter>
-	</Style>
 	<Style Selector="local|Group.inactive Button#btnActive">
 		<Setter Property="Foreground" Value="Orange"></Setter>
 	</Style>
-	<!--<Style Selector="local|Group.inactive Button">
-		<Setter Property="Foreground" Value="Gray"></Setter>
+	<Style Selector="local|Group.inactive">
+		<Setter Property="Opacity" Value="0.5"></Setter>
 	</Style>
-	<Style Selector="local|Group.inactive TextBox">
-		<Setter Property="Foreground" Value="Gray"></Setter>
-	</Style>-->
 
 	<!-- TransformOperationsTransition support added in Avalonia 0.10.x -->
 	<Style Selector="local|Group Border">
@@ -128,7 +124,7 @@
 		<Setter Property="Transitions">
           <Transitions>
             <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
-			<DoubleTransition Property="Height" Duration="0:0:0.1"/> 
+			<DoubleTransition Property="Height" Duration="0:0:0.2"/> 
           </Transitions>
         </Setter>
 		<Setter Property="RenderTransform" Value="none" />
@@ -171,6 +167,10 @@
 		<Setter Property="BorderBrush" Value="Gray"></Setter>
 		<Setter Property="Foreground" Value="Gray"></Setter>
 	</Style>
+	<Style Selector="local|Sequence.Inactive local|ArrowRight :is(Shape)">
+		<Setter Property="Stroke" Value="Gray"></Setter>
+		<Setter Property="Fill" Value="Gray"></Setter>
+	</Style>
 	
 	<!-- action styles -->
 	<Style Selector="local|ActionView Border">
@@ -199,6 +199,17 @@
 
 	<Style Selector="local|ActionView TextBlock">
 		<Setter Property="VerticalAlignment" Value="Center"></Setter>
+	</Style>
+
+	<!-- ArrowRight styles -->
+	<Style Selector="local|ArrowRight Polygon">
+		<Setter Property="Stroke" Value="White"></Setter>
+		<Setter Property="Fill" Value="White"></Setter>
+		<Setter Property="StrokeThickness" Value="1"></Setter>
+	</Style>
+
+	<Style Selector="local|ArrowRight Line">
+		<Setter Property="StrokeThickness" Value="2"></Setter>
 	</Style>
 
 	<!--<Style Selector="ScrollBarPageButton">
