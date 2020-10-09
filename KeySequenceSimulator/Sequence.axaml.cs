@@ -9,7 +9,7 @@ namespace KeySequenceSimulator
 {
     public class Sequence : UserControl
     {
-        public Group group { get; set; }
+        public Group Group { get; set; }
 
         private Button btnSequenceNumber;
         private Panel sequencePanel;
@@ -115,21 +115,21 @@ namespace KeySequenceSimulator
         {
             IsRunning = true;
             // update status from ui thread
-            Dispatcher.UIThread.Post(() => group.mainWindow.UpdateStatus());
+            Dispatcher.UIThread.Post(() => Group.mainWindow.UpdateStatus());
 
             do
             {
                 foreach (var action in Actions)
                 {
-                    if (!group.IsRunning || !IsActive)
+                    if (!Group.IsRunning || !IsActive)
                         return;
                     action.Execute();
                 }
-            } while (group.IsRunning && Repeat && IsActive);
+            } while (Group.IsRunning && Repeat && IsActive);
             IsRunning = false;
 
             // update status from ui thread when action is finished
-            Dispatcher.UIThread.Post(() => group.mainWindow.UpdateStatus());
+            Dispatcher.UIThread.Post(() => Group.mainWindow.UpdateStatus());
         }
 
         public string ToJson()

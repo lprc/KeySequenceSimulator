@@ -36,7 +36,7 @@ namespace KeySequenceSimulator
         private TextBox txtX;
         private TextBox txtY;
 
-        public char Key { get; set; }
+        public KeyboardKey Key { get; set; }
         public MouseKey SelectedMouseKey { get; private set; }
 
         private int _mouseX;
@@ -160,17 +160,14 @@ namespace KeySequenceSimulator
 
         private void changeKeyListener(object sender, KeyEventArgs e)
         {
-            Key = Util.KeyToChar(e.Key, e.KeyModifiers);
+            //TODO add safety check?
+            Key = Util.AvaloniaKeyToKeyboardKey(e.Key);
             IsListening = true;
-            if (Key == '\x00')
-                keyButton.Content = "Invalid char. Try again.";
-            else
-            {
-                // remove listener
-                keyButton.KeyUp -= changeKeyListener;
-                IsListening = false;
-                keyButton.Content = Key.ToString();
-            }
+
+            // remove listener
+            keyButton.KeyUp -= changeKeyListener;
+            IsListening = false;
+            keyButton.Content = Key.ToString();
         }
 
         // executes the action
@@ -308,15 +305,15 @@ namespace KeySequenceSimulator
             {
                 case ActionType.KEY_DOWN:
                     av.SetActionTypeCbIndex(0);
-                    av.Key = jsonObject["key"].ToString()[0];
+                    av.Key = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), jsonObject["key"].ToString());
                     break;
                 case ActionType.KEY_UP:
                     av.SetActionTypeCbIndex(1);
-                    av.Key = jsonObject["key"].ToString()[0];
+                    av.Key = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), jsonObject["key"].ToString());
                     break;
                 case ActionType.KEY_PRESS:
                     av.SetActionTypeCbIndex(2);
-                    av.Key = jsonObject["key"].ToString()[0];
+                    av.Key = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), jsonObject["key"].ToString());
                     break;
                 case ActionType.SLEEP:
                     av.SetActionTypeCbIndex(3);

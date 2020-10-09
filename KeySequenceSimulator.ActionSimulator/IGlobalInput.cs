@@ -6,9 +6,9 @@ namespace KeySequenceSimulator.ActionSimulator
 {
     public interface IGlobalInput
     {
-        void RegisterHook(char hotkey, Action func);
-        void RemoveHook(char hotkey);
+        void RegisterHook(KeyboardKey hotkey, Action func);
+        void RemoveHook(KeyboardKey hotkey);
         void Dispose();
-        List<char> GetRegisteredHotkeys();
+        List<KeyboardKey> GetRegisteredHotkeys();
     }
 }

@@ -9,114 +9,160 @@ namespace KeySequenceSimulator.ActionSimulator
 {
     static class Util
     {
-        public static VirtualKeyCode CharToKeyCode(char key)
+        // tries to get KeyboardKey from char. Defaults to KeyboardKey.None
+        public static KeyboardKey CharToKeyboardKey(char key)
         {
             switch (key)
             {
+                // special signs
                 case '\n':
+                case '\r':
+                    return KeyboardKey.Return;
+                case ',':
+                    return KeyboardKey.OemComma;
+                case '\t':
+                    return KeyboardKey.Tab;
+                case ' ':
+                    return KeyboardKey.Space;
+                case '\b':
+                    return KeyboardKey.Back;
+
+                // alphabet
                 case 'A':
                 case 'a':
-                    return VirtualKeyCode.VK_A;
+                    return KeyboardKey.A;
                 case 'B':
                 case 'b':
-                    return VirtualKeyCode.VK_B;
+                    return KeyboardKey.B;
                 case 'C':
                 case 'c':
-                    return VirtualKeyCode.VK_C;
+                    return KeyboardKey.C;
                 case 'D':
                 case 'd':
-                    return VirtualKeyCode.VK_D;
+                    return KeyboardKey.D;
                 case 'E':
                 case 'e':
-                    return VirtualKeyCode.VK_E;
+                    return KeyboardKey.E;
                 case 'F':
                 case 'f':
-                    return VirtualKeyCode.VK_F;
+                    return KeyboardKey.F;
                 case 'G':
                 case 'g':
-                    return VirtualKeyCode.VK_G;
+                    return KeyboardKey.G;
                 case 'H':
                 case 'h':
-                    return VirtualKeyCode.VK_H;
+                    return KeyboardKey.H;
                 case 'I':
                 case 'i':
-                    return VirtualKeyCode.VK_I;
+                    return KeyboardKey.I;
                 case 'J':
                 case 'j':
-                    return VirtualKeyCode.VK_J;
+                    return KeyboardKey.J;
                 case 'K':
                 case 'k':
-                    return VirtualKeyCode.VK_K;
+                    return KeyboardKey.K;
                 case 'L':
                 case 'l':
-                    return VirtualKeyCode.VK_L;
+                    return KeyboardKey.L;
                 case 'M':
                 case 'm':
-                    return VirtualKeyCode.VK_M;
+                    return KeyboardKey.M;
                 case 'N':
                 case 'n':
-                    return VirtualKeyCode.VK_N;
+                    return KeyboardKey.N;
                 case 'O':
                 case 'o':
-                    return VirtualKeyCode.VK_O;
+                    return KeyboardKey.O;
                 case 'P':
                 case 'p':
-                    return VirtualKeyCode.VK_P;
+                    return KeyboardKey.P;
                 case 'Q':
                 case 'q':
-                    return VirtualKeyCode.VK_Q;
+                    return KeyboardKey.Q;
                 case 'R':
                 case 'r':
-                    return VirtualKeyCode.VK_R;
+                    return KeyboardKey.R;
                 case 'S':
                 case 's':
-                    return VirtualKeyCode.VK_S;
+                    return KeyboardKey.S;
                 case 'T':
                 case 't':
-                    return VirtualKeyCode.VK_T;
+                    return KeyboardKey.T;
                 case 'U':
                 case 'u':
-                    return VirtualKeyCode.VK_U;
+                    return KeyboardKey.U;
                 case 'V':
                 case 'v':
-                    return VirtualKeyCode.VK_V;
+                    return KeyboardKey.V;
                 case 'W':
                 case 'w':
-                    return VirtualKeyCode.VK_W;
+                    return KeyboardKey.W;
                 case 'X':
                 case 'x':
-                    return VirtualKeyCode.VK_X;
+                    return KeyboardKey.X;
                 case 'Y':
                 case 'y':
-                    return VirtualKeyCode.VK_Y;
+                    return KeyboardKey.Y;
                 case 'Z':
                 case 'z':
-                    return VirtualKeyCode.VK_Z;
-                case ',': 
-                    return VirtualKeyCode.OEM_COMMA;
-                case '\t':
-                    return VirtualKeyCode.TAB;
-                case ' ':
-                    return VirtualKeyCode.SPACE;
+                    return KeyboardKey.Z;
 
                 // Number Pad
-                case '0': return VirtualKeyCode.VK_0;
-                case '1': return VirtualKeyCode.VK_1;
-                case '2': return VirtualKeyCode.VK_2;
-                case '3': return VirtualKeyCode.VK_3;
-                case '4': return VirtualKeyCode.VK_4;
-                case '5': return VirtualKeyCode.VK_5;
-                case '6': return VirtualKeyCode.VK_6;
-                case '7': return VirtualKeyCode.VK_7;
-                case '8': return VirtualKeyCode.VK_8;
-                case '9': return VirtualKeyCode.VK_9;
-                case '-': return VirtualKeyCode.OEM_MINUS;
-                case '+': return VirtualKeyCode.OEM_PLUS;
-                case '.': return VirtualKeyCode.OEM_PERIOD;
-                case '/': return VirtualKeyCode.DIVIDE;
-                case '*': return VirtualKeyCode.MULTIPLY;
+                case '0': return KeyboardKey.D0;
+                case '1': return KeyboardKey.D1;
+                case '2': return KeyboardKey.D2;
+                case '3': return KeyboardKey.D3;
+                case '4': return KeyboardKey.D4;
+                case '5': return KeyboardKey.D5;
+                case '6': return KeyboardKey.D6;
+                case '7': return KeyboardKey.D7;
+                case '8': return KeyboardKey.D8;
+                case '9': return KeyboardKey.D9;
+                case '-': return KeyboardKey.OemMinus;
+                case '+': return KeyboardKey.OemPlus;
+                case '.': return KeyboardKey.OemPeriod;
+                case '/': return KeyboardKey.Divide;
+                case '*': return KeyboardKey.Multiply;
 
-                default: return VirtualKeyCode.NONAME;
+                default: return KeyboardKey.None;
+            }
+        }
+
+        // tries to get special KeyboardKey from string, like F1-F12 keys
+        public static KeyboardKey StringToKeyboardKey(string key)
+        {
+            if (key.Length == 1)
+                return CharToKeyboardKey(key[0]);
+
+            switch (key)
+            {
+                case "F1":
+                    return KeyboardKey.F1;
+                case "F2":
+                    return KeyboardKey.F2;
+                case "F3":
+                    return KeyboardKey.F3;
+                case "F4":
+                    return KeyboardKey.F4;
+                case "F5":
+                    return KeyboardKey.F5;
+                case "F6":
+                    return KeyboardKey.F6;
+                case "F7":
+                    return KeyboardKey.F7;
+                case "F8":
+                    return KeyboardKey.F8;
+                case "F9":
+                    return KeyboardKey.F9;
+                case "F10":
+                    return KeyboardKey.F10;
+                case "F11":
+                    return KeyboardKey.F11;
+                case "F12":
+                    return KeyboardKey.F12;
+
+                default: 
+                    return KeyboardKey.None;
             }
         }
     }

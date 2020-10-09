@@ -224,7 +224,7 @@ namespace KeySequenceSimulator
             return json;
         }
 
-        public bool HotkeyAvailable(char hotkey)
+        public bool HotkeyAvailable(KeyboardKey hotkey)
         {
             return !GlobalInput.GetRegisteredHotkeys().Contains(hotkey);
         }

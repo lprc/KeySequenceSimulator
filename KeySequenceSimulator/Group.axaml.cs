@@ -38,7 +38,7 @@ namespace KeySequenceSimulator
         private Button hotkeyButton;
         private Button btnIsActive;
 
-        public char Hotkey { get; set; }
+        public KeyboardKey Hotkey { get; set; }
         private bool IsListening { get; set; }
 
         public List<Sequence> Sequences { get; private set; }
@@ -68,11 +68,12 @@ namespace KeySequenceSimulator
         public void ChangeHotkey(object sender, KeyEventArgs e)
         {
             IsListening = true;
-            var newHotkey = Util.KeyToChar(e.Key, e.KeyModifiers);
+            var newHotkey = Util.AvaloniaKeyToKeyboardKey(e.Key);
 
-            if (newHotkey == '\x00')
-                hotkeyButton.Content = "Invalid char. Try again.";
-            else if (!mainWindow.HotkeyAvailable(newHotkey) && newHotkey != Hotkey)
+            //TODO safety return check
+            //if (newHotkey == '\x00')
+            //    hotkeyButton.Content = "Invalid char. Try again.";
+            if (!mainWindow.HotkeyAvailable(newHotkey) && newHotkey != Hotkey)
             {
                 hotkeyButton.Content = "Hotkey already in use. Try again.";
             }
@@ -128,7 +129,7 @@ namespace KeySequenceSimulator
         {
             // Add sequence on Click
             Sequence seq = new Sequence();
-            seq.group = this;
+            seq.Group = this;
             seq.SetValue(DockPanel.DockProperty, Dock.Top);
             Sequences.Add(seq);
             seq.SetSequenceButtonNumber(Sequences.Count);
