@@ -50,7 +50,8 @@
 			<TextBox Name="txtY" Watermark="Y" />
 		</StackPanel>
 
-		<Border Name="borderPanelKeymods">
+		<Border Name="borderPanelKeymods"
+				IsVisible="False">
 			<Grid Name="panelKeymods"
 				  ColumnDefinitions="*,*" 
 				  RowDefinitions="Auto,Auto">
