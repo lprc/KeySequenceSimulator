@@ -65,6 +65,13 @@ namespace KeySequenceSimulator
             IsActive = true;
         }
 
+        // attaches a listener which sets max width to window width minus margin so sequences can be wrapped around
+        public void AttachResizeListener()
+        {
+            if (mainWindow != null)
+                mainWindow.GetObservable(TopLevel.ClientSizeProperty).Subscribe(size => this.MaxWidth = size.Width - 10);
+        }
+
         public void ChangeHotkey(object sender, KeyEventArgs e)
         {
             IsListening = true;

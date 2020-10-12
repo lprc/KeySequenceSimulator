@@ -56,6 +56,7 @@ namespace KeySequenceSimulator
             // load recent files to menu
             UpdateRecentFilesMenu();
 
+            // use dark theme
             var dark = new StyleInclude(new Uri("resm:Styles?assembly=KeySequenceSimulator"))
             {
                 Source = new Uri("resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default")
@@ -96,6 +97,7 @@ namespace KeySequenceSimulator
             // Add group on Click
             Group group = new Group();
             group.mainWindow = this;
+            group.AttachResizeListener();
             group.SetValue(DockPanel.DockProperty, Dock.Top);
             Groups.Add(group);
             group.Heading = GenerateGroupName();
