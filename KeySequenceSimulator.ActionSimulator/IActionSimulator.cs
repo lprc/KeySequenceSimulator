@@ -8,13 +8,17 @@ namespace KeySequenceSimulator.ActionSimulator
     {
         DOWN, UP, PRESS
     }
+    public enum KeyMod
+    {
+        NONE = 0, SHIFT = 1, CTRL = 2, ALT = 4, META = 8
+    }
     public enum MouseKey
     {
         LEFT, RIGHT, MIDDLE
     }
     public interface IActionSimulator
     {
-        void SimulateKey(KeyAction keyAction, KeyboardKey key);
+        void SimulateKey(KeyAction keyAction, KeyboardKey key, KeyMod mod = KeyMod.NONE);
         void SimulateMouseClick(MouseKey key, int x, int y);
         void SimulateMouseDown(MouseKey key, int x, int y);
         void SimulateMouseUp(MouseKey key, int x, int y);

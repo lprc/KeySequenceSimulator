@@ -13,7 +13,7 @@ namespace KeySequenceSimulator.ActionSimulator
     {
         private InputSimulator inputSimulator = new InputSimulator();
 
-        public void SimulateKey(KeyAction keyAction, KeyboardKey key)
+        public void SimulateKey(KeyAction keyAction, KeyboardKey key, KeyMod mod = KeyMod.NONE)
         {
             VirtualKeyCode vk = KeyboardKeyToKeyCode(key);
 
@@ -27,7 +27,8 @@ namespace KeySequenceSimulator.ActionSimulator
                         inputSimulator.Keyboard.KeyUp(vk);
                         break;
                     case KeyAction.PRESS:
-                        inputSimulator.Keyboard.KeyPress(vk);
+                        inputSimulator.Keyboard.ModifiedKeyStroke(ParseKeyMods(mod), vk);
+                        //inputSimulator.Keyboard.KeyPress(vk);
                         break;
                 }
 
@@ -113,6 +114,20 @@ namespace KeySequenceSimulator.ActionSimulator
             SM_CXVIRTUALSCREEN = 78, SM_CYVIRTUALSCREEN = 79
         }
 
+        private VirtualKeyCode[] ParseKeyMods(KeyMod mod)
+        {
+            var mods = new List<VirtualKeyCode>();
+            if ((mod & KeyMod.SHIFT) != KeyMod.NONE)
+                mods.Add(VirtualKeyCode.SHIFT);
+            if ((mod & KeyMod.CTRL) != KeyMod.NONE)
+                mods.Add(VirtualKeyCode.CONTROL);
+            if ((mod & KeyMod.ALT) != KeyMod.NONE)
+                mods.Add(VirtualKeyCode.MENU);
+            if ((mod & KeyMod.META) != KeyMod.NONE)
+                mods.Add(VirtualKeyCode.LWIN);
+
+            return mods.ToArray();
+        }
         private VirtualKeyCode KeyboardKeyToKeyCode(KeyboardKey key)
         {
             switch (key)

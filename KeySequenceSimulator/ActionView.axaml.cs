@@ -28,6 +28,12 @@ namespace KeySequenceSimulator
         private ComboBox actionCombobox;
         private Panel part2;
         private Panel part3;
+        private Border borderKeymods;
+
+        private CheckBox chbShift;
+        private CheckBox chbCtrl;
+        private CheckBox chbAlt;
+        private CheckBox chbMeta;
 
         private Button keyButton;
         private TextBox sleepText;
@@ -68,6 +74,12 @@ namespace KeySequenceSimulator
             actionCombobox = this.FindControl<ComboBox>("cbActionSelection");
             part2 = this.FindControl<Panel>("ActionPart2");
             part3 = this.FindControl<Panel>("ActionPart3");
+            borderKeymods = this.FindControl<Border>("borderPanelKeymods");
+
+            chbShift = this.FindControl<CheckBox>("chbShift");
+            chbCtrl = this.FindControl<CheckBox>("chbCtrl");
+            chbAlt = this.FindControl<CheckBox>("chbAlt");
+            chbMeta = this.FindControl<CheckBox>("chbMeta");
 
             keyButton = this.FindControl<Button>("btnKey");
             sleepText = this.FindControl<TextBox>("txtSleep");
@@ -99,6 +111,7 @@ namespace KeySequenceSimulator
             textText.SetValue(IsVisibleProperty, false);
             part2.SetValue(IsVisibleProperty, true);
             part3.SetValue(IsVisibleProperty, false);
+            borderKeymods.SetValue(IsVisibleProperty, false);
             ParentSequence.SetRepeatSequence(false);
 
             SelectedAction = (ActionType)actionCombobox.SelectedIndex;
@@ -108,8 +121,11 @@ namespace KeySequenceSimulator
             {
                 case ActionType.KEY_DOWN:
                 case ActionType.KEY_UP:
+                    keyButton.SetValue(IsVisibleProperty, true);
+                    break;
                 case ActionType.KEY_PRESS:
                     keyButton.SetValue(IsVisibleProperty, true);
+                    borderKeymods.SetValue(IsVisibleProperty, true);
                     break;
                 case ActionType.SLEEP:
                     sleepText.SetValue(IsVisibleProperty, true);
@@ -173,17 +189,22 @@ namespace KeySequenceSimulator
         // executes the action
         public async void Execute()
         {
+            KeyMod mod = (chbShift.IsChecked.HasValue && chbShift.IsChecked.Value) ? KeyMod.SHIFT : KeyMod.NONE;
+            mod |= (chbCtrl.IsChecked.HasValue && chbCtrl.IsChecked.Value) ? KeyMod.CTRL : KeyMod.NONE;
+            mod |= (chbAlt.IsChecked.HasValue && chbAlt.IsChecked.Value) ? KeyMod.ALT : KeyMod.NONE;
+            mod |= (chbMeta.IsChecked.HasValue && chbMeta.IsChecked.Value) ? KeyMod.META : KeyMod.NONE;
+
             // selects an action to execute
             switch (SelectedAction)
             {
                 case ActionType.KEY_DOWN:
-                    ActionSimulator.SimulateKey(KeyAction.DOWN, Key); //TODO key enum
+                    ActionSimulator.SimulateKey(KeyAction.DOWN, Key);
                     break;
                 case ActionType.KEY_UP:
                     ActionSimulator.SimulateKey(KeyAction.UP, Key);
                     break;
                 case ActionType.KEY_PRESS:
-                    ActionSimulator.SimulateKey(KeyAction.PRESS, Key);
+                    ActionSimulator.SimulateKey(KeyAction.PRESS, Key, mod);
                     break;
                 case ActionType.SLEEP:
                     try

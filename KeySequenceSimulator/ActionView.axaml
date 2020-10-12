@@ -49,5 +49,16 @@
 			<TextBlock>Y: </TextBlock>
 			<TextBox Name="txtY" Watermark="Y" />
 		</StackPanel>
+
+		<Border Name="borderPanelKeymods">
+			<Grid Name="panelKeymods"
+				  ColumnDefinitions="*,*" 
+				  RowDefinitions="Auto,Auto">
+				<CheckBox Name="chbShift" Grid.Row="0" Grid.Column="0">Shift</CheckBox>
+				<CheckBox Name="chbCtrl" Grid.Row="0" Grid.Column="1">Ctrl</CheckBox>
+				<CheckBox Name="chbAlt" Grid.Row="1" Grid.Column="0">Alt</CheckBox>
+				<CheckBox Name="chbMeta" Grid.Row="1" Grid.Column="1">Meta</CheckBox>
+			</Grid>
+		</Border>
 	</StackPanel>
 </UserControl>

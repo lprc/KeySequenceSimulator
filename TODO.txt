@@ -1,9 +1,13 @@
 todo kss:
-- group name unique
-- convert hotkey to char properly
+- ? group name unique
 - exception handling when loading from file
 - visualize busy while saving / loading file
 - validate sequences before executing
+- add info box what keys are ok as hotkey
+- add support for simulating ctrl, alt, etc
+- map numpad0-9 to 0-9
+- move action in sequence to left or right
+- wrap sequence around
 
 window bg: #245c60
 group bg: #24614A
@@ -18,3 +22,4 @@ done:
 - group name changeable
 - deactivate group
 - add load recent file
+- convert hotkey to char properly
