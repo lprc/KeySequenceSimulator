@@ -12,10 +12,12 @@
     <AvaloniaResource Remove="Assets\ActionView.axaml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.10.999-cibuild0010986-beta" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.10.999-cibuild0010986-beta" />
-    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.999-cibuild0010986-beta" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Avalonia" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.0-preview5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeySequenceSimulator.ActionSimulator\KeySequenceSimulator.ActionSimulator.csproj" />

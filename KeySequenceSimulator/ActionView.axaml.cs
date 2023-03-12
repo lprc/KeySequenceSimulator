@@ -269,36 +269,36 @@ namespace KeySequenceSimulator
 
         public string ToJson()
         {
-            string json = "{\n";
-            json += "\t\"type\" : \"" + SelectedAction + "\"";
+            string json = "\t\t{\n";
+            json += "\t\t\t\"type\" : \"" + SelectedAction + "\"";
 
             switch (SelectedAction)
             {
                 case ActionType.KEY_DOWN:
                 case ActionType.KEY_UP:
                 case ActionType.KEY_PRESS:
-                    json += ",\n\t\"key\" : \"" + Key + "\"";
+                    json += ",\n\t\t\t\"key\" : \"" + Key + "\"";
                     break;
                 case ActionType.SLEEP:
-                    json += ",\n\t\"duration\" : \"" + sleepText.Text + "\"";
+                    json += ",\n\t\t\t\"duration\" : \"" + sleepText.Text + "\"";
                     break;
                 case ActionType.MOUSE_DOWN:
                 case ActionType.MOUSE_UP:
                 case ActionType.MOUSE_CLICK:
                 case ActionType.MOUSE_DOUBLE_CLICK:
-                    json += ",\n\t\"mousekey\" : \"" + SelectedMouseKey + "\",\n";
-                    json += "\t\"x\" : \"" + MouseX + "\",\n";
-                    json += "\t\"y\" : \"" + MouseY + "\"";
+                    json += ",\n\t\t\t\"mousekey\" : \"" + SelectedMouseKey + "\",\n";
+                    json += "\t\t\t\"x\" : \"" + MouseX + "\",\n";
+                    json += "\t\t\t\"y\" : \"" + MouseY + "\"";
                     break;
                 case ActionType.TEXT:
-                    json += ",\n\t\"text\" : \"" + textText.Text + "\"";
+                    json += ",\n\t\t\t\"text\" : \"" + textText.Text + "\"";
                     break;
                 case ActionType.REPEAT:
                     // nop
                     break;
             }
 
-            json += "\n}";
+            json += "\n\t\t}";
             return json;
         }
 

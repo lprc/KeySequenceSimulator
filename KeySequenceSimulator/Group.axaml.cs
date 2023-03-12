@@ -187,7 +187,7 @@ namespace KeySequenceSimulator
             json += "\t\"sequences\" : [\n";
             for (int i = 0; i < Sequences.Count; i++)
             {
-                json += "\t" + Sequences[i].ToJson() + (i == Sequences.Count - 1 ? "\n" : ",\n");
+                json += "\t\t" + Sequences[i].ToJson() + (i == Sequences.Count - 1 ? "\n" : ",\n");
             }
 
             json += "\t]\n}";

@@ -5,7 +5,8 @@ todo kss:
 - validate sequences before executing
 - add info box what keys are ok as hotkey
 - move action in sequence to left or right
-- wrap sequence around
+- remove action
+- update UI after loading a savefile
 
 window bg: #245c60
 group bg: #24614A
@@ -23,3 +24,4 @@ done:
 - convert hotkey to char properly
 - map numpad0-9 to 0-9
 - add support for simulating ctrl, alt, etc
+- wrap sequence around

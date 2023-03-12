@@ -134,14 +134,14 @@ namespace KeySequenceSimulator
 
         public string ToJson()
         {
-            string json = "{\n\t\"active\" : \"" + (IsActive ? "true" : "false") + "\",\n\t\"actions\" : [\n";
+            string json = "{\n\t\t\"active\" : \"" + (IsActive ? "true" : "false") + "\",\n\t\t\"actions\" : [\n";
 
             for (int i = 0; i < Actions.Count; i++)
             {
                 json += Actions[i].ToJson() + (i == Actions.Count - 1 ? "\n" : ",\n");
             }
 
-            json += "\t]\n}";
+            json += "\t\t]\n}";
             return json;
         }
     }

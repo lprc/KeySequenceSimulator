@@ -57,12 +57,7 @@ namespace KeySequenceSimulator
             UpdateRecentFilesMenu();
 
             // use dark theme
-            var dark = new StyleInclude(new Uri("resm:Styles?assembly=KeySequenceSimulator"))
-            {
-                Source = new Uri("resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default")
-                //Source = new Uri("avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml")
-            };
-            Application.Current.Styles.Add(dark);
+            Application.Current.RequestedThemeVariant = Avalonia.Styling.ThemeVariant.Dark;
         }
 
         private void UpdateRecentFilesMenu()
@@ -215,14 +210,14 @@ namespace KeySequenceSimulator
 
         public string ToJson()
         {
-            string json = "{\n\t\"groups\" : [\n";
+            string json = "{\n\"groups\" : [\n";
 
             for (int i = 0; i < Groups.Count; i++)
             {
                 json += "\t" + Groups[i].ToJson() + (i == Groups.Count - 1 ? "\n" : ",\n");
             }
 
-            json += "\t]\n}";
+            json += "]\n}";
             return json;
         }
 
