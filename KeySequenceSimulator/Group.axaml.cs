@@ -121,14 +121,19 @@ namespace KeySequenceSimulator
             }
         }
 
-        public void ToggleIsActive(object sender, RoutedEventArgs e)
+        public void SetIsActive(bool isActive)
         {
-            IsActive = !IsActive;
+            IsActive = isActive;
             btnIsActive.Content = IsActive ? "Active" : "Inactive";
             if (IsActive)
                 Classes.Remove("inactive");
             else
                 Classes.Add("inactive");
+        }
+
+        public void ToggleIsActive(object sender, RoutedEventArgs e)
+        {
+            SetIsActive(!IsActive);
         }
 
         // adds a sequence
@@ -183,6 +188,7 @@ namespace KeySequenceSimulator
         public string ToJson()
         {
             string json = "{\n\t\"hotkey\" : \"" + Hotkey + "\",\n";
+            json += "\t\"active\" : \"" + IsActive + "\",\n";
 
             json += "\t\"sequences\" : [\n";
             for (int i = 0; i < Sequences.Count; i++)

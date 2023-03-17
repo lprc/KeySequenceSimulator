@@ -95,19 +95,24 @@ namespace KeySequenceSimulator
             } 
         }
 
-        public void ToggleActive(object sender, RoutedEventArgs e)
+        public void SetIsActive(bool isActive)
         {
-            IsActive = !IsActive;
+            IsActive = isActive;
             if (IsActive)
             {
                 btnSequenceNumber.Classes.Remove("Inactive");
                 this.Classes.Remove("Inactive");
-            }  
+            }
             else
             {
                 btnSequenceNumber.Classes.Add("Inactive");
                 this.Classes.Add("Inactive");
             }
+        }
+
+        public void ToggleActive(object sender, RoutedEventArgs e)
+        {
+            SetIsActive(!IsActive);
         }
 
         // executes the sequence. Stops if Group.IsRunning is false
@@ -134,7 +139,7 @@ namespace KeySequenceSimulator
 
         public string ToJson()
         {
-            string json = "{\n\t\t\"active\" : \"" + (IsActive ? "true" : "false") + "\",\n\t\t\"actions\" : [\n";
+            string json = "{\n\t\t\"active\" : \"" + IsActive + "\",\n\t\t\"actions\" : [\n";
 
             for (int i = 0; i < Actions.Count; i++)
             {

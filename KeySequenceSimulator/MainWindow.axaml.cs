@@ -198,11 +198,12 @@ namespace KeySequenceSimulator
                     AddGroup(null, null);
                     var g = Groups[Groups.Count - 1];
                     g.Hotkey = group["hotkey"] ?? "";
+                    g.SetIsActive(group.ContainsKey("active") && group["active"] == "True");
                     foreach (var seq in group["sequences"])
                     {
                         g.AddSequence(null, null);
                         var s = g.Sequences[g.Sequences.Count - 1];
-                        s.IsActive = seq["active"] ?? true;
+                        s.SetIsActive(seq.ContainsKey("active") && seq["active"] == "True");
                         foreach (var action in seq["actions"])
                         {
                             s.AddAction(null, null);
