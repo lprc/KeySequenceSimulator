@@ -72,6 +72,7 @@ namespace KeySequenceSimulator
                 mainWindow.GetObservable(TopLevel.ClientSizeProperty).Subscribe(size => this.MaxWidth = size.Width - 10);
         }
 
+        // Listens for a key press and sets the pressed key as new hotkey.
         public void ChangeHotkey(object sender, KeyEventArgs e)
         {
             IsListening = true;
@@ -86,10 +87,25 @@ namespace KeySequenceSimulator
             }
             else
             {
-                Hotkey = newHotkey;
+                SetHotkey(newHotkey);
+
+                // remove listener
+                mainWindow.KeyUp -= ChangeHotkey;
+                IsListening = false;
+            }
+        }
+
+        // Registers Hook for given hotkey and updates UI if key is available and not the current hotkey.
+        public void SetHotkey(KeyboardKey key)
+        {
+            if (mainWindow.HotkeyAvailable(key) && key != Hotkey)
+            {
+                // Remove hook for old key
+                mainWindow.GlobalInput.RemoveHook(Hotkey);
+
+                Hotkey = key;
                 //TODO convert hotkey to char properly
                 // register global input hook
-                mainWindow.GlobalInput.RemoveHook(Hotkey);
                 mainWindow.GlobalInput.RegisterHook(Hotkey, () =>
                 {
                     // set running to true only if at least one sequence is active. Stop running if at least one sequence is currently running
@@ -114,11 +130,18 @@ namespace KeySequenceSimulator
                     }
                 });
 
-                // remove listener
-                mainWindow.KeyUp -= ChangeHotkey;
-                IsListening = false;
                 hotkeyButton.Content = "Hotkey: " + Hotkey;
             }
+        }
+
+        // Registers Hook for given hotkey and updates UI
+        public void SetHotkey(string key)
+        {
+            KeyboardKey parsedKey;
+
+            // Only set hotkey if it can be parsed into KeyboardKey Enum
+            if (Enum.TryParse(key, out parsedKey) && Enum.IsDefined(typeof(KeyboardKey), parsedKey))
+                SetHotkey((KeyboardKey)Enum.Parse(typeof(KeyboardKey), key));
         }
 
         public void SetIsActive(bool isActive)
@@ -175,7 +198,7 @@ namespace KeySequenceSimulator
             mainWindow.RemoveGroup(this);
         }
 
-        public void SetHotkey(object sender, RoutedEventArgs e)
+        public void ListenForHotkey(object sender, RoutedEventArgs e)
         {
             // Waits for input hotkey
             hotkeyButton.Content = "Waiting for input...";

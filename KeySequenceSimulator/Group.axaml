@@ -22,7 +22,7 @@
 				<Button BorderBrush="White" 
 						BorderThickness="1,1,1,0"
 						Name="btnHotkey"
-						Click="SetHotkey"
+						Click="ListenForHotkey"
 						Margin="0,0,10,0"
 						ToolTip.Tip="Press to change hotkey">
 					Press to set a hotkey.
