@@ -17,6 +17,7 @@ namespace KeySequenceSimulator
         private TextBlock lblStatus;
         private CheckBox cbIsGloballyActive;
         private MenuItem menuRecentFiles;
+        private MenuItem menuFile;
         public List<Group> Groups { get; private set; }
 
         public bool IsGloballyActive { get; private set; }
@@ -44,6 +45,7 @@ namespace KeySequenceSimulator
             lblStatus = this.FindControl<TextBlock>("lblStatus");
             cbIsGloballyActive = this.FindControl<CheckBox>("cbIsGlobalActive");
             menuRecentFiles = this.FindControl<MenuItem>("menuRecentFiles");
+            menuFile = this.FindControl<MenuItem>("menuFile");
 
             Groups = new List<Group>();
             IsGloballyActive = true;
@@ -67,7 +69,12 @@ namespace KeySequenceSimulator
             {
                 var mu = new MenuItem();
                 mu.Header = file;
-                mu.Click += (sender, e) => LoadFile(file);
+                mu.Click += (sender, e) =>
+                {
+                    menuFile.Close();
+                    menuFile.IsSelected = false;
+                    LoadFile(file);
+                };
                 items.Add(mu);
             }
 
@@ -184,7 +191,7 @@ namespace KeySequenceSimulator
         private void ParseJson(string json)
         {
             var values = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
-            if (values["groups"] != null)
+            if (values.ContainsKey("groups"))
             {
                 foreach (var group in values["groups"])
                 {
