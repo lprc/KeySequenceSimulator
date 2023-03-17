@@ -322,19 +322,41 @@ namespace KeySequenceSimulator
             var av = initial ?? new ActionView();
             av.SelectedAction = (ActionView.ActionType)Enum.Parse(typeof(ActionView.ActionType), jsonObject["type"].ToString(), true);
 
+            // local function that updates the combobox selection of mouse key
+            void updateMouseCbSelection (MouseKey selectedMouseKey)
+            {
+                switch (selectedMouseKey)
+                {
+                    case MouseKey.LEFT:
+                        av.cbMouseKey.SelectedIndex = 0;
+                        break;
+                    case MouseKey.RIGHT:
+                        av.cbMouseKey.SelectedIndex = 1;
+                        break;
+                    case MouseKey.MIDDLE:
+                        av.cbMouseKey.SelectedIndex = 2;
+                        break;
+                }
+            };
+
             switch (av.SelectedAction)
             {
                 case ActionType.KEY_DOWN:
                     av.SetActionTypeCbIndex(0);
                     av.Key = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), jsonObject["key"].ToString());
+                    av.keyButton.Content = av.Key.ToString();
                     break;
                 case ActionType.KEY_UP:
                     av.SetActionTypeCbIndex(1);
                     av.Key = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), jsonObject["key"].ToString());
+                    av.keyButton.Content = av.Key.ToString();
                     break;
                 case ActionType.KEY_PRESS:
                     av.SetActionTypeCbIndex(2);
                     av.Key = (KeyboardKey)Enum.Parse(typeof(KeyboardKey), jsonObject["key"].ToString());
+                    av.keyButton.Content = av.Key.ToString();
+
+                    // TODO checkboxes ctrl, ...
                     break;
                 case ActionType.SLEEP:
                     av.SetActionTypeCbIndex(3);
@@ -343,24 +365,28 @@ namespace KeySequenceSimulator
                 case ActionType.MOUSE_DOWN:
                     av.SetActionTypeCbIndex(4);
                     av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    updateMouseCbSelection(av.SelectedMouseKey);
                     av.MouseX = Int32.Parse(jsonObject["x"].ToString());
                     av.MouseY = Int32.Parse(jsonObject["y"].ToString());
                     break;
                 case ActionType.MOUSE_UP:
                     av.SetActionTypeCbIndex(5);
                     av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    updateMouseCbSelection(av.SelectedMouseKey);
                     av.MouseX = Int32.Parse(jsonObject["x"].ToString());
                     av.MouseY = Int32.Parse(jsonObject["y"].ToString());
                     break;
                 case ActionType.MOUSE_CLICK:
                     av.SetActionTypeCbIndex(6);
                     av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    updateMouseCbSelection(av.SelectedMouseKey);
                     av.MouseX = Int32.Parse(jsonObject["x"].ToString());
                     av.MouseY = Int32.Parse(jsonObject["y"].ToString());
                     break;
                 case ActionType.MOUSE_DOUBLE_CLICK:
                     av.SetActionTypeCbIndex(7);
                     av.SelectedMouseKey = (MouseKey)Enum.Parse(typeof(MouseKey), jsonObject["mousekey"].ToString(), true);
+                    updateMouseCbSelection(av.SelectedMouseKey);
                     av.MouseX = Int32.Parse(jsonObject["x"].ToString());
                     av.MouseY = Int32.Parse(jsonObject["y"].ToString());
                     break;
