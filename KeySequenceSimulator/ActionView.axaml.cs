@@ -383,6 +383,10 @@ namespace KeySequenceSimulator
                     av.keyButton.Content = av.Key.ToString();
 
                     // TODO checkboxes ctrl, ...
+                    av.chbShift.IsChecked = jsonObject.ContainsKey("shift") && jsonObject["shift"].ToString() == "True";
+                    av.chbCtrl.IsChecked = jsonObject.ContainsKey("ctrl") && jsonObject["ctrl"].ToString() == "True";
+                    av.chbAlt.IsChecked = jsonObject.ContainsKey("alt") && jsonObject["alt"].ToString() == "True";
+                    av.chbMeta.IsChecked = jsonObject.ContainsKey("meta") && jsonObject["meta"].ToString() == "True";
                     break;
                 case ActionType.SLEEP:
                     av.SetActionTypeCbIndex(3);
