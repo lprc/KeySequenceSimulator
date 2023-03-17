@@ -150,7 +150,7 @@ namespace KeySequenceSimulator
         public void OnMouseSelectionChanged(object sender, RoutedEventArgs e)
         {
             // save mouse button
-            switch (actionCombobox.SelectedIndex)
+            switch (cbMouseKey.SelectedIndex)
             {
                 case 0:
                     SelectedMouseKey = MouseKey.LEFT;
