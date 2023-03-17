@@ -186,13 +186,33 @@ namespace KeySequenceSimulator
             keyButton.Content = Key.ToString();
         }
 
+        public bool isShiftKeyChecked()
+        {
+            return chbShift.IsChecked.HasValue && chbShift.IsChecked.Value;
+        }
+
+        public bool isCtrlKeyChecked()
+        {
+            return chbCtrl.IsChecked.HasValue && chbCtrl.IsChecked.Value;
+        }
+
+        public bool isAltKeyChecked()
+        {
+            return chbAlt.IsChecked.HasValue && chbAlt.IsChecked.Value;
+        }
+
+        public bool isMetaKeyChecked()
+        {
+            return chbMeta.IsChecked.HasValue && chbMeta.IsChecked.Value;
+        }
+
         // executes the action
         public async void Execute()
         {
-            KeyMod mod = (chbShift.IsChecked.HasValue && chbShift.IsChecked.Value) ? KeyMod.SHIFT : KeyMod.NONE;
-            mod |= (chbCtrl.IsChecked.HasValue && chbCtrl.IsChecked.Value) ? KeyMod.CTRL : KeyMod.NONE;
-            mod |= (chbAlt.IsChecked.HasValue && chbAlt.IsChecked.Value) ? KeyMod.ALT : KeyMod.NONE;
-            mod |= (chbMeta.IsChecked.HasValue && chbMeta.IsChecked.Value) ? KeyMod.META : KeyMod.NONE;
+            KeyMod mod = isShiftKeyChecked() ? KeyMod.SHIFT : KeyMod.NONE;
+            mod |= isCtrlKeyChecked() ? KeyMod.CTRL : KeyMod.NONE;
+            mod |= isAltKeyChecked() ? KeyMod.ALT : KeyMod.NONE;
+            mod |= isMetaKeyChecked() ? KeyMod.META : KeyMod.NONE;
 
             // selects an action to execute
             switch (SelectedAction)
@@ -276,8 +296,14 @@ namespace KeySequenceSimulator
             {
                 case ActionType.KEY_DOWN:
                 case ActionType.KEY_UP:
+                    json += ",\n\t\t\t\"key\" : \"" + Key + "\"";
+                    break;
                 case ActionType.KEY_PRESS:
                     json += ",\n\t\t\t\"key\" : \"" + Key + "\"";
+                    json += ",\n\t\t\t\"shift\" : \"" + isShiftKeyChecked() + "\"";
+                    json += ",\n\t\t\t\"ctrl\" : \"" + isCtrlKeyChecked() + "\"";
+                    json += ",\n\t\t\t\"alt\" : \"" + isAltKeyChecked() + "\"";
+                    json += ",\n\t\t\t\"meta\" : \"" + isMetaKeyChecked() + "\"";
                     break;
                 case ActionType.SLEEP:
                     json += ",\n\t\t\t\"duration\" : \"" + sleepText.Text + "\"";
