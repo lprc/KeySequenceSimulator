@@ -6,19 +6,62 @@
 			 xmlns:local="clr-namespace:KeySequenceSimulator"
              x:Class="KeySequenceSimulator.ActionView">
 	<StackPanel Orientation="Horizontal">
-		<ComboBox Name="cbActionSelection"
-				  SelectedIndex="0">
-			<ComboBoxItem>KeyUp</ComboBoxItem>
-			<ComboBoxItem>KeyDown</ComboBoxItem>
-			<ComboBoxItem>KeyPress</ComboBoxItem>
-			<ComboBoxItem>Sleep</ComboBoxItem>
-			<ComboBoxItem>MouseDown</ComboBoxItem>
-			<ComboBoxItem>MouseUp</ComboBoxItem>
-			<ComboBoxItem>MouseClick</ComboBoxItem>
-			<ComboBoxItem>MouseDoubleClick</ComboBoxItem>
-			<ComboBoxItem>Text</ComboBoxItem>
-			<ComboBoxItem>Repeat</ComboBoxItem>
-		</ComboBox>
+		<StackPanel Orientation="Vertical">
+
+			<DockPanel LastChildFill="True"
+					   Name="pnlMoveButtons">
+				<Button DockPanel.Dock="Left"
+					HorizontalAlignment="Left"
+					Name="btnActionMoveRight"
+					Width="20"
+					Height="20"
+					BorderThickness="1,1,1,0"
+					Margin="5,5,0,-5"
+					Click=""
+					ToolTip.Tip="Move action left">
+					&lt;
+				</Button>
+				
+				<Button DockPanel.Dock="Left"
+					HorizontalAlignment="Left"
+					Name="btnActionMoveLeft"
+					Width="20"
+					Height="20"
+					BorderThickness="1,1,1,0"
+					Margin="0,5,0,-5"
+					Click=""
+					ToolTip.Tip="Move action right">
+					&gt;
+				</Button>
+				
+				<Button DockPanel.Dock="Right"
+					HorizontalAlignment="Right"
+					Name="btnActionRemove"
+					Width="20"
+					Height="20"
+					BorderThickness="1,1,1,0"
+					Margin="0,5,5,-5"
+					Click="Remove"
+					ToolTip.Tip="Remove Action">
+					x
+				</Button>
+			</DockPanel>
+
+			<ComboBox Name="cbActionSelection"
+					  SelectedIndex="0">
+				<ComboBoxItem>KeyUp</ComboBoxItem>
+				<ComboBoxItem>KeyDown</ComboBoxItem>
+				<ComboBoxItem>KeyPress</ComboBoxItem>
+				<ComboBoxItem>Sleep</ComboBoxItem>
+				<ComboBoxItem>MouseDown</ComboBoxItem>
+				<ComboBoxItem>MouseUp</ComboBoxItem>
+				<ComboBoxItem>MouseClick</ComboBoxItem>
+				<ComboBoxItem>MouseDoubleClick</ComboBoxItem>
+				<ComboBoxItem>Text</ComboBoxItem>
+				<ComboBoxItem>Repeat</ComboBoxItem>
+			</ComboBox>
+		</StackPanel>
+		
 		<StackPanel Name="ActionPart2"
 					Orientation="Horizontal">
 			<Button Name="btnKey"

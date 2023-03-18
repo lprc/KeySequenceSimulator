@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace KeySequenceSimulator
 {
@@ -71,6 +72,30 @@ namespace KeySequenceSimulator
 
             sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, action);
             sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
+        }
+
+        // Removes action from this sequence, if present and if sequence is not running.
+        public void RemoveAction(ActionView a)
+        {
+            if (!IsRunning)
+            {
+                bool isRepeat = a.SelectedAction == ActionView.ActionType.REPEAT;
+                bool removed = Actions.Remove(a);
+
+                if (removed)
+                {
+                    if (isRepeat)
+                        Repeat = false;
+
+                    // First remove arrow, if child is not repeat. Then remove action itself.
+                    int idx = sequencePanel.Children.IndexOf(a);
+
+                    if (!isRepeat)
+                        sequencePanel.Children.RemoveAt(idx + 1);
+
+                    sequencePanel.Children.RemoveAt(idx);
+                }
+            }          
         }
 
         // replaces add action button with repeat if repeat is true

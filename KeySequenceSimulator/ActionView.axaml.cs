@@ -102,6 +102,12 @@ namespace KeySequenceSimulator
             IsListening = false;
         }
 
+        // Removes this action from the parent sequence
+        public void Remove(object sender, RoutedEventArgs e)
+        {
+            ParentSequence.RemoveAction(this);
+        }
+
         public void OnActionSelectionChanged(object sender, RoutedEventArgs e)
         {
             // first hide all inputs
