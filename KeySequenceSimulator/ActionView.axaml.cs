@@ -63,6 +63,7 @@ namespace KeySequenceSimulator
             private set { _mouseY = value; txtY.Text = value.ToString(); }
         }
 
+        // Enables or disables all input elements of this action.
         private bool _uiElementsEnabled = true;
         public bool UIElementsEnabled
         {
@@ -74,6 +75,17 @@ namespace KeySequenceSimulator
                 else
                     Classes.Add("Disabled");
             }
+        }
+
+        public bool BtnMoveLeftEnabled { 
+            get { return btnMoveLeft.GetValue<bool>(IsEnabledProperty); }
+            set { btnMoveLeft.SetValue(IsEnabledProperty, value); }
+        }
+
+        public bool BtnMoveRightEnabled
+        {
+            get { return btnMoveRight.GetValue<bool>(IsEnabledProperty); }
+            set { btnMoveRight.SetValue(IsEnabledProperty, value); }
         }
 
         private bool IsListening { get; set; }

@@ -85,6 +85,8 @@ namespace KeySequenceSimulator
 
             sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, action);
             sequencePanel.Children.Insert(sequencePanel.Children.Count - 1, arr);
+
+            UpdateMoveActionsButtons();
         }
 
         // Removes action from this sequence, if present and if sequence is not running.
@@ -105,6 +107,8 @@ namespace KeySequenceSimulator
 
                     sequencePanel.Children.RemoveAt(idx + 1);
                     sequencePanel.Children.RemoveAt(idx);
+
+                    UpdateMoveActionsButtons();
                 }
             }          
         }
@@ -125,6 +129,8 @@ namespace KeySequenceSimulator
                     int idxUi = sequencePanel.Children.IndexOf(a);
                     sequencePanel.Children.Move(idxUi, idxUi - 2);
                     sequencePanel.Children.Move(idxUi - 1, idxUi);
+
+                    UpdateMoveActionsButtons();
                 }
             }
         }
@@ -145,6 +151,8 @@ namespace KeySequenceSimulator
                     int idxUi = sequencePanel.Children.IndexOf(a);
                     sequencePanel.Children.Move(idxUi, idxUi + 2);
                     sequencePanel.Children.Move(idxUi + 1, idxUi);
+
+                    UpdateMoveActionsButtons();
                 }
             }
         }
@@ -189,6 +197,22 @@ namespace KeySequenceSimulator
         public void ToggleActive(object sender, RoutedEventArgs e)
         {
             SetIsActive(!IsActive);
+        }
+
+        // Disables move left and right buttons for first and last actions, enables for every other action.
+        public void UpdateMoveActionsButtons()
+        {
+            foreach (var a in Actions)
+            {
+                a.BtnMoveLeftEnabled = true;
+                a.BtnMoveRightEnabled = true;
+            }
+
+            if (Actions.Count > 0)
+            {
+                Actions[0].BtnMoveLeftEnabled = false;
+                Actions[Actions.Count - 1].BtnMoveRightEnabled = false;
+            }
         }
 
         // executes the sequence. Stops if Group.IsRunning is false
