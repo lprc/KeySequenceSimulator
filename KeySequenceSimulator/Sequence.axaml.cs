@@ -111,6 +111,40 @@ namespace KeySequenceSimulator
             }          
         }
 
+        // Move action and its UI Element to the left if it's not the first one and it's not repeat.
+        public void MoveActionLeft(ActionView a)
+        {
+            int idx = Actions.IndexOf(a);
+
+            if (idx > 0 && a.SelectedAction != ActionView.ActionType.REPEAT)
+            {
+                var tmp = Actions[idx - 1];
+                Actions[idx - 1] = Actions[idx];
+                Actions[idx] = tmp;
+
+                int idxUi = sequencePanel.Children.IndexOf(a);
+                sequencePanel.Children.Move(idxUi, idxUi - 2);
+                sequencePanel.Children.Move(idxUi - 1, idxUi);
+            }
+        }
+
+        public void MoveActionRight(ActionView a)
+
+        {
+            int idx = Actions.IndexOf(a);
+
+            if (idx < Actions.Count - 1 && a.SelectedAction != ActionView.ActionType.REPEAT)
+            {
+                var tmp = Actions[idx + 1];
+                Actions[idx + 1] = Actions[idx];
+                Actions[idx] = tmp;
+
+                int idxUi = sequencePanel.Children.IndexOf(a);
+                sequencePanel.Children.Move(idxUi, idxUi + 2);
+                sequencePanel.Children.Move(idxUi + 1, idxUi);
+            }
+        }
+
         // replaces add action button with repeat if repeat is true
         public void SetRepeatSequence(bool repeat)
         {
@@ -162,7 +196,6 @@ namespace KeySequenceSimulator
 
             Dispatcher.UIThread.Post(() => {
                 UIElementsEnabled = false;
-                //btnSequenceNumber.Classes.Add("Disabled");
                 foreach (var action in Actions)
                     action.UIElementsEnabled = false;
             });
@@ -183,7 +216,6 @@ namespace KeySequenceSimulator
 
             Dispatcher.UIThread.Post(() => {
                 UIElementsEnabled = true;
-                //btnSequenceNumber.Classes.Remove("Disabled");
                 foreach (var action in Actions)
                     action.UIElementsEnabled = true;
             });

@@ -106,29 +106,7 @@ namespace KeySequenceSimulator
                 Hotkey = key;
                 //TODO convert hotkey to char properly
                 // register global input hook
-                mainWindow.GlobalInput.RegisterHook(Hotkey, () =>
-                {
-                    // set running to true only if at least one sequence is active. Stop running if at least one sequence is currently running
-                    IsRunning = (!Sequences.Exists(s => s.IsRunning) || (!IsRunning && Sequences.Exists(s => s.IsActive))) && mainWindow.IsGloballyActive && IsActive;
-                    mainWindow.UpdateStatus();
-                    if (!IsRunning)
-                        return;
-
-                    // start background thread for each active sequence
-                    foreach (var seq in Sequences)
-                    {
-                        //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
-                        if (seq.IsActive)
-                        {
-                            Thread t = new Thread(() =>
-                            {
-                                Thread.CurrentThread.IsBackground = true;
-                                seq.Execute();
-                            });
-                            t.Start();
-                        }
-                    }
-                });
+                mainWindow.GlobalInput.RegisterHook(Hotkey, () => Execute());
 
                 hotkeyButton.Content = "Hotkey: " + Hotkey;
             }
@@ -142,6 +120,31 @@ namespace KeySequenceSimulator
             // Only set hotkey if it can be parsed into KeyboardKey Enum
             if (Enum.TryParse(key, out parsedKey) && Enum.IsDefined(typeof(KeyboardKey), parsedKey))
                 SetHotkey((KeyboardKey)Enum.Parse(typeof(KeyboardKey), key));
+        }
+
+        // Runs all sequenes of this group in a new thread.
+        public void Execute()
+        {
+            // set running to true only if at least one sequence is active. Stop running if at least one sequence is currently running
+            IsRunning = (!Sequences.Exists(s => s.IsRunning) || (!IsRunning && Sequences.Exists(s => s.IsActive))) && mainWindow.IsGloballyActive && IsActive;
+            mainWindow.UpdateStatus();
+            if (!IsRunning)
+                return;
+
+            // start background thread for each active sequence
+            foreach (var seq in Sequences)
+            {
+                //MessageBox.Show(null, "hook called. seq.IsActive = " + seq.IsActive, "Error", MessageBox.MessageBoxButtons.Ok);
+                if (seq.IsActive)
+                {
+                    Thread t = new Thread(() =>
+                    {
+                        Thread.CurrentThread.IsBackground = true;
+                        seq.Execute();
+                    });
+                    t.Start();
+                }
+            }
         }
 
         public void SetIsActive(bool isActive)

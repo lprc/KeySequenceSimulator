@@ -130,6 +130,18 @@ namespace KeySequenceSimulator
             ParentSequence.RemoveAction(this);
         }
 
+        // Move this action left (if it's not the first one)
+        public void MoveLeft(object sender, RoutedEventArgs e)
+        {
+            ParentSequence.MoveActionLeft(this);
+        }
+
+        // Move this action right (if it's not the last one)
+        public void MoveRight(object sender, RoutedEventArgs e)
+        {
+            ParentSequence.MoveActionRight(this);
+        }
+
         public void OnActionSelectionChanged(object sender, RoutedEventArgs e)
         {
             // first hide all inputs
