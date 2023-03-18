@@ -38,6 +38,19 @@ namespace KeySequenceSimulator
             set { _isRunning = value; }
         }
 
+        private bool _uiElementsEnabled = true;
+        public bool UIElementsEnabled
+        {
+            get { return _uiElementsEnabled; }
+            set
+            {
+                if (value)
+                    Classes.Remove("Disabled");
+                else
+                    Classes.Add("Disabled");
+            }
+        }
+
         public Sequence()
         {
             this.InitializeComponent();
@@ -147,6 +160,13 @@ namespace KeySequenceSimulator
             // update status from ui thread
             Dispatcher.UIThread.Post(() => Group.mainWindow.UpdateStatus());
 
+            Dispatcher.UIThread.Post(() => {
+                UIElementsEnabled = false;
+                //btnSequenceNumber.Classes.Add("Disabled");
+                foreach (var action in Actions)
+                    action.UIElementsEnabled = false;
+            });
+
             do
             {
                 foreach (var action in Actions)
@@ -160,6 +180,13 @@ namespace KeySequenceSimulator
 
             // update status from ui thread when action is finished
             Dispatcher.UIThread.Post(() => Group.mainWindow.UpdateStatus());
+
+            Dispatcher.UIThread.Post(() => {
+                UIElementsEnabled = true;
+                //btnSequenceNumber.Classes.Remove("Disabled");
+                foreach (var action in Actions)
+                    action.UIElementsEnabled = true;
+            });
         }
 
         public string ToJson()

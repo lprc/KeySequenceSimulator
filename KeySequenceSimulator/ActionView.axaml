@@ -12,7 +12,7 @@
 					   Name="pnlMoveButtons">
 				<Button DockPanel.Dock="Left"
 					HorizontalAlignment="Left"
-					Name="btnActionMoveRight"
+					Name="btnMoveLeft"
 					Width="20"
 					Height="20"
 					BorderThickness="1,1,1,0"
@@ -24,7 +24,7 @@
 				
 				<Button DockPanel.Dock="Left"
 					HorizontalAlignment="Left"
-					Name="btnActionMoveLeft"
+					Name="btnMoveRight"
 					Width="20"
 					Height="20"
 					BorderThickness="1,1,1,0"
@@ -36,7 +36,7 @@
 				
 				<Button DockPanel.Dock="Right"
 					HorizontalAlignment="Right"
-					Name="btnActionRemove"
+					Name="btnRemove"
 					Width="20"
 					Height="20"
 					BorderThickness="1,1,1,0"

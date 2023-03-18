@@ -42,6 +42,10 @@ namespace KeySequenceSimulator
         private TextBox txtX;
         private TextBox txtY;
 
+        private Button btnMoveLeft;
+        private Button btnMoveRight;
+        private Button btnRemove;
+
         public KeyboardKey Key { get; set; }
         public MouseKey SelectedMouseKey { get; private set; }
 
@@ -58,6 +62,20 @@ namespace KeySequenceSimulator
             get { return _mouseY; }
             private set { _mouseY = value; txtY.Text = value.ToString(); }
         }
+
+        private bool _uiElementsEnabled = true;
+        public bool UIElementsEnabled
+        {
+            get { return _uiElementsEnabled; }
+            set
+            {
+                if (value)
+                    Classes.Remove("Disabled");
+                else
+                    Classes.Add("Disabled");
+            }
+        }
+
         private bool IsListening { get; set; }
 
         public IActionSimulator ActionSimulator { get; set; }
@@ -87,6 +105,10 @@ namespace KeySequenceSimulator
             textText = this.FindControl<TextBox>("txtText");
             txtX = this.FindControl<TextBox>("txtX");
             txtY = this.FindControl<TextBox>("txtY");
+
+            btnMoveRight = this.FindControl<Button>("btnMoveRight");
+            btnMoveLeft = this.FindControl<Button>("btnMoveLeft");
+            btnRemove = this.FindControl<Button>("btnRemove");
 
             // add listeners to comboboxes
             actionCombobox.SelectionChanged += OnActionSelectionChanged;
@@ -212,7 +234,7 @@ namespace KeySequenceSimulator
             return chbMeta.IsChecked.HasValue && chbMeta.IsChecked.Value;
         }
 
-        // executes the action
+        // Executes the action. Typically gets called from another thread than the UI thread.
         public async void Execute()
         {
             KeyMod mod = isShiftKeyChecked() ? KeyMod.SHIFT : KeyMod.NONE;

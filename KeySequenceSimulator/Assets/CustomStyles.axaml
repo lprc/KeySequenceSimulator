@@ -156,6 +156,10 @@
 		<Setter Property="FontWeight" Value="Bold"/>
 	</Style>
 
+	<Style Selector="local|Sequence.Disabled Button">
+		<Setter Property="IsEnabled" Value="false"></Setter>
+	</Style>
+		
 	<Style Selector="local|Sequence.Inactive Button">
 		<Setter Property="BorderBrush" Value="Gray"></Setter>
 		<Setter Property="Foreground" Value="Gray"></Setter>
@@ -173,6 +177,13 @@
 	</Style>
 	
 	<!-- action styles -->
+	<Style Selector="local|ActionView.Disabled Button, 
+			local|ActionView.Disabled ComboBox,
+			local|ActionView.Disabled CheckBox,
+			local|ActionView.Disabled TextBox">
+		<Setter Property="IsEnabled" Value="false"></Setter>
+	</Style>
+	
 	<Style Selector="local|ActionView Border">
 		<Setter Property="BorderBrush" Value="White"></Setter>
 		<Setter Property="BorderThickness" Value="1"></Setter>
