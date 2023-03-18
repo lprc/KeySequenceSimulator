@@ -98,14 +98,12 @@ namespace KeySequenceSimulator
                 if (removed)
                 {
                     if (isRepeat)
-                        Repeat = false;
+                        SetRepeatSequence(false);
 
                     // First remove arrow, if child is not repeat. Then remove action itself.
                     int idx = sequencePanel.Children.IndexOf(a);
 
-                    if (!isRepeat)
-                        sequencePanel.Children.RemoveAt(idx + 1);
-
+                    sequencePanel.Children.RemoveAt(idx + 1);
                     sequencePanel.Children.RemoveAt(idx);
                 }
             }          
@@ -114,34 +112,40 @@ namespace KeySequenceSimulator
         // Move action and its UI Element to the left if it's not the first one and it's not repeat.
         public void MoveActionLeft(ActionView a)
         {
-            int idx = Actions.IndexOf(a);
-
-            if (idx > 0 && a.SelectedAction != ActionView.ActionType.REPEAT)
+            if (!IsRunning)
             {
-                var tmp = Actions[idx - 1];
-                Actions[idx - 1] = Actions[idx];
-                Actions[idx] = tmp;
+                int idx = Actions.IndexOf(a);
 
-                int idxUi = sequencePanel.Children.IndexOf(a);
-                sequencePanel.Children.Move(idxUi, idxUi - 2);
-                sequencePanel.Children.Move(idxUi - 1, idxUi);
+                if (idx > 0 && a.SelectedAction != ActionView.ActionType.REPEAT)
+                {
+                    var tmp = Actions[idx - 1];
+                    Actions[idx - 1] = Actions[idx];
+                    Actions[idx] = tmp;
+
+                    int idxUi = sequencePanel.Children.IndexOf(a);
+                    sequencePanel.Children.Move(idxUi, idxUi - 2);
+                    sequencePanel.Children.Move(idxUi - 1, idxUi);
+                }
             }
         }
 
         public void MoveActionRight(ActionView a)
 
         {
-            int idx = Actions.IndexOf(a);
-
-            if (idx < Actions.Count - 1 && a.SelectedAction != ActionView.ActionType.REPEAT)
+            if (!IsRunning)
             {
-                var tmp = Actions[idx + 1];
-                Actions[idx + 1] = Actions[idx];
-                Actions[idx] = tmp;
+                int idx = Actions.IndexOf(a);
 
-                int idxUi = sequencePanel.Children.IndexOf(a);
-                sequencePanel.Children.Move(idxUi, idxUi + 2);
-                sequencePanel.Children.Move(idxUi + 1, idxUi);
+                if (idx < Actions.Count - 1 && a.SelectedAction != ActionView.ActionType.REPEAT)
+                {
+                    var tmp = Actions[idx + 1];
+                    Actions[idx + 1] = Actions[idx];
+                    Actions[idx] = tmp;
+
+                    int idxUi = sequencePanel.Children.IndexOf(a);
+                    sequencePanel.Children.Move(idxUi, idxUi + 2);
+                    sequencePanel.Children.Move(idxUi + 1, idxUi);
+                }
             }
         }
 
