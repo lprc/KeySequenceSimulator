@@ -91,6 +91,11 @@
 			<TextBox Name="txtX" Watermark="X" />
 			<TextBlock>Y: </TextBlock>
 			<TextBox Name="txtY" Watermark="Y" />
+			<Button Name="btnRecordCursorPos"
+					Click="ListenForCursorPos"
+					ToolTip.Tip="Start listening for cursor position">
+				&#9655;
+			</Button>
 		</StackPanel>
 
 		<Border Name="borderPanelKeymods"

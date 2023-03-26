@@ -7,6 +7,7 @@ todo kss:
 - move action in sequence to left or right
 - remove action
 - update UI after loading a savefile
+- Fix Bug Mouse Click Pos for multiple screens (e.g. when X is set to 1000, having two screens the press will be done at X = 500)
 
 window bg: #245c60
 group bg: #24614A

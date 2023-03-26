@@ -8,6 +8,7 @@ using KeySequenceSimulator.ActionSimulator;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Avalonia.Threading;
+using System.Threading;
 
 namespace KeySequenceSimulator
 {
@@ -41,10 +42,13 @@ namespace KeySequenceSimulator
         private TextBox textText;
         private TextBox txtX;
         private TextBox txtY;
+        private Button btnRecordCursorPos;
 
         private Button btnMoveLeft;
         private Button btnMoveRight;
         private Button btnRemove;
+
+        private volatile bool isListeningForCursorPos = false;
 
         public KeyboardKey Key { get; set; }
         public MouseKey SelectedMouseKey { get; private set; }
@@ -117,6 +121,7 @@ namespace KeySequenceSimulator
             textText = this.FindControl<TextBox>("txtText");
             txtX = this.FindControl<TextBox>("txtX");
             txtY = this.FindControl<TextBox>("txtY");
+            btnRecordCursorPos = this.FindControl<Button>("btnRecordCursorPos");
 
             btnMoveRight = this.FindControl<Button>("btnMoveRight");
             btnMoveLeft = this.FindControl<Button>("btnMoveLeft");
@@ -214,6 +219,52 @@ namespace KeySequenceSimulator
                     SelectedMouseKey = MouseKey.MIDDLE;
                     break;
             }
+        }
+
+        // Adds cursor pos listener if not already attached.
+        public void ListenForCursorPos(object sender, RoutedEventArgs e)
+        {
+            btnRecordCursorPos.Content = "Press Enter to accept cursor position...";
+
+            if (!isListeningForCursorPos)
+            {
+                ParentSequence.Group.mainWindow.Focus();
+                isListeningForCursorPos = true;
+                ParentSequence.Group.mainWindow.GlobalInput.RegisterHook(KeyboardKey.Enter, () => cursorPosListener());
+
+                // Update text fields continously
+                Thread t = new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+
+                    while (isListeningForCursorPos)
+                    {
+                        var pos = ParentSequence.Group.mainWindow.GlobalInput.GetCursorPos();
+
+                        Dispatcher.UIThread.Post(() =>
+                        {
+                            txtX.Text = pos.X.ToString();
+                            txtY.Text = pos.Y.ToString();
+                        });
+                        Thread.Sleep(300);
+                    }
+                });
+                t.Start();
+            }
+                
+        }
+
+        // Accept cursor position (hook attached in ListenForCursorPos).
+        public void cursorPosListener()
+        {
+            isListeningForCursorPos = false;
+            ParentSequence.Group.mainWindow.GlobalInput.RemoveHook(KeyboardKey.Enter);
+
+            btnRecordCursorPos.Content = "\u25B7";
+
+            var pos = ParentSequence.Group.mainWindow.GlobalInput.GetCursorPos();
+            txtX.Text = pos.X.ToString();
+            txtY.Text = pos.Y.ToString();
         }
 
         public void SetKey(object sender, RoutedEventArgs e)
