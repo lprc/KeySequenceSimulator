@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace KeySequenceSimulator.ActionSimulator
 {
@@ -69,5 +70,13 @@ namespace KeySequenceSimulator.ActionSimulator
         {
             return hotkeyActionDict.Keys.ToList();
         }
+
+        // Returns current cursor position using System.Windows.Forms
+        public Point GetCursorPos()
+        {
+            var pos = Cursor.Position; // Returns a point of type System.Drawing.Point
+            return new Point(pos.X, pos.Y);
+        }
+
     }
 }

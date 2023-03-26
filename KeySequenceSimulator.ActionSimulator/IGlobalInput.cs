@@ -10,5 +10,18 @@ namespace KeySequenceSimulator.ActionSimulator
         void RemoveHook(KeyboardKey hotkey);
         void Dispose();
         List<KeyboardKey> GetRegisteredHotkeys();
+        Point GetCursorPos();
+    }
+
+    public struct Point
+    {
+        public int X;
+        public int Y;
+
+        public Point(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
